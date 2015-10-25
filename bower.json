@@ -1,0 +1,25 @@
+{
+  "name": "mangekyou",
+  "description": "简单的图像处理程序",
+  "main": "index.js",
+  "authors": [
+    "frantic1048"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/frantic1048/mangekyou",
+  "moduleType": [
+    "es6",
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pure": "~0.6.0",
+    "font-awesome": "fontawesome#~4.4.0"
+  }
+}

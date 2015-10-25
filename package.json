@@ -1,0 +1,32 @@
+{
+  "name": "mangekyou",
+  "version": "0.0.2",
+  "description": "简单的图像处理程序",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frantic1048/mangekyou.git"
+  },
+  "author": "frantic1048",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/frantic1048/mangekyou/issues"
+  },
+  "homepage": "https://github.com/frantic1048/mangekyou#readme",
+  "dependencies": {
+    "bower": "^1.6.5",
+    "electron-prebuilt": "^0.34.1",
+    "electron-reload": "^0.2.0",
+    "flux": "^2.1.1"
+  },
+  "devDependencies": {
+    "babel-core": "^5.8.29",
+    "babel-eslint": "^4.1.3",
+    "gulp": "gulpjs/gulp#4.0",
+    "gulp-eslint": "^1.0.0",
+    "gulp-newer": "^0.5.1"
+  }
+}
