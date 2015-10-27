@@ -29,3 +29,6 @@ bower_components
 
 # Dolphin
 .directory
+
+# builded app
+build
