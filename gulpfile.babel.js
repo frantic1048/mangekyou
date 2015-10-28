@@ -84,10 +84,15 @@ gulp.task('js', () => {
 });
 
 gulp.task('dev', (callback) => {
-  gulp.watch(app.html.src, 'html');
-  gulp.watch(app.css.src, 'css');
-  gulp.watch(app.js.src, 'css');
-  callback()
+  gulp.watch(app.html.src, gulp.parallel('html'));
+  gulp.watch(app.css.src, gulp.parallel('css'));
+  gulp.watch(app.js.src, gulp.parallel('js'));
+  gulp.parallel(
+    'html',
+    'css',
+    'js',
+  )();
+  callback();
 });
 
 gulp.task('default', (callback) => {

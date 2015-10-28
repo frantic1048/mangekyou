@@ -7,5 +7,12 @@
 </head>
 <body>
 <h1>(´・ω・｀)</h1>
+<div id="app"></div>
+<script type="text/javascript">
+  var ReactDOM = require('react-dom');
+  var React = require('react');
+  var app = require('./script/index.js');
+  ReactDOM.render(React.createElement(app), document.getElementById('app'));
+</script>
 </body>
 </html>

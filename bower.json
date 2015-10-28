@@ -1,7 +1,7 @@
 {
   "name": "mangekyou",
   "description": "简单的图像处理程序",
-  "main": "index.js",
+  "main": "build/app/index.js",
   "authors": [
     "frantic1048"
   ],
