@@ -4,18 +4,10 @@ import ipc from 'ipc';
 
 require('crash-reporter').start();
 
-// for dev
-// auto reload when file changes
-require('electron-reload')(__dirname, {
-  electron: require('electron-prebuilt')
-});
-
 let mainWindow = null;
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+  app.quit();
 });
 
 app.on('ready', () => {

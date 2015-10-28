@@ -4,7 +4,9 @@ import sass from 'gulp-sass';
 import newer from 'gulp-newer';
 import sourcemaps from 'gulp-sourcemaps';
 import eslint from 'gulp-eslint';
+import electronConnect from 'electron-connect';
 
+const electron = electronConnect.server.create();
 
 const app = {
   js: {},
@@ -34,10 +36,11 @@ app.js.lintSrc = [
 
 app.css.src = 'src/app/style/*.+(css|scss)';
 app.css.srcCompiled = 'src/app/style/*.css';
-app.css.dest = 'build/app/style/app.css';
+app.css.dest = 'build/app/style/*.css';
 app.css.destPath = 'build/app/style';
 
 app.html.src = 'src/app/index.html';
+app.html.dest = 'build/app/index.html';
 app.html.destPath = 'build/app';
 
 vendor.font.src = [
@@ -83,14 +86,30 @@ gulp.task('js', () => {
     .pipe(gulp.dest(app.js.destPath));
 });
 
+gulp.task('serve', (callback) => {
+  electron.start();
+  gulp.watch(
+    Array.prototype.concat(app.js.dest[0]),
+    electron.restart
+  );
+  gulp.watch(
+    Array.prototype.concat(app.js.dest[1], app.html.dest, app.css.dest),
+    electron.reload
+  );
+  callback();
+});
+
 gulp.task('dev', (callback) => {
   gulp.watch(app.html.src, gulp.parallel('html'));
   gulp.watch(app.css.src, gulp.parallel('css'));
   gulp.watch(app.js.src, gulp.parallel('js'));
-  gulp.parallel(
-    'html',
-    'css',
-    'js',
+  gulp.series(
+    gulp.parallel(
+      'html',
+      'css',
+      'js',
+    ),
+    'serve',
   )();
   callback();
 });

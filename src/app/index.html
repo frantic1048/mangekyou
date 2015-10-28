@@ -4,15 +4,23 @@
   <meta charset="UTF-8">
   <title>Mangekyou</title>
   <link rel="stylesheet" href="style/font.css">
+  <link rel="stylesheet" href="style/general.css">
+  <script>require('electron-connect').client.create()</script>
 </head>
 <body>
-<h1>(´・ω・｀)</h1>
 <div id="app"></div>
 <script type="text/javascript">
-  var ReactDOM = require('react-dom');
   var React = require('react');
-  var app = require('./script/index.js');
-  ReactDOM.render(React.createElement(app), document.getElementById('app'));
+  var ReactDOM = require('react-dom');
+  var injectTapEventPlugin = require("react-tap-event-plugin");
+  var main = require('./script/main');
+
+  //Needed for onTouchTap
+  //Can go away when react 1.0 release
+  //Check this repo:
+  //https://github.com/zilverline/react-tap-event-plugin
+  injectTapEventPlugin();
+  ReactDOM.render(React.createElement(main), document.getElementById('app'));
 </script>
 </body>
 </html>
