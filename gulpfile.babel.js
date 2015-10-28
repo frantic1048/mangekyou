@@ -29,10 +29,10 @@ app.js.dest = [
   'build/app/**/*.js',
 ];
 app.js.destPath = 'build/app';
-app.js.lintSrc = [
+app.js.lintSrc = Array.prototype.concat(
   app.js.src,
   'gulpfile.babel.js',
-];
+);
 
 app.css.src = 'src/app/style/*.+(css|scss)';
 app.css.srcCompiled = 'src/app/style/*.css';
