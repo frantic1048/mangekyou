@@ -1,5 +1,4 @@
 import React from 'react';
-
 import FilePanelToolbar from './FilePanelToolbar';
 import FilePanelCards from './FilePanelCards';
 

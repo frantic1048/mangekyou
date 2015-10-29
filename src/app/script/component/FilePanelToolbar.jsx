@@ -3,7 +3,7 @@ import Toolbar from 'material-ui/lib/toolbar/toolbar';
 import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
 import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title';
 import RaisedButton from 'material-ui/lib/raised-button';
-import FlatButton from 'material-ui/lib/flat-button';
+import mangekyouAction from './../action/mangekyouAction';
 
 const FilePanelToolbar = React.createClass({
   render() {
@@ -13,11 +13,19 @@ const FilePanelToolbar = React.createClass({
           <ToolbarTitle text="管理要进行处理的图片" />
         </ToolbarGroup>
         <ToolbarGroup float="right">
-          <FlatButton label="清空" />
-          <RaisedButton primary label="添加" />
+          <RaisedButton label="清空" onClick={this.handleClearFile()}/>
+          <RaisedButton primary label="添加">
+            <input type="file" id="fileInput"></input>
+          </RaisedButton>
         </ToolbarGroup>
       </Toolbar>
     );
+  },
+  handleAddFile(newFile) {
+    mangekyouAction.addFile(newFile);
+  },
+  handleClearFile() {
+    mangekyouAction.clearFile();
   },
 });
 
