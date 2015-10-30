@@ -21,7 +21,11 @@ const FilePanelCard = React.createClass({
   render() {
     return ( // eslint-disable-line no-extra-parens
       <ListItem
-        leftAvatar={<Avatar src={this.props.file.path} style={{ objectFit: 'cover' }}/>}
+        leftAvatar={
+          <Avatar
+            src={this.props.file.path}
+            style={{ objectFit: 'cover', borderRadius: 'none' }}/>
+        }
         primaryText={this.props.file.name}
         secondaryText={`路径：${this.props.file.path}`}
         rightIconButton={
