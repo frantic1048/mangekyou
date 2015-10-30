@@ -1,5 +1,6 @@
 import React from 'react';
-import FilePanelCard from './FilePanelCard';
+import List from 'material-ui/lib/lists/list';
+import FilePanelListItem from './FilePanelListItem';
 import mangekyouStore from './../store/mangekyouStore';
 
 const FilePanelCards = React.createClass({
@@ -16,9 +17,17 @@ const FilePanelCards = React.createClass({
   },
   render() {
     return ( // eslint-disable-line no-extra-parens
-      <div>
-        { list.map(f => <FilePanelCard file={f} />) }
-      </div>
+      <List
+        //             Height(viewPort - titlebar - tabbar - toolbar)
+        style={{ height: 'calc(100vh - 64px - 48px - 56px)', overflowY: 'auto' }}
+      >
+        { this.state.list.map((f, index) => {
+          return ( // eslint-disable-line no-extra-parens
+            <FilePanelListItem file={f} key={index}/>
+          );
+        })
+        }
+      </List>
     );
   },
   _onChange() {

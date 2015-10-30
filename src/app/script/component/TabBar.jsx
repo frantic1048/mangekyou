@@ -9,7 +9,9 @@ import ViewPanel from './ViewPanel';
 const TabBar = React.createClass({
   render() {
     return ( // eslint-disable-line no-extra-parens
-      <Tabs>
+      <Tabs
+        style={{ userSelect: 'none' }}
+      >
         <Tab label="文件">
           <FilePanel />
         </Tab>
