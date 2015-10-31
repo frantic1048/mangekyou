@@ -6,20 +6,20 @@ import mangekyouDispatcher from './../dispatcher/mangekyouDispatcher';
 const CHANGE_EVENT = 'change';
 
 const _store = {
-  fileNodeList: [],
-  TransformNodeList: [],
+  fileNodes: new Map(),
+  transformNodes: new Map(),
 };
 
-function addFileNode(newFile) {
-  _store.fileNodeList.push(newFile);
+function addFileNode({key, newFile}) {
+  _store.fileNodes.set(key, newFile);
 }
 
-function removeFileNode(index) {
-  _store.fileNodeList.splice(index, 1);
+function removeFileNode(key) {
+  _store.fileNodes.delete(key);
 }
 
 function clearFileNode() {
-  _store.fileNodeList.splice(0, _store.fileNodeList.length);
+  _store.fileNodes.clear();
 }
 
 const mangekyouStore = Object.assign({}, EventEmitter.prototype, {
@@ -29,8 +29,8 @@ const mangekyouStore = Object.assign({}, EventEmitter.prototype, {
   removeChangeListener(cb) {
     this.removeListener(CHANGE_EVENT, cb);
   },
-  getFileList() {
-    return _store.fileNodeList;
+  getFileNodes() {
+    return _store.fileNodes;
   },
 });
 

@@ -47,11 +47,14 @@ const FilePanelToolbar = React.createClass({
         let _imageData;
         ctx.drawImage(img, 0, 0);
         _imageData = ctx.getImageData(0, 0, img.width, img.height);
-        mangekyouAction.addFile({
-          name: f.name,
-          path: f.path,
-          image: _imageData,
-        });
+        mangekyouAction.addFile(
+          f.path,
+          {
+            name: f.name,
+            path: f.path,
+            image: _imageData,
+          }
+        );
       };
       fr.onload = () => { img.src = fr.result; };
       fr.readAsDataURL(f);

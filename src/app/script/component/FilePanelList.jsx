@@ -3,10 +3,10 @@ import List from 'material-ui/lib/lists/list';
 import FilePanelListItem from './FilePanelListItem';
 import mangekyouStore from './../store/mangekyouStore';
 
-const FilePanelCards = React.createClass({
+const FilePanelList = React.createClass({
   getInitialState() {
     return {
-      list: mangekyouStore.getFileList(),
+      nodes: mangekyouStore.getFileNodes(),
     };
   },
   componentDidMount() {
@@ -16,25 +16,28 @@ const FilePanelCards = React.createClass({
     mangekyouStore.removeChangeListener(this._onChange);
   },
   render() {
+    const items = [];
+    for (const [_key, _file] of this.state.nodes.entries()) {
+      // FIXME: key issue
+      items.push(
+        <FilePanelListItem
+          node={{key: _key, file: _file}}
+        />
+      );
+    }
     return ( // eslint-disable-line no-extra-parens
       <List
         //             Height(viewPort - titlebar - tabbar - toolbar)
         style={{ height: 'calc(100vh - 64px - 48px - 56px)', overflowY: 'auto' }}
-      >
-        { this.state.list.map((f, index) => {
-          return ( // eslint-disable-line no-extra-parens
-            <FilePanelListItem file={f} key={index}/>
-          );
-        })
-        }
+      >{items}
       </List>
     );
   },
   _onChange() {
     this.setState({
-      list: mangekyouStore.getFileList(),
+      nodes: mangekyouStore.getFileNodes(),
     });
   },
 });
 
-export default FilePanelCards;
+export default FilePanelList;
