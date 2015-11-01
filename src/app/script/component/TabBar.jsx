@@ -13,13 +13,13 @@ const TabBar = React.createClass({
         style={{ userSelect: 'none' }}
       >
         <Tab label="文件">
-          <FilePanel />
+          <FilePanel/>
         </Tab>
         <Tab label="编辑">
-          <NodePanel />
+          <NodePanel/>
         </Tab>
         <Tab label="预览">
-          <ViewPanel />
+          <ViewPanel/>
         </Tab>
       </Tabs>
     );

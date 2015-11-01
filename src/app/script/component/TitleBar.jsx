@@ -15,17 +15,17 @@ const TitleBar = React.createClass({
         iconElementLeft={
           <IconButton
             style={{ WebkitAppRegion: 'no-drag' }}>
-            <NavigationClose />
+            <NavigationClose/>
           </IconButton>}
         iconElementRight={
           <IconMenu
             style={{ WebkitAppRegion: 'no-drag' }}
             iconButtonElement={
-            <IconButton><MoreVertIcon /></IconButton>
+            <IconButton><MoreVertIcon/></IconButton>
           }>
-            <MenuItem primaryText="One" />
-            <MenuItem primaryText="Two" />
-            <MenuItem primaryText="San!" />
+            <MenuItem primaryText="One"/>
+            <MenuItem primaryText="Two"/>
+            <MenuItem primaryText="San!"/>
           </IconMenu>
       }/>
     );

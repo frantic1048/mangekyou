@@ -12,7 +12,7 @@ const FilePanelToolbar = React.createClass({
         style={{ userSelect: 'none' }}
       >
         <ToolbarGroup float="left">
-          <ToolbarTitle text="管理要进行处理的图片" />
+          <ToolbarTitle text="管理要进行处理的图片"/>
         </ToolbarGroup>
         <ToolbarGroup float="right">
           <RaisedButton label="清空" onClick={this.handleClearFile}/>

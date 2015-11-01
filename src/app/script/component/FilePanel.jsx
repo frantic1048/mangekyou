@@ -6,8 +6,8 @@ const FilePanel = React.createClass({
   render() {
     return ( // eslint-disable-line no-extra-parens
       <div>
-        <FilePanelToolbar />
-        <FilePanelList />
+        <FilePanelToolbar/>
+        <FilePanelList/>
       </div>
     );
   },
