@@ -1,5 +1,4 @@
 import React from 'react';
-
 import NodePanelToolbar from './NodePanelToolbar';
 import NodePanelView from './NodePanelView';
 
