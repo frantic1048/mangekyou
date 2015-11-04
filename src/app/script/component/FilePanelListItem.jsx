@@ -8,21 +8,22 @@ import mangekyouAction from './../action/mangekyouAction';
 const FilePanelListItem = React.createClass({
   propTypes: {
     node: React.PropTypes.shape({
-      key: React.PropTypes.string.isRequired,
-      file: React.PropTypes.shape({
-        name: React.PropTypes.string.isRequired,
-        path: React.PropTypes.string.isRequired,
-        index: React.PropTypes.number,
-        image: React.PropTypes.shape({
-          data: React.PropTypes.any.isRequired,
-          height: React.PropTypes.number.isRequired,
-          width: React.PropTypes.number.isRequired,
-        }),
+      data: React.PropTypes.shape({
+        key: React.PropTypes.string.isRequired,
+        file: React.PropTypes.shape({
+          name: React.PropTypes.string.isRequired,
+          path: React.PropTypes.string.isRequired,
+          image: React.PropTypes.shape({
+            data: React.PropTypes.any.isRequired,
+            height: React.PropTypes.number.isRequired,
+            width: React.PropTypes.number.isRequired,
+          }),
+        }).isRequired,
       }).isRequired,
     }).isRequired,
   },
   render() {
-    const {key, file} = this.props.node;
+    const {key, file} = this.props.node.data;
     return ( // eslint-disable-line no-extra-parens
       <ListItem
         key={key}
@@ -45,7 +46,7 @@ const FilePanelListItem = React.createClass({
     );
   },
   handleRemoveFile() {
-    mangekyouAction.removeFile(this.props.node.key);
+    mangekyouAction.removeFile(this.props.node.data.key);
   },
 });
 

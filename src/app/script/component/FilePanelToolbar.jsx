@@ -4,6 +4,7 @@ import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
 import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title';
 import RaisedButton from 'material-ui/lib/raised-button';
 import mangekyouAction from './../action/mangekyouAction';
+import FileNode from './../node/FileNode';
 
 const FilePanelToolbar = React.createClass({
   render() {
@@ -47,14 +48,11 @@ const FilePanelToolbar = React.createClass({
         let _imageData;
         ctx.drawImage(img, 0, 0);
         _imageData = ctx.getImageData(0, 0, img.width, img.height);
-        mangekyouAction.addFile(
-          f.path,
-          {
-            name: f.name,
-            path: f.path,
-            image: _imageData,
-          }
-        );
+        mangekyouAction.addFile(new FileNode({
+          name: f.name,
+          path: f.path,
+          image: _imageData,
+        }));
       };
       fr.onload = () => { img.src = fr.result; };
       fr.readAsDataURL(f);

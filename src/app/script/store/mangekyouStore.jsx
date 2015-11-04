@@ -10,8 +10,8 @@ const _store = {
   transformNodes: new Map(),
 };
 
-function addFileNode({key, newFile}) {
-  _store.fileNodes.set(key, newFile);
+function addFileNode(fileNode) {
+  _store.fileNodes.set(fileNode.data.key, fileNode);
 }
 
 function removeFileNode(key) {

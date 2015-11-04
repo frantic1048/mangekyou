@@ -2,10 +2,10 @@ import mangekyouDispatcher from './../dispatcher/mangekyouDispatcher';
 import mangekyouConstant from './../constant/mangekyouConstant';
 
 const mangekyouAction = {
-  addFile(key, newFile) {
+  addFile(fileNode) {
     mangekyouDispatcher.handleAction({
       actionType: mangekyouConstant.ADD_FILE_NODE,
-      data: {key, newFile},
+      data: fileNode,
     });
   },
   removeFile(key) {
