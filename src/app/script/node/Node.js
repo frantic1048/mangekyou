@@ -1,15 +1,14 @@
-// a general Node prototype
-function Node(callback, options) {
-  // input is a NodeId:Node Map
-  this.input = new Map();
+import QuantizationNode from './QuantizationNode';
+import SampleRateNode from './SampleRateNode';
 
-  // data is a node-type related map
-  this.data = {};
+const nodes = {
+  Quantization: QuantizationNode,
+  SampleRate: SampleRateNode,
+};
 
-  // output is a function return a output-type:processed data object
-  this.output = null;
-
-  callback.call(this, options);
+function Node(typeName, options) {
+  return new nodes[typeName](options);
 }
 
+export const nodeTypes = Object.keys(nodes);
 export default Node;

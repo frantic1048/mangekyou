@@ -1,4 +1,4 @@
-import Node from './Node';
+import NodeBase from './NodeBase';
 
 function fileNodeInit({name, path, image}) {
   this.data = {
@@ -15,7 +15,7 @@ function fileNodeInit({name, path, image}) {
 }
 
 function FileNode(options) {
-  return new Node(fileNodeInit, options);
+  return new NodeBase(fileNodeInit, options);
 }
 
 export default FileNode;
