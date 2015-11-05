@@ -10,10 +10,10 @@ const FilePanelList = React.createClass({
     };
   },
   componentDidMount() {
-    mangekyouStore.addChangeListener(this._onChange);
+    mangekyouStore.addFileNodeChangeListener(this._onChange);
   },
   componentWillUnmount() {
-    mangekyouStore.removeChangeListener(this._onChange);
+    mangekyouStore.removeFileNodeChangeListener(this._onChange);
   },
   render() {
     const items = [];

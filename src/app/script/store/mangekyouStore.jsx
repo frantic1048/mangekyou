@@ -4,7 +4,11 @@ import mangekyouConstant from './../constant/mangekyouConstant';
 import mangekyouDispatcher from './../dispatcher/mangekyouDispatcher';
 import {transformNodeTypes} from './../node/TransformNode';
 
-const CHANGE_EVENT = 'change';
+const CHANGE_EVENT = {
+  FILE_NODE: 'FILE_NODE',
+  TRANSFORM_NODE: 'TRANSFORM_NODE',
+  VIEW_NODE: 'VIEW_NODE',
+};
 
 const _store = {
   fileNodes: new Map(),
@@ -26,14 +30,17 @@ function clearFileNode() {
 }
 
 const mangekyouStore = Object.assign({}, EventEmitter.prototype, {
-  addChangeListener(cb) {
-    this.on(CHANGE_EVENT, cb);
+  addFileNodeChangeListener(cb) {
+    this.on(CHANGE_EVENT.FILE_NODE, cb);
   },
-  removeChangeListener(cb) {
-    this.removeListener(CHANGE_EVENT, cb);
+  removeFileNodeChangeListener(cb) {
+    this.removeListener(CHANGE_EVENT.FILE_NODE, cb);
   },
   getFileNodes() {
     return _store.fileNodes;
+  },
+  getTransformNodeTypes() {
+    return _store.transformNodeTypes;
   },
 });
 
@@ -42,15 +49,15 @@ mangekyouDispatcher.register(payload => {
   switch (action.actionType) {
   case mangekyouConstant.ADD_FILE_NODE:
     addFileNode(action.data);
-    mangekyouStore.emit(CHANGE_EVENT);
+    mangekyouStore.emit(CHANGE_EVENT.FILE_NODE);
     break;
   case mangekyouConstant.REMOVE_FILE_NODE:
     removeFileNode(action.data);
-    mangekyouStore.emit(CHANGE_EVENT);
+    mangekyouStore.emit(CHANGE_EVENT.FILE_NODE);
     break;
   case mangekyouConstant.CLEAR_FILE_NODE:
     clearFileNode();
-    mangekyouStore.emit(CHANGE_EVENT);
+    mangekyouStore.emit(CHANGE_EVENT.FILE_NODE);
     break;
   default:
     return true;
