@@ -2,7 +2,7 @@ import NodeBase from './NodeBase';
 
 function sampleRate(image, rate) {
   // TODO: sample rate processing
-  return 0;
+  return image;
 }
 
 function sampleRateNodeInit({inputNode}) {

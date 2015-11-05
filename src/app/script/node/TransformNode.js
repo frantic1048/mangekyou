@@ -6,9 +6,9 @@ const nodes = {
   SampleRate: SampleRateNode,
 };
 
-function Node(typeName, options) {
+function TransformNode(typeName, options) {
   return new nodes[typeName](options);
 }
 
-export const nodeTypes = Object.keys(nodes);
-export default Node;
+export const transformNodeTypes = Object.keys(nodes);
+export default TransformNode;

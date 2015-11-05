@@ -2,12 +2,15 @@ import { EventEmitter } from 'events';
 
 import mangekyouConstant from './../constant/mangekyouConstant';
 import mangekyouDispatcher from './../dispatcher/mangekyouDispatcher';
+import {transformNodeTypes} from './../node/TransformNode';
 
 const CHANGE_EVENT = 'change';
 
 const _store = {
   fileNodes: new Map(),
+  viewNodes: new Map(),
   transformNodes: new Map(),
+  transformNodeTypes: transformNodeTypes,
 };
 
 function addFileNode(fileNode) {
