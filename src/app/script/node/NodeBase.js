@@ -6,6 +6,9 @@ function NodeBase(callback, options) {
   // data is a node-type related map
   this.data = {};
 
+  // description of transform params
+  this.parameter = {};
+
   // output is a function return a output-type:processed data object
   this.output = null;
 

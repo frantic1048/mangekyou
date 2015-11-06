@@ -6,9 +6,13 @@ const nodes = {
   SampleRate: SampleRateNode,
 };
 
+export const transformNodeTypes = {
+  Quantization: '量化',
+  SampleRate: '采样率',
+};
+
 function TransformNode(typeName, options) {
   return new nodes[typeName](options);
 }
 
-export const transformNodeTypes = Object.keys(nodes);
 export default TransformNode;
