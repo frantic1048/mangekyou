@@ -7,19 +7,16 @@ function sampleRate(image, {rate}) {
 
 function sampleRateNodeInit({inputNode}) {
   this.input.set('image', inputNode);
+  // rate
+  // Infinity : full resolution
+  // 1~x : sample 1~x pixel on width
+  // 0 : sample only 1 pixel
   this.parameter = {
-    rate: {
-      displayName: '采样率',
-      value: 256,
-      type: 'range',
-      min: 1,
-      max: 256,
-      step: 1,
-    },
+    rate: Infinity,
   };
   this.output = () => {
     const source = this.input.get('image').output();
-    return sampleRate(source, param);
+    return sampleRate(source, this.parameter);
   };
 }
 

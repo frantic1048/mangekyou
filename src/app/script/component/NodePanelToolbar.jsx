@@ -5,15 +5,11 @@ import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title';
 import DropDownMenu from 'material-ui/lib/drop-down-menu';
 import RaisedButton from 'material-ui/lib/raised-button';
 import mangekyouStore from './../store/mangekyouStore';
-
-let transformNodeId = 1;
-function getTransformNodeId() {
-  return transformNodeId++;
-}
+import mangekyouAction from './../action/mangekyouAction';
+import TransformNode from './../node/TransformNode';
 
 const NodePanelToolbar = React.createClass({
   getInitialState() {
-    // TODO: node type store
     const transformNodeTypes = mangekyouStore.getTransformNodeTypes();
     const nodeTypeOptions = Object.keys(transformNodeTypes).map(key => {
       return {
@@ -30,13 +26,22 @@ const NodePanelToolbar = React.createClass({
       <Toolbar>
         <ToolbarGroup style={{ float: 'left' }}>
           <ToolbarTitle text="类型"/>
-            <DropDownMenu menuItems={this.state.nodeTypeOptions}/>
+            <DropDownMenu
+              menuItems={this.state.nodeTypeOptions}
+              ref="nodeType"
+              onChange={this.handleChange}/>
         </ToolbarGroup>
         <ToolbarGroup style={{ float: 'right' }}>
-          <RaisedButton primary label="添加节点"/>
+          <RaisedButton primary label="添加节点" onClinck={this.handleClick}/>
         </ToolbarGroup>
       </Toolbar>
     );
+  },
+  handleClick() {
+
+  },
+  handleChange() {
+    console.log(this.refs.nodeType.value);
   },
 });
 
