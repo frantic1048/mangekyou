@@ -19,6 +19,7 @@ const NodePanelToolbar = React.createClass({
     });
     return {
       nodeTypeOptions,
+      selectedIndex: 0,
     };
   },
   render() {
@@ -32,16 +33,18 @@ const NodePanelToolbar = React.createClass({
               onChange={this.handleChange}/>
         </ToolbarGroup>
         <ToolbarGroup style={{ float: 'right' }}>
-          <RaisedButton primary label="添加节点" onClinck={this.handleClick}/>
+          <RaisedButton primary label="添加节点" onClick={this.handleClick}/>
         </ToolbarGroup>
       </Toolbar>
     );
   },
   handleClick() {
-
+    mangekyouAction.addTransformNode(
+      new TransformNode(this.state.nodeTypeOptions[this.state.selectedIndex].payload)
+    );
   },
-  handleChange() {
-    console.log(this.refs.nodeType.value);
+  handleChange(event, selectedIndex) {
+    this.setState({selectedIndex});
   },
 });
 

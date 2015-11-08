@@ -2,11 +2,13 @@ import NodeBase from './NodeBase';
 
 function sampleRate(image, {rate}) {
   // TODO: sample rate processing
-  return image;
+  return image || null;
 }
 
-function sampleRateNodeInit({inputNode}) {
-  this.input.set('image', inputNode);
+function sampleRateNodeInit({inputNode = null } = {inputNode: null}) {
+  if (inputNode) {
+    this.input.set('image', inputNode);
+  }
   // rate
   // Infinity : full resolution
   // 1~x : sample 1~x pixel on width
@@ -15,7 +17,10 @@ function sampleRateNodeInit({inputNode}) {
     rate: Infinity,
   };
   this.output = () => {
-    const source = this.input.get('image').output();
+    let source = null;
+    if (this.input.get('image')) {
+      source = this.input.get('image').output();
+    }
     return sampleRate(source, this.parameter);
   };
 }

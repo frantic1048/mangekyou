@@ -17,10 +17,10 @@ const FilePanelList = React.createClass({
   },
   render() {
     const items = [];
-    for (const [, node] of this.state.nodes.entries()) {
+    for (const [key, node] of this.state.nodes.entries()) {
       items.push(
         <FilePanelListItem
-          key={node.data.key}
+          key={key}
           node={node}
         />
       );

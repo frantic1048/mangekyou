@@ -35,7 +35,7 @@ function getTransformNodeId() {
 }
 
 function addTransformNode(transformNode) {
-  _store.fileNodes.set(getTransformNodeId(), transformNode);
+  _store.transformNodes.set(getTransformNodeId(), transformNode);
 }
 
 function removeTransformNode(key) {
