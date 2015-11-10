@@ -1,5 +1,8 @@
 // a general Node prototype
 function NodeBase(callback, options) {
+  // name
+  this.name = 'base';
+
   // input is a NodeId:Node Map
   this.input = new Map();
 

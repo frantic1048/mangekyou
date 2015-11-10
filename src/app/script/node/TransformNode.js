@@ -2,13 +2,13 @@ import QuantizationNode from './QuantizationNode';
 import SampleRateNode from './SampleRateNode';
 
 const nodes = {
-  Quantization: QuantizationNode,
-  SampleRate: SampleRateNode,
+  [QuantizationNode.name]: QuantizationNode,
+  [SampleRateNode.name]: SampleRateNode,
 };
 
 export const transformNodeTypes = {
-  Quantization: '量化',
-  SampleRate: '采样率',
+  [QuantizationNode.name]: '量化',
+  [SampleRateNode.name]: '采样率',
 };
 
 function TransformNode(typeName, options) {

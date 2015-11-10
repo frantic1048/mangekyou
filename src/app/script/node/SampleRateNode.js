@@ -6,6 +6,8 @@ function sampleRate(image, {rate}) {
 }
 
 function sampleRateNodeInit({inputNode = null } = {inputNode: null}) {
+  this.name = 'SampleRate';
+
   if (inputNode) {
     this.input.set('image', inputNode);
   }
