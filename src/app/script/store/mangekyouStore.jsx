@@ -2,101 +2,75 @@ import { EventEmitter } from 'events';
 
 import mangekyouConstant from './../constant/mangekyouConstant';
 import mangekyouDispatcher from './../dispatcher/mangekyouDispatcher';
-import {transformNodeTypes} from './../node/TransformNode';
 
 const CHANGE_EVENT = {
-  FILE_NODE: 'FILE_NODE',
-  TRANSFORM_NODE: 'TRANSFORM_NODE',
-  VIEW_NODE: 'VIEW_NODE',
+  HISTORY: 'HISTORY',
+  CURRENT_IMAGE: 'CURRENT_IMAGE',
 };
 
 const _store = {
-  fileNodes: new Map(),
-  viewNodes: new Map(),
-  transformNodes: new Map(),
-  transformNodeTypes: transformNodeTypes,
+  history: [],
+  currentImage: null,
 };
 
-function addFileNode(fileNode) {
-  _store.fileNodes.set(fileNode.data.key, fileNode);
+function addHistory({operation, image}) {
+  History.push({operation, image});
+  _store.currentImage = image;
 }
 
-function removeFileNode(key) {
-  _store.fileNodes.delete(key);
+function loadHistory(index) {
+  _store.currentImage = _store.history[index].image;
 }
 
-function clearFileNode() {
-  _store.fileNodes.clear();
+function updateCurrentImage(image) {
+  _store.currentImage = image;
 }
 
-let transformNodeId = 1;
-function getTransformNodeId() {
-  return transformNodeId++;
-}
-
-function addTransformNode(transformNode) {
-  _store.transformNodes.set(getTransformNodeId(), transformNode);
-}
-
-function removeTransformNode(key) {
-  _store.transformNodes.delete(key);
-}
-
-function clearTransformNode() {
-  _store.transformNodes.clear();
+function newImage(image) {
+  _store.history = [];
+  addHistory({
+    operation: '打开文件',
+    image,
+  });
 }
 
 const mangekyouStore = Object.assign({}, EventEmitter.prototype, {
-  addFileNodeChangeListener(cb) {
-    this.on(CHANGE_EVENT.FILE_NODE, cb);
+  addHistoryChangeListener(cb) {
+    this.on(CHANGE_EVENT.HISTORY, cb);
   },
-  removeFileNodeChangeListener(cb) {
-    this.removeListener(CHANGE_EVENT.FILE_NODE, cb);
+  removeHistoryChangeListener(cb) {
+    this.removeListener(CHANGE_EVENT.HISTORY, cb);
   },
-  getFileNodes() {
-    return _store.fileNodes;
+  addCurrentImageChangeListener(cb) {
+    this.on(CHANGE_EVENT.CURRENT_IMAGE, cb);
   },
-  addTransformNodeChangeListener(cb) {
-    this.on(CHANGE_EVENT.TRANSFORM_NODE, cb);
+  removeCurrentImageChangeListener(cb) {
+    this.removeListener(CHANGE_EVENT.CURRENT_IMAGE, cb);
   },
-  removeTransformNodeChangeListener(cb) {
-    this.removeListener(CHANGE_EVENT.TRANSFORM_NODE, cb);
-  },
-  getTransformNodeTypes() {
-    return _store.transformNodeTypes;
-  },
-  getTransformNodes() {
-    return _store.transformNodes;
+  getHistory() {
+    return _store.history;
   },
 });
 
 mangekyouDispatcher.register(payload => {
-  const action = payload.action;
-  const data = action.data;
-  switch (action.actionType) {
-  case mangekyouConstant.ADD_FILE_NODE:
-    addFileNode(data);
-    mangekyouStore.emit(CHANGE_EVENT.FILE_NODE);
+  const {data, actionType} = payload.action;
+  switch (actionType) {
+  case mangekyouConstant.ADD_HISTORY:
+    addHistory(data);
+    mangekyouStore.emit(CHANGE_EVENT.HISTORY);
     break;
-  case mangekyouConstant.REMOVE_FILE_NODE:
-    removeFileNode(data);
-    mangekyouStore.emit(CHANGE_EVENT.FILE_NODE);
+  case mangekyouConstant.LOAD_HISTORY:
+    loadHistory(data);
+    mangekyouStore.emit(CHANGE_EVENT.CURRENT_IMAGE);
     break;
-  case mangekyouConstant.CLEAR_FILE_NODE:
-    clearFileNode();
-    mangekyouStore.emit(CHANGE_EVENT.FILE_NODE);
+  case mangekyouConstant.NEW_IMAGE:
+    newImage(data);
+    mangekyouStore.emit(CHANGE_EVENT.CURRENT_IMAGE);
+    mangekyouStore.emit(CHANGE_EVENT.HISTORY);
     break;
-  case mangekyouConstant.ADD_TRANSFORM_NODE:
-    addTransformNode(data);
-    mangekyouStore.emit(CHANGE_EVENT.TRANSFORM_NODE);
-    break;
-  case mangekyouConstant.REMOVE_TRANSFORM_NODE:
-    removeTransformNode(data);
-    mangekyouStore.emit(CHANGE_EVENT.TRANSFORM_NODE);
-    break;
-  case mangekyouConstant.CLEAR_TRANSFORM_NODE:
-    clearTransformNode();
-    mangekyouStore.emit(CHANGE_EVENT.TRANSFORM_NODE);
+  case mangekyouConstant.UPDATE_CURRENT_IMAGE:
+    updateCurrentImage(data);
+    mangekyouStore.emit(CHANGE_EVENT.CURRENT_IMAGE);
     break;
   default:
     return true;

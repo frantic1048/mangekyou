@@ -2,38 +2,28 @@ import mangekyouDispatcher from './../dispatcher/mangekyouDispatcher';
 import mangekyouConstant from './../constant/mangekyouConstant';
 
 const mangekyouAction = {
-  addFile(fileNode) {
+  newImage(image) {
     mangekyouDispatcher.handleAction({
-      actionType: mangekyouConstant.ADD_FILE_NODE,
-      data: fileNode,
+      actionType: mangekyouConstant.NEW_IMAGE,
+      data: image,
     });
   },
-  removeFile(key) {
+  addHistory({operation, image}) {
     mangekyouDispatcher.handleAction({
-      actionType: mangekyouConstant.REMOVE_FILE_NODE,
-      data: key,
+      actionType: mangekyouConstant.ADD_HISTORY,
+      data: {operation, image},
     });
   },
-  clearFile() {
+  loadHistory(index) {
     mangekyouDispatcher.handleAction({
-      actionType: mangekyouConstant.CLEAR_FILE_NODE,
+      actionType: mangekyouConstant.LOAD_HISTORY,
+      data: index,
     });
   },
-  addTransformNode(transformNode) {
+  updateCurrentImage(image) {
     mangekyouDispatcher.handleAction({
-      actionType: mangekyouConstant.ADD_TRANSFORM_NODE,
-      data: transformNode,
-    });
-  },
-  removeTransformNode(key) {
-    mangekyouDispatcher.handleAction({
-      actionType: mangekyouConstant.REMOVE_TRANSFORM_NODE,
-      data: key,
-    });
-  },
-  clearTransformNode() {
-    mangekyouDispatcher.handleAction({
-      actionType: mangekyouConstant.CLEAR_TRANSFORM_NODE,
+      actionType: mangekyouConstant.UPDATE_CURRENT_IMAGE,
+      data: image,
     });
   },
 };
