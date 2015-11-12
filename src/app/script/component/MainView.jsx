@@ -1,5 +1,5 @@
 import React from 'react';
-import History from './History';
+import HistoryPanel from './HistoryPanel';
 import Preview from './Preview';
 import ToolPanel from './ToolPanel';
 
@@ -17,7 +17,7 @@ const MainView = React.createClass({
           alignItems: 'strech',
         }}
       >
-        <History/>
+        <HistoryPanel/>
         <Preview/>
         <ToolPanel/>
       </div>

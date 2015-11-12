@@ -26,6 +26,12 @@ const mangekyouAction = {
       data: image,
     });
   },
+  triggerShowing(componentName) {
+    mangekyouDispatcher.handleAction({
+      actionType: mangekyouAction.TRIGGER_SHOWING,
+      data: componentName,
+    });
+  },
 };
 
 export default mangekyouAction;

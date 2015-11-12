@@ -6,11 +6,16 @@ import mangekyouDispatcher from './../dispatcher/mangekyouDispatcher';
 const CHANGE_EVENT = {
   HISTORY: 'HISTORY',
   CURRENT_IMAGE: 'CURRENT_IMAGE',
+  SHOWING: 'SHOWING',
 };
 
 const _store = {
   history: [],
   currentImage: null,
+  showing: {
+    historyPanel: true,
+    toolPanel: true,
+  },
 };
 
 function addHistory({operation, image}) {
@@ -34,6 +39,10 @@ function newImage(image) {
   });
 }
 
+function triggerShowing(componentName) {
+  _store.showing[componentName] = !_store.showing[componentName];
+}
+
 const mangekyouStore = Object.assign({}, EventEmitter.prototype, {
   addHistoryChangeListener(cb) {
     this.on(CHANGE_EVENT.HISTORY, cb);
@@ -41,17 +50,26 @@ const mangekyouStore = Object.assign({}, EventEmitter.prototype, {
   removeHistoryChangeListener(cb) {
     this.removeListener(CHANGE_EVENT.HISTORY, cb);
   },
+  getHistory() {
+    return _store.history;
+  },
   addCurrentImageChangeListener(cb) {
     this.on(CHANGE_EVENT.CURRENT_IMAGE, cb);
   },
   removeCurrentImageChangeListener(cb) {
     this.removeListener(CHANGE_EVENT.CURRENT_IMAGE, cb);
   },
-  getHistory() {
-    return _store.history;
-  },
   getCurrentImage() {
     return _store.currentImage;
+  },
+  addShowingChangeListener(cb) {
+    this.on(CHANGE_EVENT.SHOWING, cb);
+  },
+  removeShowingChangeListener(cb) {
+    this.removeListener(CHANGE_EVENT.SHOWING, cb);
+  },
+  getShowing() {
+    return _store.showing;
   },
 });
 
@@ -74,6 +92,10 @@ mangekyouDispatcher.register(payload => {
   case mangekyouConstant.UPDATE_CURRENT_IMAGE:
     updateCurrentImage(data);
     mangekyouStore.emit(CHANGE_EVENT.CURRENT_IMAGE);
+    break;
+  case mangekyouConstant.TRIGGER_SHOWING:
+    triggerShowing(data);
+    mangekyouStore.emit(CHANGE_EVENT.SHOWING);
     break;
   default:
     return true;

@@ -4,17 +4,20 @@ import HistoryItem from './HistoryItem';
 import mangekyouStore from './../store/mangekyouStore';
 
 // TODO: History component
-const History = React.createClass({
+const HistoryPanel = React.createClass({
   getInitialState() {
     return {
       historyList: mangekyouStore.getHistory(),
+      showing: mangekyouStore.getShowing().historyPanel,
     };
   },
   componentDidMount() {
-    mangekyouStore.addHistoryChangeListener(this._onChange);
+    mangekyouStore.addHistoryChangeListener(this._onHistoryChange);
+    mangekyouStore.addShowingChangeListener(this._onShowingChange);
   },
   componentWillUnmount() {
-    mangekyouStore.removeHistoryChangeListener(this._onChange);
+    mangekyouStore.removeHistoryChangeListener(this._onHistoryChange);
+    mangekyouStore.removeShowingChangeListener(this._onShowingChange);
   },
   render() {
     const listItems = [];
@@ -29,6 +32,7 @@ const History = React.createClass({
     });
     return ( // eslint-disable-line no-extra-parens
       <div
+        data-showing={this.state.showing}
         id="history-panel"
         style={{
           flexGrow: '1',
@@ -45,11 +49,16 @@ const History = React.createClass({
       </div>
     );
   },
-  _onChange() {
+  _onHistoryChange() {
     this.setState({
       historyList: mangekyouStore.getHistory,
     });
   },
+  _onShowingChange() {
+    this.setState({
+      showing: mangekyouStore.getShowing().historyPanel,
+    });
+  },
 });
 
-export default History;
+export default HistoryPanel;
