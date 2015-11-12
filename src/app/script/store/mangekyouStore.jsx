@@ -50,6 +50,9 @@ const mangekyouStore = Object.assign({}, EventEmitter.prototype, {
   getHistory() {
     return _store.history;
   },
+  getCurrentImage() {
+    return _store.currentImage;
+  },
 });
 
 mangekyouDispatcher.register(payload => {

@@ -3,7 +3,12 @@ import React from 'react';
 const ToolPanel = React.createClass({
   render() {
     return ( // eslint-disable-line no-extra-parens
-      <div>Tool Panel</div>
+      <div
+        style={{
+          flexGrow: '1',
+          flexBasis: '12rem',
+        }}
+      >Tool Panel</div>
     );
   },
 });

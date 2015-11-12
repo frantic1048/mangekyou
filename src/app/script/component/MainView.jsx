@@ -7,7 +7,16 @@ import ToolPanel from './ToolPanel';
 const MainView = React.createClass({
   render() {
     return ( // eslint-disable-line no-extra-parens
-      <div>
+      <div
+        id="main-view"
+        style={{
+          height: 'calc(100vh - 64px)',
+          display: 'flex',
+          flexFlow: 'row nowrap',
+          justifyContent: 'space-between',
+          alignItems: 'strech',
+        }}
+      >
         <History/>
         <Preview/>
         <ToolPanel/>

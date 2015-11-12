@@ -28,7 +28,18 @@ const History = React.createClass({
       );
     }
     return ( // eslint-disable-line no-extra-parens
-      <h2>History Panel</h2>
+      <div
+        id="history-panel"
+        style={{
+          flexGrow: '1',
+          flexBasis: '8rem',
+        }}
+      >
+        <h1>History Panel</h1>
+        <List>
+          {listItems}
+        </List>
+      </div>
     );
   },
   _onChange() {
