@@ -24,6 +24,7 @@ const Preview = React.createClass({
           flexGrow: '3',
           flexBasis: '0',
           overflow: 'hidden',
+          userSelect: 'none',
         }}
       >
         <canvas id="preview-canvas"></canvas>
@@ -37,6 +38,7 @@ const Preview = React.createClass({
     this.setState({
       image: mangekyouStore.getCurrentImage(),
     });
+    this._draw();
   },
   _onResize() {
     const container = ReactDOM.findDOMNode(this);
@@ -44,30 +46,35 @@ const Preview = React.createClass({
     const {width, height} = container.getBoundingClientRect();
     canvas.setAttribute('width', Math.floor(width));
     canvas.setAttribute('height', Math.floor(height));
+    this._draw();
   },
   _draw() {
-    const container = ReactDOM.findDOMNode(this);
-    const canvas = container.children[0];
-    const ctx = canvas.getContext('2d');
-    const {width, height} = canvas;
-    const {iwidth, iheight} = this.state.image;
-    const wRatio = width / iwidth;
-    const hRatio = height / iheight;
+    if (this.state.image) {
+      const container = ReactDOM.findDOMNode(this);
+      const canvas = container.children[0];
+      const ctx = canvas.getContext('2d');
+      const {width, height} = canvas;
+      const iwidth = this.state.image.width;
+      const iheight = this.state.image.height;
 
-    // ratio to size image contained in canvas
-    // image is bigger: shrink to fit
-    // image is smaller: no scaling
-    const ratio = Math.min(Math.min(wRatio, hRatio), 1);
+      const wRatio = width / iwidth;
+      const hRatio = height / iheight;
 
-    // shift to center image in canvas
-    const shiftX = (width - iwidth * ratio) / 2;
-    const shiftY = (height - iheight * ratio) / 2;
+      // ratio to size image contained in canvas
+      // image is bigger: shrink to fit
+      // image is smaller: no scaling
+      const ratio = Math.min(Math.min(wRatio, hRatio), 1);
 
-    ctx.clearRect(0, 0, width, height);
-    ctx.drawImage(
-      this.state.image,
-      0, 0, iwidth, iheight,
-      shiftX, shiftY, iwidth * ratio, iheight * ratio);
+      // shift to center image in canvas
+      const shiftX = (width - iwidth * ratio) / 2;
+      const shiftY = (height - iheight * ratio) / 2;
+
+      ctx.clearRect(0, 0, width, height);
+      ctx.drawImage(
+        this.state.image,
+        0, 0, iwidth, iheight,
+        shiftX, shiftY, iwidth * ratio, iheight * ratio);
+    }
   },
 });
 

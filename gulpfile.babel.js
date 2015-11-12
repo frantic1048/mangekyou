@@ -79,7 +79,7 @@ gulp.task('css', () => {
 
 gulp.task('js', () => {
   return gulp.src(app.js.src)
-    .pipe(newer(app.js.destPath))
+    // .pipe(newer(app.js.destPath))
     .pipe(sourcemaps.init())
     .pipe(babel({ modules: 'common' }))
     .pipe(sourcemaps.write())

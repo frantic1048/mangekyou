@@ -2,7 +2,7 @@ import React from 'react';
 import ListItem from 'material-ui/lib/lists/list-item';
 import Avatar from 'material-ui/lib/avatar';
 import IconButton from 'material-ui/lib/icon-button';
-import ActionHistory from 'material-ui/lib/svg-icons/action/history';
+import ContentForward from 'material-ui/lib/svg-icons/content/forward';
 import mangekyouAction from './../action/mangekyouAction';
 
 const HistoryItem = React.createClass({
@@ -10,19 +10,18 @@ const HistoryItem = React.createClass({
     history: React.PropTypes.shape({
       operation: React.PropTypes.string.isRequired,
       image: React.PropTypes.shape({
-        data: React.PropTypes.any.isRequired,
         width: React.PropTypes.number.isRequired,
         height: React.PropTypes.number.isRequired,
+        toDataURL: React.PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
     index: React.PropTypes.number.isRequired,
   },
   render() {
-    const cv = document.createElement('canvas');
-    cv.getContext('2d').drawImage(this.props.history.image, 0, 0);
-    const dataURL = cv.toDataURL('image/png');
+    const dataURL = this.props.history.image.toDataURL('image/png');
     return ( // eslint-disable-line no-extra-parens
       <ListItem
+        style={{ userSelect: 'none' }}
         leftAvatar={
           <Avatar
             src={dataURL}
@@ -35,11 +34,11 @@ const HistoryItem = React.createClass({
         primaryText={this.props.history.operation}
         rightIconButton={
           <IconButton
-            tooltip="跳转"
-            tooltipPosition="right-center"
+            tooltip="跳转到此记录"
+            tooltipPosition="bottom-right"
             onClick={this.handleLoadHistory}
           >
-            <ActionHistory/>
+            <ContentForward/>
           </IconButton>
         }
       />

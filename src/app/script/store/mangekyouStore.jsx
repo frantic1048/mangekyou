@@ -19,7 +19,7 @@ const _store = {
 };
 
 function addHistory({operation, image}) {
-  History.push({operation, image});
+  _store.history.push({operation, image});
   _store.currentImage = image;
 }
 

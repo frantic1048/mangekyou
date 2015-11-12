@@ -21,8 +21,9 @@ const ToolPanel = React.createClass({
         style={{
           flexGrow: '1',
           flexBasis: '12rem',
+          userSelect: 'none',
         }}
-      >Tool Panel</div>
+      ><h1>Tool Panel</h1></div>
     );
   },
   _onShowingChange() {

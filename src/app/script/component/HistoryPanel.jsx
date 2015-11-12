@@ -3,7 +3,6 @@ import List from 'material-ui/lib/lists/list';
 import HistoryItem from './HistoryItem';
 import mangekyouStore from './../store/mangekyouStore';
 
-// TODO: History component
 const HistoryPanel = React.createClass({
   getInitialState() {
     return {
@@ -37,6 +36,7 @@ const HistoryPanel = React.createClass({
         style={{
           flexGrow: '1',
           flexBasis: '8rem',
+          userSelect: 'none',
         }}
       >
         <List
@@ -51,7 +51,7 @@ const HistoryPanel = React.createClass({
   },
   _onHistoryChange() {
     this.setState({
-      historyList: mangekyouStore.getHistory,
+      historyList: mangekyouStore.getHistory(),
     });
   },
   _onShowingChange() {
