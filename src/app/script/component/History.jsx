@@ -2,7 +2,6 @@ import React from 'react';
 import List from 'material-ui/lib/lists/list';
 import HistoryItem from './HistoryItem';
 import mangekyouStore from './../store/mangekyouStore';
-import mangekyouAction from './../action/mangekyouAction';
 
 // TODO: History component
 const History = React.createClass({
@@ -19,14 +18,15 @@ const History = React.createClass({
   },
   render() {
     const listItems = [];
-    for (const history of this.state.historyList) {
+    this.state.historyList.forEach((history, index) => {
       listItems.push(
         <HistoryItem
-          key={history.key}
+          key={index}
           history={history}
+          index={index}
         />
       );
-    }
+    });
     return ( // eslint-disable-line no-extra-parens
       <div
         id="history-panel"
@@ -35,8 +35,11 @@ const History = React.createClass({
           flexBasis: '8rem',
         }}
       >
-        <h1>History Panel</h1>
-        <List>
+        <List
+          style={{
+            backgroundColor: 'transparent',
+          }}
+        >
           {listItems}
         </List>
       </div>

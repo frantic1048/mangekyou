@@ -26,7 +26,6 @@ const FilePanelListItem = React.createClass({
     const {key, file} = this.props.node.data;
     return ( // eslint-disable-line no-extra-parens
       <ListItem
-        key={key}
         leftAvatar={
           <Avatar
             src={file.path}
