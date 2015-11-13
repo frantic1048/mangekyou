@@ -5,16 +5,16 @@ import mangekyouStore from '../store/mangekyouStore';
 const Preview = React.createClass({
   getInitialState() {
     return {
-      image: mangekyouStore.getCurrentImage(),
+      image: mangekyouStore.getPreviewImage(),
     };
   },
   componentDidMount() {
     this._initCanvas();
-    mangekyouStore.addCurrentImageChangeListener(this._onChange);
+    mangekyouStore.addPreviewImageChangeListener(this._onChange);
     window.addEventListener('resize', this._onResize);
   },
   componentWillUnmount() {
-    mangekyouStore.removeCurrentImageChangeListener(this._onChange);
+    mangekyouStore.removePreviewImageChangeListener(this._onChange);
     window.removeEventListener('resize', this._onResize);
   },
   render() {
@@ -36,7 +36,7 @@ const Preview = React.createClass({
   },
   _onChange() {
     this.setState({
-      image: mangekyouStore.getCurrentImage(),
+      image: mangekyouStore.getPreviewImage(),
     });
     this._draw();
   },

@@ -1,4 +1,5 @@
 import React from 'react';
+import Paper from 'material-ui/lib/paper';
 import List from 'material-ui/lib/lists/list';
 import HistoryItem from './HistoryItem';
 import mangekyouStore from './../store/mangekyouStore';
@@ -30,12 +31,16 @@ const HistoryPanel = React.createClass({
       );
     });
     return ( // eslint-disable-line no-extra-parens
-      <div
+      <Paper
         data-showing={this.state.showing}
+        rounded={false}
+        zDepth={2}
         id="history-panel"
         style={{
           flexGrow: '1',
           flexBasis: '8rem',
+          zIndex: 4,
+          backgroundColor: 'transparent',
           userSelect: 'none',
         }}
       >
@@ -46,7 +51,7 @@ const HistoryPanel = React.createClass({
         >
           {listItems}
         </List>
-      </div>
+      </Paper>
     );
   },
   _onHistoryChange() {

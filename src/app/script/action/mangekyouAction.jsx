@@ -20,7 +20,7 @@ const mangekyouAction = {
       data: index,
     });
   },
-  updateCurrentImage(image) {
+  updatePreviewImage(image) {
     mangekyouDispatcher.handleAction({
       actionType: mangekyouConstant.UPDATE_CURRENT_IMAGE,
       data: image,

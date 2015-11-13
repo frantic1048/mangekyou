@@ -5,13 +5,13 @@ import mangekyouDispatcher from './../dispatcher/mangekyouDispatcher';
 
 const CHANGE_EVENT = {
   HISTORY: 'HISTORY',
-  CURRENT_IMAGE: 'CURRENT_IMAGE',
+  PREVIEW: 'PREVIEW',
   SHOWING: 'SHOWING',
 };
 
 const _store = {
   history: [],
-  currentImage: null,
+  previewImage: null,
   showing: {
     historyPanel: true,
     toolPanel: true,
@@ -20,15 +20,21 @@ const _store = {
 
 function addHistory({operation, image}) {
   _store.history.push({operation, image});
-  _store.currentImage = image;
+  _store.previewImage = image;
 }
 
 function loadHistory(index) {
-  _store.currentImage = _store.history[index].image;
+  if ( _store.history.slice(-1).operation === '历史跳转') {
+    _store.history.pop();
+  }
+  addHistory({
+    operation: '历史跳转',
+    image: _store.history[index].image,
+  });
 }
 
-function updateCurrentImage(image) {
-  _store.currentImage = image;
+function updatePreviewImage(image) {
+  _store.previewImage = image;
 }
 
 function newImage(image) {
@@ -53,14 +59,17 @@ const mangekyouStore = Object.assign({}, EventEmitter.prototype, {
   getHistory() {
     return _store.history;
   },
-  addCurrentImageChangeListener(cb) {
-    this.on(CHANGE_EVENT.CURRENT_IMAGE, cb);
+  getLastImage() {
+    return _store.history.slice(-1);
   },
-  removeCurrentImageChangeListener(cb) {
-    this.removeListener(CHANGE_EVENT.CURRENT_IMAGE, cb);
+  addPreviewImageChangeListener(cb) {
+    this.on(CHANGE_EVENT.PREVIEW, cb);
   },
-  getCurrentImage() {
-    return _store.currentImage;
+  removePreviewImageChangeListener(cb) {
+    this.removeListener(CHANGE_EVENT.PREVIEW, cb);
+  },
+  getPreviewImage() {
+    return _store.previewImage;
   },
   addShowingChangeListener(cb) {
     this.on(CHANGE_EVENT.SHOWING, cb);
@@ -82,16 +91,17 @@ mangekyouDispatcher.register(payload => {
     break;
   case mangekyouConstant.LOAD_HISTORY:
     loadHistory(data);
-    mangekyouStore.emit(CHANGE_EVENT.CURRENT_IMAGE);
+    mangekyouStore.emit(CHANGE_EVENT.PREVIEW);
+    mangekyouStore.emit(CHANGE_EVENT.HISTORY);
     break;
   case mangekyouConstant.NEW_IMAGE:
     newImage(data);
-    mangekyouStore.emit(CHANGE_EVENT.CURRENT_IMAGE);
+    mangekyouStore.emit(CHANGE_EVENT.PREVIEW);
     mangekyouStore.emit(CHANGE_EVENT.HISTORY);
     break;
-  case mangekyouConstant.UPDATE_CURRENT_IMAGE:
-    updateCurrentImage(data);
-    mangekyouStore.emit(CHANGE_EVENT.CURRENT_IMAGE);
+  case mangekyouConstant.UPDATE_PREVIEW:
+    updatePreviewImage(data);
+    mangekyouStore.emit(CHANGE_EVENT.PREVIEW);
     break;
   case mangekyouConstant.TRIGGER_SHOWING:
     triggerShowing(data);
