@@ -11,12 +11,17 @@ const ToolPanel = React.createClass({
   getInitialState() {
     return {
       showing: mangekyouStore.getShowing().toolPanel,
+      currentRecord: mangekyouStore.getLastHistory(),
+      processing: false,
+      worker: null,
     };
   },
   componentDidMount() {
+    mangekyouStore.addHistoryChangeListener(this._onHistoryChange);
     mangekyouStore.addShowingChangeListener(this._onShowingChange);
   },
   componentWillUnmount() {
+    mangekyouStore.removeHistoryChangeListener(this._onHistoryChange);
     mangekyouStore.removeShowingChangeListener(this._onShowingChange);
   },
   render() {
@@ -37,9 +42,43 @@ const ToolPanel = React.createClass({
       </Paper>
     );
   },
+  _onHistoryChange() {
+    this.setState({
+      currentRecord: mangekyouStore.getLastHistory(),
+    });
+  },
   _onShowingChange() {
     this.setState({
       showing: mangekyouStore.getShowing().toolPanel,
+    });
+  },
+  _WillProcess({operationName, operationParam}) {
+    if (this.state.processing && this.state.worker) {
+      this.state.worker.terminate();
+    }
+    const {width, height} = this.state.currentRecord.image;
+    const data = this.state.currentRecord.image.getContext('2d').getImageData(0, 0, width, height);
+    const aworker = new Worker('script/processor/worker.js');
+    this.setState({
+      worker: aworker,
+      processing: true,
+    });
+    aworker.onmessage = this._DidProcess;
+    aworker.postMessage({
+      operationName,
+      operationParam,
+      data,
+    });
+  },
+  _DidProcess({data}) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.putImageData(data, 0, 0);
+    mangekyouAction.updatePreviewImage(canvas);
+    this.state.worker.terminate();
+    this.setState({
+      worker: null,
+      processing: false,
     });
   },
 });

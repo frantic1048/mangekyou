@@ -24,7 +24,7 @@ function addHistory({operation, image}) {
 }
 
 function loadHistory(index) {
-  if ( _store.history.slice(-1).operation === '历史跳转') {
+  if ( _store.history.slice(-1)[0].operation === '历史跳转') {
     _store.history.pop();
   }
   addHistory({
@@ -38,7 +38,9 @@ function updatePreviewImage(image) {
 }
 
 function newImage(image) {
-  _store.history = [];
+  // enable below line to clear history on opening new image.
+  // _store.history = [];
+
   addHistory({
     operation: '打开文件',
     image,
@@ -59,8 +61,8 @@ const mangekyouStore = Object.assign({}, EventEmitter.prototype, {
   getHistory() {
     return _store.history;
   },
-  getLastImage() {
-    return _store.history.slice(-1);
+  getLastHistory() {
+    return _store.history.length > 0 ? _store.history.slice(-1)[0] : null;
   },
   addPreviewImageChangeListener(cb) {
     this.on(CHANGE_EVENT.PREVIEW, cb);

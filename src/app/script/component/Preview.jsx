@@ -13,6 +13,9 @@ const Preview = React.createClass({
     mangekyouStore.addPreviewImageChangeListener(this._onChange);
     window.addEventListener('resize', this._onResize);
   },
+  componentDidUpdate() {
+    this._draw();
+  },
   componentWillUnmount() {
     mangekyouStore.removePreviewImageChangeListener(this._onChange);
     window.removeEventListener('resize', this._onResize);
@@ -38,7 +41,6 @@ const Preview = React.createClass({
     this.setState({
       image: mangekyouStore.getPreviewImage(),
     });
-    this._draw();
   },
   _onResize() {
     const container = ReactDOM.findDOMNode(this);
