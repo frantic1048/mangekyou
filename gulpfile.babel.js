@@ -94,7 +94,7 @@ gulp.task('serve', (callback) => {
   );
   gulp.watch(
     Array.prototype.concat(app.js.dest[1], app.html.dest, app.css.dest),
-    electron.reload
+    electron.restart
   );
   callback();
 });

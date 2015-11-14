@@ -59,8 +59,16 @@ const TitleBar = React.createClass({
             />
             <MenuItem primaryText="保存" leftIcon={<ContentSaveIcon/>}/>
             <MenuDivider/>
-            <MenuItem primaryText={`${this.state.showing.historyPanel ? '隐藏' : '显示'}历史记录`} leftIcon={<ActionHistoryIcon/>}/>
-            <MenuItem primaryText={`${this.state.showing.toolPanel ? '隐藏' : '显示'}编辑面板`} leftIcon={<ImageStyleIcon/>}/>
+            <MenuItem
+              onClick={this._handleTriggerHistoryPanel}
+              primaryText={`${this.state.showing.historyPanel ? '隐藏' : '显示'}历史记录`}
+              leftIcon={<ActionHistoryIcon/>}
+            />
+            <MenuItem
+              onClick={this._handleTriggerToolPanel}
+              primaryText={`${this.state.showing.toolPanel ? '隐藏' : '显示'}编辑面板`}
+              leftIcon={<ImageStyleIcon/>}
+            />
           </IconMenu>
       }/>
     );
@@ -87,6 +95,8 @@ const TitleBar = React.createClass({
   _handleAddImageClick() {
     this.refs.fileInput.click();
   },
+  _handleTriggerHistoryPanel() { mangekyouAction.triggerShowing('historyPanel'); },
+  _handleTriggerToolPanel() { mangekyouAction.triggerShowing('toolPanel'); },
   _onShowingChange() {
     this.setState({
       showing: mangekyouStore.getShowing(),

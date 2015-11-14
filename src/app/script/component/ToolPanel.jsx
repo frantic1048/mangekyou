@@ -33,7 +33,7 @@ const ToolPanel = React.createClass({
         id="tool-panel"
         style={{
           flexGrow: '1',
-          flexBasis: '12rem',
+          flexBasis: this.state.showing ? '16rem' : '0rem',
           zIndex: 4,
           userSelect: 'none',
         }}

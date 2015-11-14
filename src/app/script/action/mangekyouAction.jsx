@@ -28,7 +28,7 @@ const mangekyouAction = {
   },
   triggerShowing(componentName) {
     mangekyouDispatcher.handleAction({
-      actionType: mangekyouAction.TRIGGER_SHOWING,
+      actionType: mangekyouConstant.TRIGGER_SHOWING,
       data: componentName,
     });
   },

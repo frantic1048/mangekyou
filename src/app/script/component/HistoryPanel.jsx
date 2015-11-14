@@ -37,8 +37,8 @@ const HistoryPanel = React.createClass({
         zDepth={2}
         id="history-panel"
         style={{
-          flexGrow: '1',
-          flexBasis: '8rem',
+          flexGrow: '0',
+          flexBasis: this.state.showing ? '16rem' : '0rem',
           zIndex: 4,
           backgroundColor: 'transparent',
           userSelect: 'none',
@@ -46,7 +46,10 @@ const HistoryPanel = React.createClass({
       >
         <List
           style={{
-            backgroundColor: 'transparent',
+            backgroundColor: 'rgba(255, 255, 255, 0.6)',
+            overflowX: 'visible',
+            overflowY: 'auto',
+            height: 'calc(100vh - 64px)',
           }}
         >
           {listItems}
