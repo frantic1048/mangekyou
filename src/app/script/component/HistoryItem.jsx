@@ -41,7 +41,7 @@ const HistoryItem = React.createClass({
         rightIconButton={
           <IconButton
             tooltip="跳转到此记录"
-            tooltipPosition="bottom-right"
+            tooltipPosition="bottom-left"
             onClick={this.handleLoadHistory}
           >
             <ContentForward/>

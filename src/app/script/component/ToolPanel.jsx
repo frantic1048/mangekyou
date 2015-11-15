@@ -1,11 +1,12 @@
 import React from 'react';
 import Paper from 'material-ui/lib/paper';
 import RaisedButton from 'material-ui/lib/raised-button';
-import DorpDownMenu from 'material-ui/lib/drop-down-menu';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import DropDownMenu from 'material-ui/lib/drop-down-menu';
 
 import mangekyouAction from '../action/mangekyouAction';
 import mangekyouStore from '../store/mangekyouStore';
+
+import SampleRate from './tool/SampleRate';
 
 const ToolPanel = React.createClass({
   getInitialState() {
@@ -13,7 +14,15 @@ const ToolPanel = React.createClass({
       showing: mangekyouStore.getShowing().toolPanel,
       currentRecord: mangekyouStore.getLastHistory(),
       processing: false,
+      proceedOperation: '',
       worker: null,
+      selectedOperation: '',
+      operations: {
+        SampleRate: {
+          displayName: '采样率',
+          component: SampleRate,
+        },
+      },
     };
   },
   componentDidMount() {
@@ -25,6 +34,16 @@ const ToolPanel = React.createClass({
     mangekyouStore.removeShowingChangeListener(this._onShowingChange);
   },
   render() {
+    const menuItems = [
+      { payload: '', text: '无' },
+    ];
+    for (const op of Object.keys(this.state.operations)) {
+      menuItems.push({
+        payload: op,
+        text: this.state.operations[op].displayName,
+      });
+    }
+    const Tool = this.state.selectedOperation ? this.state.operations[this.state.selectedOperation].component : 'span';
     return ( // eslint-disable-line no-extra-parens
       <Paper
         data-showing={this.state.showing}
@@ -33,7 +52,7 @@ const ToolPanel = React.createClass({
         id="tool-panel"
         style={{
           position: 'fixed',
-          width: '16rem',
+          width: 'auto',
           right: this.state.showing ? '0rem' : '-16rem',
           transform: `scaleX(${this.state.showing ? 1 : 0})`,
           transformOrigin: 'right center',
@@ -42,9 +61,24 @@ const ToolPanel = React.createClass({
           backgroundColor: 'rgba(255, 255, 255, 0.6)',
         }}
       >
-        <h1>Tool Panel</h1>
+        <div>
+          <span>操作：</span>
+          <DropDownMenu menuItems={menuItems} onChange={this._handleChange}/>
+          <RaisedButton
+            label="应用"
+            primary
+          />
+        </div>
+        <Tool
+          willProcess={this._WillProcess}
+        />
       </Paper>
     );
+  },
+  _handleChange(event, selectedIndex, menuItem) {
+    this.setState({
+      selectedOperation: menuItem.payload,
+    });
   },
   _onHistoryChange() {
     this.setState({
@@ -66,13 +100,16 @@ const ToolPanel = React.createClass({
     this.setState({
       worker: aworker,
       processing: true,
+      proceedOperation: operationName,
     });
     aworker.onmessage = this._DidProcess;
     aworker.postMessage({
       operationName,
       operationParam,
-      data,
-    });
+      imageData: data,
+    },
+    [data]
+    );
   },
   _DidProcess({data}) {
     const canvas = document.createElement('canvas');
