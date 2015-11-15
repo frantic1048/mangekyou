@@ -30,10 +30,10 @@ const HistoryItem = React.createClass({
             width="38"
             height="38"
             style={{
-              'object-fit': 'contain',
+              objectFit: 'contain',
               border: 'solid 1px rgba(0, 0, 0, 0.08)',
               borderRadius: '0',
-              '-webkit-user-select': 'none',
+              userSelect: 'none',
             }}
           />
         }

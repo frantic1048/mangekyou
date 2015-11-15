@@ -5,7 +5,6 @@ import LightRawTheme from 'material-ui/lib/styles/raw-themes/light-raw-theme';
 import TitleBar from './component/TitleBar';
 import MainView from './component/MainView';
 
-
 const main = React.createClass({
   childContextTypes: {
     muiTheme: React.PropTypes.object,

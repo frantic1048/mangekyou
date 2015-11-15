@@ -32,10 +32,14 @@ const ToolPanel = React.createClass({
         rounded={false}
         id="tool-panel"
         style={{
-          flexGrow: '1',
-          flexBasis: this.state.showing ? '16rem' : '0rem',
+          position: 'fixed',
+          width: '16rem',
+          right: this.state.showing ? '0rem' : '-16rem',
+          transform: `scaleX(${this.state.showing ? 1 : 0})`,
+          transformOrigin: 'right center',
           zIndex: 4,
           userSelect: 'none',
+          backgroundColor: 'rgba(255, 255, 255, 0.6)',
         }}
       >
         <h1>Tool Panel</h1>

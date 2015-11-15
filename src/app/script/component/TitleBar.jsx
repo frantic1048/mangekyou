@@ -38,6 +38,7 @@ const TitleBar = React.createClass({
               onChange={this._handleFile}
               id="fileInput"
               ref="fileInput"
+              multiple
               type="file"
               accept="image/*"
               style={{ display: 'none' }}

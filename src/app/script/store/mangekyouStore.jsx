@@ -38,9 +38,6 @@ function updatePreviewImage(image) {
 }
 
 function newImage(image) {
-  // enable below line to clear history on opening new image.
-  // _store.history = [];
-
   addHistory({
     operation: '打开文件',
     image,

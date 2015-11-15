@@ -28,6 +28,7 @@ const Preview = React.createClass({
           flexBasis: '0',
           overflow: 'hidden',
           userSelect: 'none',
+          zIndex: '-1',
         }}
       >
         <canvas id="preview-canvas"></canvas>

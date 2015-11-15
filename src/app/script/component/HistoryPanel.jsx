@@ -24,7 +24,7 @@ const HistoryPanel = React.createClass({
     this.state.historyList.forEach((history, index) => {
       listItems.push(
         <HistoryItem
-          key={index}
+          key={performance.now()}
           history={history}
           index={index}
         />
@@ -37,9 +37,11 @@ const HistoryPanel = React.createClass({
         zDepth={2}
         id="history-panel"
         style={{
-          flexGrow: '0',
-          flexBasis: this.state.showing ? '16rem' : '0rem',
-          zIndex: 4,
+          position: 'fixed',
+          width: '16rem',
+          left: this.state.showing ? '0rem' : '-16rem',
+          transform: `scaleX(${this.state.showing ? 1 : 0})`,
+          transformOrigin: 'left center',
           backgroundColor: 'transparent',
           userSelect: 'none',
         }}
@@ -48,8 +50,8 @@ const HistoryPanel = React.createClass({
           style={{
             backgroundColor: 'rgba(255, 255, 255, 0.6)',
             overflowX: 'visible',
-            overflowY: 'auto',
             height: 'calc(100vh - 64px)',
+            transition: 'none',
           }}
         >
           {listItems}
@@ -61,6 +63,7 @@ const HistoryPanel = React.createClass({
     this.setState({
       historyList: mangekyouStore.getHistory(),
     });
+    this.forceUpdate();
   },
   _onShowingChange() {
     this.setState({
