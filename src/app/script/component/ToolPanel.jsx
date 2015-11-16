@@ -37,13 +37,18 @@ const ToolPanel = React.createClass({
     const menuItems = [
       { payload: '', text: '无' },
     ];
+
+    // add avilable operations to menu
     for (const op of Object.keys(this.state.operations)) {
       menuItems.push({
         payload: op,
         text: this.state.operations[op].displayName,
       });
     }
+
+    // create component of selected operation.
     const Tool = this.state.selectedOperation ? this.state.operations[this.state.selectedOperation].component : 'span';
+
     return ( // eslint-disable-line no-extra-parens
       <Paper
         data-showing={this.state.showing}
@@ -61,17 +66,34 @@ const ToolPanel = React.createClass({
           backgroundColor: 'rgba(255, 255, 255, 0.6)',
         }}
       >
-        <div>
-          <span>操作：</span>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-end',
+            margin: '1rem',
+          }}
+        >
+          <div
+            style={{
+              paddingBottom: '8px',
+            }}
+          >操作：</div>
           <DropDownMenu menuItems={menuItems} onChange={this._handleChange}/>
           <RaisedButton
             label="应用"
             primary
           />
         </div>
-        <Tool
-          willProcess={this._WillProcess}
-        />
+        <div
+          style={{
+            margin: '1rem',
+          }}
+        >
+          <Tool
+            willProcess={this._WillProcess}
+          />
+        </div>
       </Paper>
     );
   },
@@ -94,27 +116,37 @@ const ToolPanel = React.createClass({
     if (this.state.processing && this.state.worker) {
       this.state.worker.terminate();
     }
-    const {width, height} = this.state.currentRecord.image;
-    const data = this.state.currentRecord.image.getContext('2d').getImageData(0, 0, width, height);
-    const aworker = new Worker('script/processor/worker.js');
-    this.setState({
-      worker: aworker,
-      processing: true,
-      proceedOperation: operationName,
-    });
-    aworker.onmessage = this._DidProcess;
-    aworker.postMessage({
-      operationName,
-      operationParam,
-      imageData: data,
-    },
-    [data]
-    );
+    if (this.state.currentRecord) {
+      // if there's an image, process it.
+      const {width, height} = this.state.currentRecord.image;
+      const imgData = this.state.currentRecord.image.getContext('2d').getImageData(0, 0, width, height);
+      const aworker = new Worker('script/processor/worker.js');
+      this.setState({
+        worker: aworker,
+        processing: true,
+        proceedOperation: operationName,
+      });
+      aworker.onmessage = this._DidProcess;
+      aworker.postMessage({
+        operationName,
+        operationParam,
+        image: {
+          width: imgData.width,
+          height: imgData.height,
+          buffer: imgData.data.buffer,
+        },
+      },
+      [imgData.data.buffer]
+      );
+    }
   },
   _DidProcess({data}) {
+    console.log('returned data from worker');
+    console.log(data);
+    const imgd = new ImageData(new Uint8ClampedArray(data.image.buffer), data.image.width, data.image.height);
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-    ctx.putImageData(data, 0, 0);
+    ctx.putImageData(imgd, 0, 0);
     mangekyouAction.updatePreviewImage(canvas);
     this.state.worker.terminate();
     this.setState({

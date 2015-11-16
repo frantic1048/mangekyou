@@ -1,4 +1,5 @@
 import React from 'react';
+import Slider from 'material-ui/lib/slider';
 
 const SampleRate = React.createClass({
   propTypes: {
@@ -7,18 +8,40 @@ const SampleRate = React.createClass({
   getInitialState() {
     return {
       param: {
-        rate: Infinity,
+        distance: 1,
       },
     };
   },
+  componentDidMount() {
+    this._handleChange(null, 1);
+  },
   render() {
     return ( // eslint-disable-line no-extra-parens
-      <div>this SampleRate</div>
+      <div>
+        <Slider
+          name="slider-samplerate"
+          onChange={this._handleChange}
+          onDragStop={this._compute}
+          max={256}
+          min={1}
+          step={1}
+          description="采样距离"
+        />
+      </div>
     );
   },
-  _handleChange() {
-    // TODO: pass params to willProcess
-    this.props.willProcess();
+  _handleChange(event, value) {
+    this.setState({
+      param: {
+        distance: value,
+      },
+    });
+  },
+  _compute() {
+    this.props.willProcess({
+      operationName: 'SampleRate',
+      operationParam: this.state.param,
+    });
   },
 });
 

@@ -29,7 +29,7 @@ const TitleBar = React.createClass({
   render() {
     return ( // eslint-disable-line no-extra-parens
       <AppBar
-        title="Magenkyou"
+        title="Mangekyou"
         style={{ WebkitAppRegion: 'drag', userSelect: 'none' }}
         iconElementLeft={
           <IconButton
