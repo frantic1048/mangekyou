@@ -133,10 +133,9 @@ const ToolPanel = React.createClass({
         image: {
           width: imgData.width,
           height: imgData.height,
-          buffer: imgData.data.buffer,
+          data: imgData.data,
         },
-      }
-      );
+      });
     }
   },
   _DidProcess({data}) {

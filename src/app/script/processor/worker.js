@@ -1,4 +1,5 @@
 self.importScripts(
+  './util.js',
   './SampleRate.js',
 );
 
