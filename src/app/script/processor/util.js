@@ -58,3 +58,5 @@ function hsy2rgb(h, s, y) {
   [r, g, b] = [r1 + m, g1 + m, b1 + m];
   return [r, g, b];
 }
+
+export {luma, hsy2rgb};

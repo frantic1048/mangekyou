@@ -1,7 +1,4 @@
-self.importScripts(
-  './util.js',
-  './SampleRate.js',
-);
+import SampleRate from './SampleRate';
 
 const op = {
   SampleRate,
@@ -15,9 +12,7 @@ self.onmessage = ({data}) => {
     image: {
       width: workerResult.width,
       height: workerResult.height,
-      buffer: workerResult.data.buffer,
+      data: workerResult.data,
     },
-  },
-  [workerResult.data.buffer]
-  );
+  });
 };

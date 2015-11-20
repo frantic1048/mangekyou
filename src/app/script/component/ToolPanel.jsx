@@ -120,7 +120,7 @@ const ToolPanel = React.createClass({
       // if there's an image, process it.
       const {width, height} = this.state.currentRecord.image;
       const imgData = this.state.currentRecord.image.getContext('2d').getImageData(0, 0, width, height);
-      const aworker = new Worker('script/processor/worker.js');
+      const aworker = new Worker('script/worker.js');
       this.setState({
         worker: aworker,
         processing: true,
@@ -139,7 +139,8 @@ const ToolPanel = React.createClass({
     }
   },
   _DidProcess({data}) {
-    const imgd = new ImageData(new Uint8ClampedArray(data.image.buffer), data.image.width, data.image.height);
+    const imgd = data.image.data;
+    // const imgd = new ImageData(new Uint8ClampedArray(data.image.buffer), data.image.width, data.image.height);
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     ctx.putImageData(imgd, 0, 0);

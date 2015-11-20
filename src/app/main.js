@@ -1,6 +1,6 @@
 import app from 'app';
 import BrowserWindow from 'browser-window';
-import ipc from 'ipc';
+import ipc from 'ipcMain';
 
 require('crash-reporter').start();
 
@@ -26,7 +26,7 @@ app.on('ready', () => {
   // disable default electron menu
   // mainWindow.setMenu(null);
 
-  mainWindow.loadUrl(`file://${__dirname}/index.html`);
+  mainWindow.loadURL(`file://${__dirname}/index.html`);
   mainWindow.show();
 
   mainWindow.on('closed', () => {
