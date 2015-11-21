@@ -32,3 +32,6 @@ bower_components
 
 # builded app
 build
+
+# travis releasing temp folder
+ghpage

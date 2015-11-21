@@ -1,0 +1,27 @@
+env:
+  - secure: "Kva3mzmx2cSlo3C3bxghBZQxOxJGGU9qjNheRfqd/wv9Qhgo07aMXktq971W3q0dWEdXkszkc3QVK0jl2IJIbc0NDxRpeMn1nAiwHm5JMptqGNKhMu2N78F6ZjziUUpj0Nna44maMD7DXVlUl0yUqSvxfhHRUbh+yiqqw59mL472mSInsDWg06Fy5v5Cr64sD6p/jQGc8b6iDJTmvcczVaMPoD5duK+u7WS3lnsVG95dOSp9idDxrbDZhOyz8sz857xTuANbzpsFfx0NyHKGYlYs9ktTXG2Q10+bUAuzQ0mMXk2TTCiuyjCoTiUn4Mn8mvTUBn5149T+ohBu7fMeW2MOHjJSCCIBWKEKF1gRAjscdW7Sgon3unurLmmHg+8cGTglZ376raGkNMqqaxEOW6Qu5qIRYEad8bJNK52x/pDjYe39Vy9wzXemPiLVlVqoKEm2nnG9cavlSQ4wDN4IQCO3RhB/XiJ1G6mrDKeQQlVSD3NAD2k51g16HyKIff6OvOHmvQbLEgc+ZOs7qUEmQNEWvekaB5bnVXLzr9e5tZxPd0ZW744ikDTddVRvFzaBUXibY7P/Hf8MwH1hrSVajryxodWaJp64Z0u9CS2ozsKjkLW/YF7OrqT3AgzgDbTwLRbKX7CzobbU23B3Q+UqF5iz7EVuVbYJpRTHYdu9l3I="
+language: node_js
+node_js:
+  - "node"
+branches:
+  - except:
+    - master
+  - only:
+    - release
+install: true
+script:
+  - git config --global user.email "$GIT_EMAIL"
+  - git config --global user.name "$GIT_NAME"
+  - git fetch
+  - git checkout release
+  - npm install
+  - gulp product
+after_success:
+  - git clone https://$GH_TOKEN@github.com/frantic1048/mangekyou.git ghpage
+  - cd ghpage
+  - git checkout gh-pages
+  - cp -rf ../build/app/* ./
+  - git add -A .
+  - git commit -m ":cloud:Travis auto update"
+  - git push --quiet
+  - echo '(っ╹ ◡ ╹ )っ'
