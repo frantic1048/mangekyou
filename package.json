@@ -1,6 +1,6 @@
 {
   "name": "mangekyou",
-  "version": "0.3.0",
+  "version": "0.3.5",
   "description": "简单的图像处理程序",
   "main": "build/app/main.js",
   "scripts": {
@@ -24,7 +24,8 @@
     "flux": "^2.1.1",
     "material-ui": "^0.13.0",
     "react": "^0.14.0",
-    "react-dom": "^0.14.0"
+    "react-dom": "^0.14.0",
+    "react-tap-event-plugin": "^0.2.1"
   },
   "devDependencies": {
     "babel-core": "^6.2.1",
