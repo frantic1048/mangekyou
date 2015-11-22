@@ -59,4 +59,4 @@ function hsy2rgb(h, s, y) {
   return [r, g, b];
 }
 
-export {luma, hsy2rgb};
+export default {luma, hsy2rgb};
