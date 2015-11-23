@@ -25,6 +25,7 @@ function reGamma(Clinear) {
 // Rec. 709 luma of a sRGB color
 // Rec. 709 亮度
 // https://en.wikipedia.org/wiki/Rec._709#Luma_coefficients
+// r, g, b:[0, 1]
 function luma(r, g, b) {
   const rLinear = deGamma(r);
   const gLinear = deGamma(g);
@@ -33,6 +34,7 @@ function luma(r, g, b) {
 }
 
 // https://en.wikipedia.org/wiki/HSL_and_HSV#From_luma.2Fchroma.2Fhue
+// h:[0, 360], s:[0, 1], y:[0, 1]
 function hsy2rgb(h, s, y) {
   const hm = h / 60;
   const c = s;
@@ -59,4 +61,9 @@ function hsy2rgb(h, s, y) {
   return [r, g, b];
 }
 
-export default {luma, hsy2rgb};
+// Coordinate helper for pixel accesing of ImageData
+function getCoordinate(width) {
+  return (x, y) => x * 4 + y * width * 4;
+}
+
+export default {luma, hsy2rgb, getCoordinate};

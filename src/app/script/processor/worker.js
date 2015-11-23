@@ -4,15 +4,16 @@ const op = {
   SampleRate,
 };
 
-self.onmessage = ({data}) => {
-  const {operationName, operationParam, image} = data;
+self.onmessage = ({data: {operationName, operationParam, image}}) => {
   image.data = new Uint8ClampedArray(image.buffer);
   const workerResult = op[operationName](image, operationParam);
   self.postMessage({
     image: {
       width: workerResult.width,
       height: workerResult.height,
-      data: workerResult.data,
+      buffer: workerResult.data.buffer,
     },
-  });
+  },
+  [workerResult.data.buffer]
+  );
 };
