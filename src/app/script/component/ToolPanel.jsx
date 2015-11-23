@@ -139,8 +139,7 @@ const ToolPanel = React.createClass({
     }
   },
   _DidProcess({data}) {
-    const imgd = data.image.data;
-    // const imgd = new ImageData(new Uint8ClampedArray(data.image.buffer), data.image.width, data.image.height);
+    const imgd = new ImageData(new Uint8ClampedArray(data.image.buffer), data.image.width, data.image.height);
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     ctx.putImageData(imgd, 0, 0);

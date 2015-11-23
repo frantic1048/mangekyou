@@ -1,22 +1,21 @@
-import {hsy2rgb} from './util';
+import {getCoordinate} from './util';
 
-function SampleRate(image, param) {
-  const {width, height, data} = image;
-  let w = 360, h = 256, dat = new Uint8ClampedArray(4 * 360 * 256);
-  const s = 1;
-  for (let row = 0; row < 256; ++row) {
-    for (let col = 0; col < 360; ++col) {
-      const [r, g, b] = hsy2rgb(col, 1, row / 256);
-      dat[row * w * 4 + col * 4 + 0] = r * 256;
-      dat[row * w * 4 + col * 4 + 1] = g * 256;
-      dat[row * w * 4 + col * 4 + 2] = b * 256;
-      dat[row * w * 4 + col * 4 + 3] = 256;
+function SampleRate({width, height, data}, {distance}) {
+  const cin = getCoordinate(width);
+  const sw = Math.floor(width / distance);
+  const sh = Math.floor(height / distance);
+  const cout = getCoordinate(sw);
+  const dout = new Uint8ClampedArray(4 * sw * sh);
+
+  for (let y = 0; y < sh; ++y) {
+    for (let x = 0; x < sw; ++x) {
+      // TODO: jump jump jump
     }
   }
   return {
     width: w,
     height: h,
-    data: dat,
+    data: dout,
   };
 }
 
