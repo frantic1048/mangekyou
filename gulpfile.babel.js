@@ -54,8 +54,9 @@ app.js.dest = ['build/app/main.js'];
 app.js.destPath = 'build/app';
 app.js.lintSrc = Array.prototype.concat( app.js.src, 'gulpfile.babel.js' );
 
-app.bundle.src = ['src/app/script/entry.js', 'src/app/script/worker.js'];
-app.bundle.dest = ['build/app/script/entry.js', 'build/app/script/worker.js'];
+app.bundle.src = ['src/app/script/entry.js', 'src/app/script/processor/worker.js'];
+app.bundle.dest = ['build/app/script/entry.js', 'build/app/script/processor/worker.js'];
+app.bundle.destPath = 'build/app/script';
 
 app.css.src = 'src/app/style/*.+(css|scss)';
 app.css.dest = 'build/app/style/*.css';
@@ -112,17 +113,17 @@ gulp.task('js-product', () => {
 });
 
 gulp.task('webpack-dev', ()=>{
-  return gulp.src(['src/app/script/entry.js', 'src/app/script/processor/worker.js'])
+  return gulp.src(app.bundle.src)
     .pipe(named())
     .pipe(webpack(webpackDevConf))
-    .pipe(gulp.dest('build/app/script'));
+    .pipe(gulp.dest(app.bundle.destPath));
 });
 
 gulp.task('webpack-product', ()=>{
-  return gulp.src(['src/app/script/entry.js', 'src/app/script/processor/worker.js'])
+  return gulp.src(app.bundle.src)
     .pipe(named())
     .pipe(webpack(webpackProductConf))
-    .pipe(gulp.dest('build/app/script'));
+    .pipe(gulp.dest(app.bundle.destPath));
 });
 
 gulp.task('serve', (callback) => {
@@ -149,8 +150,8 @@ gulp.task('dev', (callback) => {
       'js-dev'
     ),
     gulp.parallel(
-      'webpack-dev',
-      'serve'
+    'webpack-dev',
+    'serve'
     )
   )();
   callback();
@@ -166,7 +167,6 @@ gulp.task('product', (callback) => {
   callback();
 });
 
-gulp.task('default', (callback) => {
-  gulp.series('dev');
+gulp.task('default', gulp.series('dev'), (callback) => {
   callback();
 });

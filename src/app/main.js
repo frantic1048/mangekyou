@@ -1,6 +1,5 @@
-import app from 'app';
+import {app, ipcMain as ipc} from 'electron';
 import BrowserWindow from 'browser-window';
-import ipc from 'ipcMain';
 
 require('crash-reporter').start();
 

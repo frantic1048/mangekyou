@@ -63,7 +63,20 @@ function hsy2rgb(h, s, y) {
 
 // Coordinate helper for pixel accesing of ImageData
 function getCoordinate(width) {
-  return (x, y) => x * 4 + y * width * 4;
+  return (x, y) => y * width * 4 + x * 4;
 }
 
-export default {luma, hsy2rgb, getCoordinate};
+// ImageData helper
+function getAllPositions(width, height) {
+  const positions = function* pos() {
+    for (let y = 0; y < height; ++y) {
+      for (let x = 0; x < width; ++x) {
+        yield [x, y, y * width * 4 + x * 4];
+      }
+    }
+  };
+  positions[Symbol.iterator] = positions;
+  return positions;
+}
+
+export {luma, hsy2rgb, getCoordinate, getAllPositions};

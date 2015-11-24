@@ -1,3 +1,7 @@
+// emulate a full ES6 environment
+// http://babeljs.io/docs/usage/polyfill/
+import 'babel-polyfill';
+
 import SampleRate from './SampleRate';
 
 const op = {
@@ -5,15 +9,19 @@ const op = {
 };
 
 self.onmessage = ({data: {operationName, operationParam, image}}) => {
-  image.data = new Uint8ClampedArray(image.buffer);
   const workerResult = op[operationName](image, operationParam);
-  self.postMessage({
-    image: {
-      width: workerResult.width,
-      height: workerResult.height,
-      buffer: workerResult.data.buffer,
-    },
-  },
-  [workerResult.data.buffer]
-  );
+  if (workerResult) {
+    self.postMessage({
+      proceed: true,
+      image: {
+        width: workerResult.width,
+        height: workerResult.height,
+        buffer: workerResult.data.buffer,
+      },
+    }
+    ,
+    [workerResult.data.buffer]);
+  } else {
+    return { proceed: false };
+  }
 };

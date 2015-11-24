@@ -1,21 +1,25 @@
-import {getCoordinate} from './util';
+import {getCoordinate, getAllPositions} from './util';
 
 function SampleRate({width, height, data}, {distance}) {
-  const cin = getCoordinate(width);
-  const sw = Math.floor(width / distance);
-  const sh = Math.floor(height / distance);
-  const cout = getCoordinate(sw);
-  const dout = new Uint8ClampedArray(4 * sw * sh);
+  // FIXME: weird output on distance === 1
+  const cord = getCoordinate(width);
+  const oWidth = Math.floor(width / distance);
+  const oHeight = Math.floor(height / distance);
+  const oAllPos = getAllPositions(oWidth, oHeight);
+  const oData = new Uint8ClampedArray(4 * oWidth * oHeight);
 
-  for (let y = 0; y < sh; ++y) {
-    for (let x = 0; x < sw; ++x) {
-      // TODO: jump jump jump
-    }
+  for (const [oX, oY, oIndex] of oAllPos()) {
+    const index = cord(oX * distance, oY * distance);
+    oData[oIndex] = data[index];
+    oData[oIndex + 1] = data[index + 1];
+    oData[oIndex + 2] = data[index + 2];
+    oData[oIndex + 3] = data[index + 3];
   }
+
   return {
-    width: w,
-    height: h,
-    data: dout,
+    width: oWidth,
+    height: oHeight,
+    data: oData,
   };
 }
 

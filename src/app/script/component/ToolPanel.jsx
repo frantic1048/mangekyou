@@ -139,16 +139,21 @@ const ToolPanel = React.createClass({
     }
   },
   _DidProcess({data}) {
-    const imgd = new ImageData(new Uint8ClampedArray(data.image.buffer), data.image.width, data.image.height);
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    ctx.putImageData(imgd, 0, 0);
-    mangekyouAction.updatePreviewImage(canvas);
-    this.state.worker.terminate();
-    this.setState({
-      worker: null,
-      processing: false,
-    });
+    if (data.proceed) {
+      // const imgd = new ImageData(data.image.data, data.image.width, data.image.height);
+      const imgd = new ImageData(new Uint8ClampedArray(data.image.buffer), data.image.width, data.image.height);
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      ctx.putImageData(imgd, 0, 0);
+      mangekyouAction.updatePreviewImage(canvas);
+      this.state.worker.terminate();
+      this.setState({
+        worker: null,
+        processing: false,
+      });
+    } else {
+      mangekyouAction.updatePreviewImage(this.state.currentRecord.image);
+    }
   },
 });
 
