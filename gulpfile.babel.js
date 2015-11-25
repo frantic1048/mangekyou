@@ -1,12 +1,12 @@
 import gulp from 'gulp';
 import newer from 'gulp-newer';
-import uglifyjs from 'gulp-uglifyjs';
+import uglify from 'gulp-uglify';
 import babel from 'gulp-babel';
 import eslint from 'gulp-eslint';
 import sourcemaps from 'gulp-sourcemaps';
 import sass from 'gulp-sass';
 import electronConnect from 'electron-connect';
-import webpack from 'gulp-webpack';
+import webpack from 'webpack-stream';
 import named from 'vinyl-named';
 
 const electron = electronConnect.server.create();
@@ -38,6 +38,9 @@ const webpackProductConf = Object.assign({}, webpackConf, {
   plugins: [
     new webpack.webpack.optimize.UglifyJsPlugin({
       sourceMap: false,
+      compress: {
+        warnings: false,
+      },
     }),
   ],
 });
@@ -108,7 +111,7 @@ gulp.task('js-product', () => {
     .pipe(babel({
       presets: ['es2015'],
     }))
-    .pipe(uglifyjs())
+    .pipe(uglify({compress: { warnings: false }}))
     .pipe(gulp.dest(app.js.destPath));
 });
 

@@ -1,6 +1,6 @@
 {
   "name": "mangekyou",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "description": "简单的图像处理程序",
   "main": "build/app/main.js",
   "scripts": {
@@ -41,10 +41,10 @@
     "gulp-newer": "^1.0.0",
     "gulp-sass": "^2.1.0",
     "gulp-sourcemaps": "^1.6.0",
-    "gulp-uglifyjs": "^0.6.2",
-    "gulp-webpack": "^1.5.0",
+    "gulp-uglify": "^1.5.1",
+    "webpack-stream": "^2.1.1",
     "gulp-webpack-sourcemaps": "^0.3.0",
-    "newer": "^0.1.5",
-    "vinyl-named": "^1.1.0"
+    "vinyl-named": "^1.1.0",
+    "newer": "^0.1.5"
   }
 }
