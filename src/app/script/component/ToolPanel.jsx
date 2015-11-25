@@ -14,7 +14,9 @@ const ToolPanel = React.createClass({
       showing: mangekyouStore.getShowing().toolPanel,
       currentRecord: mangekyouStore.getLastHistory(),
       processing: false,
+      proceedImage: null,
       proceedOperation: '',
+      proceedOperationDisplayName: '',
       worker: null,
       selectedOperation: '',
       operations: {
@@ -81,6 +83,7 @@ const ToolPanel = React.createClass({
           >操作：</div>
           <DropDownMenu menuItems={menuItems} onChange={this._handleChange}/>
           <RaisedButton
+            onClick={this._handleApply}
             label="应用"
             primary
           />
@@ -91,6 +94,7 @@ const ToolPanel = React.createClass({
           }}
         >
           <Tool
+            currentImage={this.state.currentRecord ? this.state.currentRecord.image : null}
             willProcess={this._WillProcess}
           />
         </div>
@@ -100,7 +104,17 @@ const ToolPanel = React.createClass({
   _handleChange(event, selectedIndex, menuItem) {
     this.setState({
       selectedOperation: menuItem.payload,
+      selectedOperationDisplayName: menuItem.text,
     });
+  },
+  _handleApply() {
+    if (this.state.proceedImage) {
+      mangekyouAction.addHistory({
+        operation: this.state.proceedOperation,
+        operationDisplayName: this.state.proceedOperationDisplayName,
+        image: this.state.proceedImage,
+      });
+    }
   },
   _onHistoryChange() {
     this.setState({
@@ -124,7 +138,8 @@ const ToolPanel = React.createClass({
       this.setState({
         worker: aworker,
         processing: true,
-        proceedOperation: operationName,
+        proceedOperation: this.state.selectedOperation,
+        proceedOperationDisplayName: this.state.selectedOperationDisplayName,
       });
       aworker.onmessage = this._DidProcess;
       aworker.postMessage({
@@ -144,12 +159,15 @@ const ToolPanel = React.createClass({
       const imgd = new ImageData(new Uint8ClampedArray(data.image.buffer), data.image.width, data.image.height);
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
+      canvas.setAttribute('width', data.image.width);
+      canvas.setAttribute('height', data.image.height);
       ctx.putImageData(imgd, 0, 0);
       mangekyouAction.updatePreviewImage(canvas);
       this.state.worker.terminate();
       this.setState({
         worker: null,
         processing: false,
+        proceedImage: canvas,
       });
     } else {
       mangekyouAction.updatePreviewImage(this.state.currentRecord.image);

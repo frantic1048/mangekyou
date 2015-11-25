@@ -1,7 +1,6 @@
 import {getCoordinate, getAllPositions} from './util';
 
 function SampleRate({width, height, data}, {distance}) {
-  // FIXME: weird output on distance === 1
   const cord = getCoordinate(width);
   const oWidth = Math.floor(width / distance);
   const oHeight = Math.floor(height / distance);

@@ -8,10 +8,10 @@ const mangekyouAction = {
       data: image,
     });
   },
-  addHistory({operation, image}) {
+  addHistory({operation, operationDisplayName, image}) {
     mangekyouDispatcher.handleAction({
       actionType: mangekyouConstant.ADD_HISTORY,
-      data: {operation, image},
+      data: {operation, operationDisplayName, image},
     });
   },
   loadHistory(index) {

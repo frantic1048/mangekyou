@@ -4,6 +4,10 @@ import Slider from 'material-ui/lib/slider';
 const SampleRate = React.createClass({
   propTypes: {
     willProcess: React.PropTypes.func.isRequired,
+    currentImage: React.PropTypes.shape({
+      width: React.PropTypes.number.isRequired,
+      height: React.PropTypes.number.isRequired,
+    }),
   },
   getInitialState() {
     return {
@@ -22,10 +26,10 @@ const SampleRate = React.createClass({
           name="slider-samplerate"
           onChange={this._handleChange}
           onDragStop={this._compute}
-          max={25}
+          max={this.props.currentImage ? Math.min(this.props.currentImage.width, this.props.currentImage.height) : 20}
           min={1}
           step={1}
-          description="采样距离"
+          description={`采样距离: ${this.state.param.distance} px`}
         />
       </div>
     );

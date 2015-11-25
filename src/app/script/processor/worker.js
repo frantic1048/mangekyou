@@ -10,18 +10,15 @@ const op = {
 
 self.onmessage = ({data: {operationName, operationParam, image}}) => {
   const workerResult = op[operationName](image, operationParam);
-  if (workerResult) {
-    self.postMessage({
+  self.postMessage(
+    {
       proceed: true,
       image: {
         width: workerResult.width,
         height: workerResult.height,
         buffer: workerResult.data.buffer,
       },
-    }
-    ,
-    [workerResult.data.buffer]);
-  } else {
-    return { proceed: false };
-  }
+    },
+    [workerResult.data.buffer]
+  );
 };

@@ -18,17 +18,18 @@ const _store = {
   },
 };
 
-function addHistory({operation, image}) {
-  _store.history.push({operation, image});
+function addHistory({operation, operationDisplayName, image}) {
+  _store.history.push({operation, operationDisplayName, image});
   _store.previewImage = image;
 }
 
 function loadHistory(index) {
-  if ( _store.history.slice(-1)[0].operation === '历史跳转') {
+  if ( _store.history.slice(-1)[0].operation === 'historyJump') {
     _store.history.pop();
   }
   addHistory({
-    operation: '历史跳转',
+    operation: 'historyJump',
+    operationDisplayName: '历史跳转',
     image: _store.history[index].image,
   });
 }
@@ -39,7 +40,8 @@ function updatePreviewImage(image) {
 
 function newImage(image) {
   addHistory({
-    operation: '打开文件',
+    operation: 'addFile',
+    operationDisplayName: '添加文件',
     image,
   });
 }

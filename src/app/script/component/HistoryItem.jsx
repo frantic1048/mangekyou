@@ -7,7 +7,7 @@ import mangekyouAction from './../action/mangekyouAction';
 const HistoryItem = React.createClass({
   propTypes: {
     history: React.PropTypes.shape({
-      operation: React.PropTypes.string.isRequired,
+      operationDisplayName: React.PropTypes.string.isRequired,
       image: React.PropTypes.shape({
         width: React.PropTypes.number.isRequired,
         height: React.PropTypes.number.isRequired,
@@ -37,7 +37,7 @@ const HistoryItem = React.createClass({
             }}
           />
         }
-        primaryText={this.props.history.operation}
+        primaryText={this.props.history.operationDisplayName}
         rightIconButton={
           <IconButton
             tooltip="跳转到此记录"
