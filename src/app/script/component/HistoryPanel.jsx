@@ -1,8 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Paper from 'material-ui/lib/paper';
-import List from 'material-ui/lib/lists/list';
-import HistoryItem from './HistoryItem';
+import React          from 'react';
+import ReactDOM       from 'react-dom';
+import Paper          from 'material-ui/lib/paper';
+import List           from 'material-ui/lib/lists/list';
+import HistoryItem    from './HistoryItem';
 import mangekyouStore from './../store/mangekyouStore';
 
 const HistoryPanel = React.createClass({

@@ -1,18 +1,17 @@
-import React from 'react';
-import AppBar  from 'material-ui/lib/app-bar';
-import IconMenu from 'material-ui/lib/menus/icon-menu';
-import MenuItem from 'material-ui/lib/menus/menu-item';
-import MenuDivider from 'material-ui/lib/menus/menu-divider';
-import IconButton from 'material-ui/lib/icon-button';
-import MoreVertIcon  from 'material-ui/lib/svg-icons/navigation/more-vert';
-import ImageAddToPhotosIcon from 'material-ui/lib/svg-icons/image/add-to-photos';
-import ContentSaveIcon from 'material-ui/lib/svg-icons/content/save';
-import ActionHistoryIcon from 'material-ui/lib/svg-icons/action/history';
-import ImageStyleIcon from 'material-ui/lib/svg-icons/image/style';
+import React                  from 'react';
+import AppBar                 from 'material-ui/lib/app-bar';
+import IconMenu               from 'material-ui/lib/menus/icon-menu';
+import MenuItem               from 'material-ui/lib/menus/menu-item';
+import MenuDivider            from 'material-ui/lib/menus/menu-divider';
+import IconButton             from 'material-ui/lib/icon-button';
+import MoreVertIcon           from 'material-ui/lib/svg-icons/navigation/more-vert';
+import ImageAddToPhotosIcon   from 'material-ui/lib/svg-icons/image/add-to-photos';
+import ContentSaveIcon        from 'material-ui/lib/svg-icons/content/save';
+import ActionHistoryIcon      from 'material-ui/lib/svg-icons/action/history';
+import ImageStyleIcon         from 'material-ui/lib/svg-icons/image/style';
 import ImageFilterVintageIcon from 'material-ui/lib/svg-icons/image/filter-vintage';
-
-import mangekyouAction from '../action/mangekyouAction';
-import mangekyouStore from '../store/mangekyouStore';
+import mangekyouAction        from '../action/mangekyouAction';
+import mangekyouStore         from '../store/mangekyouStore';
 
 const TitleBar = React.createClass({
   getInitialState() {

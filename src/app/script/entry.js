@@ -2,9 +2,9 @@
 // http://babeljs.io/docs/usage/polyfill/
 import 'babel-polyfill';
 
-import React from 'react';
+import React    from 'react';
 import ReactDOM from 'react-dom';
-import app from './app';
+import app      from './app';
 
 // Needed for onTouchTap
 // Can go away when react 1.0 release

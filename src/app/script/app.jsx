@@ -1,9 +1,9 @@
-import React  from 'react';
-import ThemeManager from 'material-ui/lib/styles/theme-manager';
-import LightRawTheme from 'material-ui/lib/styles/raw-themes/light-raw-theme';
-
-import TitleBar from './component/TitleBar';
-import MainView from './component/MainView';
+import React            from 'react';
+import ThemeManager     from 'material-ui/lib/styles/theme-manager';
+import LightRawTheme    from 'material-ui/lib/styles/raw-themes/light-raw-theme';
+import TitleBar         from './component/TitleBar';
+import MainView         from './component/MainView';
+import KeyboardShortcut from './component/KeyboardShortcut';
 
 const main = React.createClass({
   childContextTypes: {
@@ -24,6 +24,7 @@ const main = React.createClass({
       <div id="main">
         <TitleBar />
         <MainView />
+        <KeyboardShortcut />
       </div>
     );
   },

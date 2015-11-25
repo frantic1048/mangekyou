@@ -1,6 +1,5 @@
-import { EventEmitter } from 'events';
-
-import mangekyouConstant from './../constant/mangekyouConstant';
+import { EventEmitter }    from 'events';
+import mangekyouConstant   from './../constant/mangekyouConstant';
 import mangekyouDispatcher from './../dispatcher/mangekyouDispatcher';
 
 const CHANGE_EVENT = {

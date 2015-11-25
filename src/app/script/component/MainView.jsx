@@ -1,7 +1,7 @@
-import React from 'react';
+import React        from 'react';
 import HistoryPanel from './HistoryPanel';
-import Preview from './Preview';
-import ToolPanel from './ToolPanel';
+import Preview      from './Preview';
+import ToolPanel    from './ToolPanel';
 
 const MainView = React.createClass({
   render() {

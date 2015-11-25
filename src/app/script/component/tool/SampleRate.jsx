@@ -1,4 +1,4 @@
-import React from 'react';
+import React  from 'react';
 import Slider from 'material-ui/lib/slider';
 
 const SampleRate = React.createClass({

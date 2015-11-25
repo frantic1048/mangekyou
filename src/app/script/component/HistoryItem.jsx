@@ -1,7 +1,7 @@
-import React from 'react';
-import ListItem from 'material-ui/lib/lists/list-item';
-import IconButton from 'material-ui/lib/icon-button';
-import ContentForward from 'material-ui/lib/svg-icons/content/forward';
+import React           from 'react';
+import ListItem        from 'material-ui/lib/lists/list-item';
+import IconButton      from 'material-ui/lib/icon-button';
+import ContentForward  from 'material-ui/lib/svg-icons/content/forward';
 import mangekyouAction from './../action/mangekyouAction';
 
 const HistoryItem = React.createClass({

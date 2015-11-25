@@ -1,12 +1,10 @@
-import React from 'react';
-import Paper from 'material-ui/lib/paper';
-import RaisedButton from 'material-ui/lib/raised-button';
-import DropDownMenu from 'material-ui/lib/drop-down-menu';
-
+import React           from 'react';
+import Paper           from 'material-ui/lib/paper';
+import RaisedButton    from 'material-ui/lib/raised-button';
+import DropDownMenu    from 'material-ui/lib/drop-down-menu';
 import mangekyouAction from '../action/mangekyouAction';
-import mangekyouStore from '../store/mangekyouStore';
-
-import SampleRate from './tool/SampleRate';
+import mangekyouStore  from '../store/mangekyouStore';
+import SampleRate      from './tool/SampleRate';
 
 const ToolPanel = React.createClass({
   getInitialState() {

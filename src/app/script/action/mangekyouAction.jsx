@@ -1,5 +1,5 @@
 import mangekyouDispatcher from './../dispatcher/mangekyouDispatcher';
-import mangekyouConstant from './../constant/mangekyouConstant';
+import mangekyouConstant   from './../constant/mangekyouConstant';
 
 const mangekyouAction = {
   newImage(image) {
