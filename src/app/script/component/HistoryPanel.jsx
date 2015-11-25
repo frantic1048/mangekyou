@@ -51,7 +51,7 @@ const HistoryPanel = React.createClass({
     this.state.historyList.forEach((history, index) => {
       listItems.push(
         <HistoryItem
-          key={performance.now()}
+          key={history.key}
           history={history}
           index={index}
         />

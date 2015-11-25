@@ -19,7 +19,7 @@ const _store = {
 };
 
 function addHistory({operation, operationDisplayName, image}) {
-  _store.history.push({operation, operationDisplayName, image});
+  _store.history.push({operation, operationDisplayName, image, key: performance.now()});
   _store.previewImage = image;
 }
 

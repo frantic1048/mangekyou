@@ -18,13 +18,16 @@ const TitleBar = React.createClass({
   getInitialState() {
     return {
       showing: mangekyouStore.getShowing(),
+      currentImage: null,
     };
   },
   componentDidMount() {
     mangekyouStore.addShowingChangeListener(this._onShowingChange);
+    mangekyouStore.addHistoryChangeListener(this._onHistoryChange);
   },
   componentWillUnmount() {
     mangekyouStore.removeShowingChangeListener(this._onShowingChange);
+    mangekyouStore.removeHistoryChangeListener(this._onHistoryChange);
   },
   render() {
     return ( // eslint-disable-line no-extra-parens
@@ -58,7 +61,12 @@ const TitleBar = React.createClass({
               primaryText="打开"
               leftIcon={<ImageAddToPhotosIcon/>}
             />
-            <MenuItem primaryText="保存" leftIcon={<ContentSaveIcon/>}/>
+            <MenuItem
+              onClick={this._handleSaveImageClick}
+              disabled={this.state.currentImage ? false : true}
+              primaryText="导出"
+              leftIcon={<ContentSaveIcon/>}
+            />
             <MenuDivider/>
             <MenuItem
               onClick={this._handleTriggerHistoryPanel}
@@ -96,11 +104,24 @@ const TitleBar = React.createClass({
   _handleAddImageClick() {
     this.refs.fileInput.click();
   },
+  _handleSaveImageClick() {
+    if (this.state.currentImage) {
+      const a = document.createElement('a');
+      a.setAttribute('download', 'proceed.png');
+      a.setAttribute('href', this.state.currentImage.toDataURL());
+      a.click();
+    }
+  },
   _handleTriggerHistoryPanel() { mangekyouAction.triggerShowing('historyPanel'); },
   _handleTriggerToolPanel() { mangekyouAction.triggerShowing('toolPanel'); },
   _onShowingChange() {
     this.setState({
       showing: mangekyouStore.getShowing(),
+    });
+  },
+  _onHistoryChange() {
+    this.setState({
+      currentImage: mangekyouStore.getLastHistory().image,
     });
   },
 });
