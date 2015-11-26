@@ -57,8 +57,8 @@ app.js.dest = ['build/app/main.js'];
 app.js.destPath = 'build/app';
 app.js.lintSrc = Array.prototype.concat( app.js.src, 'gulpfile.babel.js' );
 
-app.bundle.src = ['src/app/script/entry.js', 'src/app/script/processor/worker.js'];
-app.bundle.dest = ['build/app/script/entry.js', 'build/app/script/processor/worker.js'];
+app.bundle.src = ['src/app/script/entry.js', 'src/app/script/worker/worker.js'];
+app.bundle.dest = ['build/app/script/entry.js', 'build/app/script/worker/worker.js'];
 app.bundle.destPath = 'build/app/script';
 
 app.css.src = 'src/app/style/*.+(css|scss)';

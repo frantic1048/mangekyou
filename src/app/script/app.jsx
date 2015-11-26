@@ -4,6 +4,7 @@ import LightRawTheme    from 'material-ui/lib/styles/raw-themes/light-raw-theme'
 import TitleBar         from './component/TitleBar';
 import MainView         from './component/MainView';
 import KeyboardShortcut from './component/KeyboardShortcut';
+import keyMap           from './keyMap';
 
 const main = React.createClass({
   childContextTypes: {
@@ -24,7 +25,7 @@ const main = React.createClass({
       <div id="main">
         <TitleBar />
         <MainView />
-        <KeyboardShortcut />
+        <KeyboardShortcut descriptors={keyMap} />
       </div>
     );
   },

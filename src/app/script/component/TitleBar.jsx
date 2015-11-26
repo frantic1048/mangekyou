@@ -10,6 +10,7 @@ import ContentSaveIcon        from 'material-ui/lib/svg-icons/content/save';
 import ActionHistoryIcon      from 'material-ui/lib/svg-icons/action/history';
 import ImageStyleIcon         from 'material-ui/lib/svg-icons/image/style';
 import ImageFilterVintageIcon from 'material-ui/lib/svg-icons/image/filter-vintage';
+import KeyboardShortcut       from './KeyboardShortcut';
 import mangekyouAction        from '../action/mangekyouAction';
 import mangekyouStore         from '../store/mangekyouStore';
 
@@ -21,6 +22,16 @@ const TitleBar = React.createClass({
       processing: mangekyouStore.getProcessingState(),
       animating: false,
       intervalId: Infinity,
+      keyMap: [
+        {
+          char: 'o',
+          action: () => { this._handleAddImageClick(); },
+        },
+        {
+          char: 'e',
+          action: () => { this._handleExportImageClick(); },
+        },
+      ],
     };
   },
   componentDidMount() {
@@ -51,6 +62,7 @@ const TitleBar = React.createClass({
               accept="image/*"
               style={{ display: 'none' }}
             />
+          <KeyboardShortcut descriptors={this.state.keyMap} />
           <ImageFilterVintageIcon style={{
             fill: this.state.animating ? '#FF4081' : 'white',
             stroke: this.state.animating ? 'black' : 'transparent',
@@ -70,23 +82,27 @@ const TitleBar = React.createClass({
               style={{ WebkitAppRegion: 'no-drag' }}
               innerDivStyle={{ WebkitAppRegion: 'no-drag' }}
               primaryText="打开"
+              secondaryText="O"
               leftIcon={<ImageAddToPhotosIcon/>}
             />
             <MenuItem
-              onClick={this._handleSaveImageClick}
+              onClick={this._handleExportImageClick}
               disabled={this.state.currentImage ? false : true}
               primaryText="导出"
+              secondaryText="E"
               leftIcon={<ContentSaveIcon/>}
             />
             <MenuDivider/>
             <MenuItem
               onClick={this._handleTriggerHistoryPanel}
               primaryText={`${this.state.showing.historyPanel ? '隐藏' : '显示'}历史记录`}
+              secondaryText="H"
               leftIcon={<ActionHistoryIcon/>}
             />
             <MenuItem
               onClick={this._handleTriggerToolPanel}
               primaryText={`${this.state.showing.toolPanel ? '隐藏' : '显示'}编辑面板`}
+              secondaryText="T"
               leftIcon={<ImageStyleIcon/>}
             />
           </IconMenu>
@@ -122,7 +138,7 @@ const TitleBar = React.createClass({
   _handleAddImageClick() {
     this.refs.fileInput.click();
   },
-  _handleSaveImageClick() {
+  _handleExportImageClick() {
     if (this.state.currentImage) {
       const a = document.createElement('a');
       a.setAttribute('download', 'proceed.png');
