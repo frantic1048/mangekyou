@@ -18,15 +18,20 @@ const TitleBar = React.createClass({
     return {
       showing: mangekyouStore.getShowing(),
       currentImage: null,
+      processing: mangekyouStore.getProcessingState(),
+      animating: false,
+      intervalId: Infinity,
     };
   },
   componentDidMount() {
     mangekyouStore.addShowingChangeListener(this._onShowingChange);
     mangekyouStore.addHistoryChangeListener(this._onHistoryChange);
+    mangekyouStore.addProcessingChangeListener(this._onProcessingChange);
   },
   componentWillUnmount() {
     mangekyouStore.removeShowingChangeListener(this._onShowingChange);
     mangekyouStore.removeHistoryChangeListener(this._onHistoryChange);
+    mangekyouStore.removeProcessingChangeListener(this._onProcessingChange);
   },
   render() {
     return ( // eslint-disable-line no-extra-parens
@@ -35,6 +40,7 @@ const TitleBar = React.createClass({
         style={{ WebkitAppRegion: 'drag', userSelect: 'none' }}
         iconElementLeft={
           <IconButton
+            id="mangekyou-logo"
             style={{ WebkitAppRegion: 'no-drag' }}>
             <input
               onChange={this._handleFile}
@@ -45,7 +51,13 @@ const TitleBar = React.createClass({
               accept="image/*"
               style={{ display: 'none' }}
             />
-          <ImageFilterVintageIcon style={{ fill: '#ffffff' }}/>
+          <ImageFilterVintageIcon style={{
+            fill: this.state.animating ? '#FF4081' : 'white',
+            stroke: this.state.animating ? 'black' : 'transparent',
+            strokeWidth: this.state.animating ? '1px' : '0px',
+            transform: 'transform: scale(1) rotate(0deg)',
+            animation: this.state.animating ? 'logoRotate 2s linear infinite' : 'none',
+          }}/>
           </IconButton>}
         iconElementRight={
           <IconMenu
@@ -82,6 +94,8 @@ const TitleBar = React.createClass({
     );
   },
   _handleFile() {
+    mangekyouAction.setProcessingState(true);
+    let fileCount = this.refs.fileInput.files.length;
     function extractAndAddFile(f) {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
@@ -92,6 +106,11 @@ const TitleBar = React.createClass({
         canvas.setAttribute('height', img.height);
         ctx.drawImage(img, 0, 0);
         mangekyouAction.newImage(canvas);
+        -- fileCount;
+        if (fileCount < 1) {
+          // loading files complete
+          mangekyouAction.setProcessingState(false);
+        }
       };
       fr.onload = () => { img.src = fr.result; };
       fr.readAsDataURL(f);
@@ -122,6 +141,29 @@ const TitleBar = React.createClass({
     this.setState({
       currentImage: mangekyouStore.getLastHistory().image,
     });
+  },
+  _onProcessingChange() {
+    const isProcessing = mangekyouStore.getProcessingState();
+    const newState = {};
+    if (isProcessing) {
+      newState.processing = true;
+      newState.animating = true;
+      if (!isFinite(this.state.intervalId)) {
+        // use setInterval making sure animation stop on end of cycle
+        newState.intervalId = setInterval(()=>{
+          if (!this.state.processing) {
+            clearInterval(this.state.intervalId);
+            this.setState({
+              animating: false,
+              intervalId: Infinity,
+            });
+          }
+        }, 2000);
+      }
+    } else {
+      newState.processing = false;
+    }
+    this.setState(newState);
   },
 });
 

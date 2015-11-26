@@ -17,3 +17,8 @@ body {
 ::-webkit-scrollbar-thumb:active {
   background: rgba(0, 0, 0, 0.4);
 }
+
+@keyframes logoRotate {
+  from { transform: scale(1.2) rotate(0deg); }
+  to   { transform: scale(1.2) rotate(360deg); }
+}

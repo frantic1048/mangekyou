@@ -6,11 +6,13 @@ const CHANGE_EVENT = {
   HISTORY: 'HISTORY',
   PREVIEW: 'PREVIEW',
   SHOWING: 'SHOWING',
+  PROCESSING: 'PROCESSING',
 };
 
 const _store = {
   history: [],
   previewImage: null,
+  processing: false,
   showing: {
     historyPanel: true,
     toolPanel: true,
@@ -31,6 +33,10 @@ function loadHistory(index) {
     operationDisplayName: '历史跳转',
     image: _store.history[index].image,
   });
+}
+
+function setProcessingState(isProcessing) {
+  _store.processing = isProcessing;
 }
 
 function updatePreviewImage(image) {
@@ -61,6 +67,15 @@ const mangekyouStore = Object.assign({}, EventEmitter.prototype, {
   },
   getLastHistory() {
     return _store.history.length > 0 ? _store.history.slice(-1)[0] : null;
+  },
+  getProcessingState() {
+    return _store.processing;
+  },
+  addProcessingChangeListener(cb) {
+    this.on(CHANGE_EVENT.PROCESSING, cb);
+  },
+  removeProcessingChangeListener(cb) {
+    this.removeListener(CHANGE_EVENT.PROCESSING, cb);
   },
   addPreviewImageChangeListener(cb) {
     this.on(CHANGE_EVENT.PREVIEW, cb);
@@ -93,6 +108,10 @@ mangekyouDispatcher.register(payload => {
     loadHistory(data);
     mangekyouStore.emit(CHANGE_EVENT.PREVIEW);
     mangekyouStore.emit(CHANGE_EVENT.HISTORY);
+    break;
+  case mangekyouConstant.SET_PROCESSING_STATE:
+    setProcessingState(data);
+    mangekyouStore.emit(CHANGE_EVENT.PROCESSING);
     break;
   case mangekyouConstant.NEW_IMAGE:
     newImage(data);

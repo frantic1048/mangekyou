@@ -149,6 +149,7 @@ const ToolPanel = React.createClass({
           data: imgData.data,
         },
       });
+      mangekyouAction.setProcessingState(true);
     }
   },
   _DidProcess({data}) {
@@ -170,6 +171,7 @@ const ToolPanel = React.createClass({
     } else {
       mangekyouAction.updatePreviewImage(this.state.currentRecord.image);
     }
+    mangekyouAction.setProcessingState(false);
   },
 });
 

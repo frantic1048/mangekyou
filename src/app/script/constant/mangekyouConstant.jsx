@@ -4,6 +4,7 @@ const mangekyouConstant = {
   LOAD_HISTORY: 'LOAD_HISTORY',
   UPDATE_PREVIEW: 'UPDATE_PREVIEW',
   TRIGGER_SHOWING: 'TRIGGER_SHOWING',
+  SET_PROCESSING_STATE: 'SET_PROCESSING_STATE',
 };
 
 export default mangekyouConstant;
