@@ -1,1 +1,1 @@
-body{margin:0;padding:0}::-webkit-scrollbar{width:12px;height:5px;background:transparent}::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.2)}::-webkit-scrollbar-thumb:hover,::-webkit-scrollbar-thumb:active{background:rgba(0,0,0,0.4)}
+body{margin:0;padding:0}::-webkit-scrollbar{width:12px;height:5px;background:transparent}::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.2)}::-webkit-scrollbar-thumb:hover,::-webkit-scrollbar-thumb:active{background:rgba(0,0,0,0.4)}@keyframes logoRotate{from{transform:scale(1.2) rotate(0deg)}to{transform:scale(1.2) rotate(360deg)}}
