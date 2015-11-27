@@ -1,13 +1,13 @@
-import gulp from 'gulp';
-import newer from 'gulp-newer';
-import uglify from 'gulp-uglify';
-import babel from 'gulp-babel';
-import eslint from 'gulp-eslint';
-import sourcemaps from 'gulp-sourcemaps';
-import sass from 'gulp-sass';
+import gulp            from 'gulp';
+import newer           from 'gulp-newer';
+import uglify          from 'gulp-uglify';
+import babel           from 'gulp-babel';
+import eslint          from 'gulp-eslint';
+import sourcemaps      from 'gulp-sourcemaps';
+import sass            from 'gulp-sass';
 import electronConnect from 'electron-connect';
-import webpack from 'webpack-stream';
-import named from 'vinyl-named';
+import webpack         from 'webpack-stream';
+import named           from 'vinyl-named';
 
 const electron = electronConnect.server.create();
 
