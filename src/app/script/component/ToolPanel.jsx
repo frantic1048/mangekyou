@@ -5,6 +5,7 @@ import DropDownMenu    from 'material-ui/lib/drop-down-menu';
 import mangekyouAction from '../action/mangekyouAction';
 import mangekyouStore  from '../store/mangekyouStore';
 import SampleRate      from './tool/SampleRate';
+import Quantization    from './tool/Quantization';
 
 const ToolPanel = React.createClass({
   getInitialState() {
@@ -21,6 +22,10 @@ const ToolPanel = React.createClass({
         SampleRate: {
           displayName: '采样率',
           component: SampleRate,
+        },
+        Quantization: {
+          displayName: '量化',
+          component: Quantization,
         },
       },
     };

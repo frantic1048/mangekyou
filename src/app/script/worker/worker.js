@@ -2,10 +2,12 @@
 // http://babeljs.io/docs/usage/polyfill/
 import 'babel-polyfill';
 
-import SampleRate from './SampleRate';
+import SampleRate   from './SampleRate';
+import Quantization from './Quantization';
 
 const op = {
   SampleRate,
+  Quantization,
 };
 
 self.onmessage = ({data: {operationName, operationParam, image}}) => {
