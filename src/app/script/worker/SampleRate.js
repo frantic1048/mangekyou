@@ -9,10 +9,10 @@ function SampleRate({width, height, data}, {distance}) {
 
   for (const [oX, oY, oIndex] of oAllPos()) {
     const index = cord(oX * distance, oY * distance);
-    oData[oIndex] = data[index];
-    oData[oIndex + 1] = data[index + 1];
-    oData[oIndex + 2] = data[index + 2];
-    oData[oIndex + 3] = data[index + 3];
+    oData[oIndex] = data[index];         // red
+    oData[oIndex + 1] = data[index + 1]; // green
+    oData[oIndex + 2] = data[index + 2]; // blud
+    oData[oIndex + 3] = data[index + 3]; // alpha
   }
 
   return {
