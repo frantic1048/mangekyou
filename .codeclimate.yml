@@ -30,6 +30,8 @@ engines:
 ratings:
   paths:
   - src/app/*.js
+  - src/app/*.jsx
+  - src/app/**/*.js
   - src/app/**/*.jsx
   - gulpfile.babel.js
 #   - lib/**
