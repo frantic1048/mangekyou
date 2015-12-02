@@ -67,6 +67,7 @@ function getCoordinate(width) {
 }
 
 // ImageData helper
+// return a genetor function iterates all position of image
 function getAllPositions(width, height) {
   const positions = function* pos() {
     for (let y = 0; y < height; ++y) {

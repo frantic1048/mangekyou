@@ -52,14 +52,14 @@ const app = {
   bundle: {},
 };
 
+app.bundle.entry = ['src/app/script/entry.js', 'src/app/script/worker/worker.js'];
+app.bundle.dest = ['build/app/script/entry.js', 'build/app/script/worker/worker.js'];
+app.bundle.destPath = 'build/app/script';
+
 app.js.src = ['src/app/main.js'];
 app.js.dest = ['build/app/main.js'];
 app.js.destPath = 'build/app';
-app.js.lintSrc = Array.prototype.concat( app.js.src, 'gulpfile.babel.js' );
-
-app.bundle.src = ['src/app/script/entry.js', 'src/app/script/worker/worker.js'];
-app.bundle.dest = ['build/app/script/entry.js', 'build/app/script/worker/worker.js'];
-app.bundle.destPath = 'build/app/script';
+app.js.lintSrc = Array.prototype.concat( app.js.src, 'gulpfile.babel.js');
 
 app.css.src = 'src/app/style/*.+(css|scss)';
 app.css.dest = 'build/app/style/*.css';
@@ -116,14 +116,14 @@ gulp.task('js-product', () => {
 });
 
 gulp.task('webpack-dev', ()=>{
-  return gulp.src(app.bundle.src)
+  return gulp.src(app.bundle.entry)
     .pipe(named())
     .pipe(webpack(webpackDevConf))
     .pipe(gulp.dest(app.bundle.destPath));
 });
 
 gulp.task('webpack-product', ()=>{
-  return gulp.src(app.bundle.src)
+  return gulp.src(app.bundle.entry)
     .pipe(named())
     .pipe(webpack(webpackProductConf))
     .pipe(gulp.dest(app.bundle.destPath));

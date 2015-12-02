@@ -2,7 +2,6 @@ import React  from 'react';
 import Slider from 'material-ui/lib/slider';
 
 const Quantization = React.createClass({
-  // TODO: Quantization controls
   propTypes: {
     willProcess: React.PropTypes.func.isRequired,
     currentImage: React.PropTypes.shape({
@@ -18,10 +17,6 @@ const Quantization = React.createClass({
     };
   },
   componentDidMount() {},
-  componentDidUpdate() {
-    // trigger computing on history/tool change
-    this._compute();
-  },
   render() {
     return ( // eslint-disable-line no-extra-parens
       <div>
@@ -31,7 +26,7 @@ const Quantization = React.createClass({
           onDragStop={this._compute}
           defaultValue={256}
           max={256}
-          min={1}
+          min={2}
           step={1}
           description={`量化等级：${this.state.param.level}`}
         />

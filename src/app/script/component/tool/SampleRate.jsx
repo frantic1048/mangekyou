@@ -19,10 +19,6 @@ const SampleRate = React.createClass({
   componentDidMount() {
     this._handleChange(null, 1);
   },
-  componentDidUpdate() {
-    // trigger computing on history/tool change
-    this._compute();
-  },
   render() {
     return ( // eslint-disable-line no-extra-parens
       <div>

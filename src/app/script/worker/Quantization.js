@@ -6,10 +6,9 @@ function levelize(level, value) {
 }
 
 function Quantization({width, height, data}, {level}) {
-  // TODO: Quantization algorithm
   const allPos = getAllPositions(width, height);
-  const lv = levelize.bind(level);
-  for (const {index} of allPos()) {
+  const lv = levelize.bind(this, level);
+  for (const [,, index] of allPos()) {
     data[index] = lv(data[index]);         // red
     data[index + 1] = lv(data[index + 1]); // green
     data[index + 2] = lv(data[index + 2]); // blue
