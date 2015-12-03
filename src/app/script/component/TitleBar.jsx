@@ -13,13 +13,14 @@ import ImageFilterVintageIcon from 'material-ui/lib/svg-icons/image/filter-vinta
 import KeyboardShortcut       from './KeyboardShortcut';
 import mangekyouAction        from '../action/mangekyouAction';
 import mangekyouStore         from '../store/mangekyouStore';
+import mangekyouConstant      from '../constant/mangekyouConstant';
 
 const TitleBar = React.createClass({
   getInitialState() {
     return {
       showing: mangekyouStore.getShowing(),
       currentImage: null,
-      processing: mangekyouStore.getProcessingState(),
+      processingState: mangekyouStore.getProcessingState(),
       animating: false,
       intervalId: Infinity,
       keyMap: [
@@ -110,7 +111,7 @@ const TitleBar = React.createClass({
     );
   },
   _handleFile() {
-    mangekyouAction.setProcessingState(true);
+    mangekyouAction.setProcessingState(mangekyouConstant.LOADING_FILE);
     let fileCount = this.refs.fileInput.files.length;
     function extractAndAddFile(f) {
       const canvas = document.createElement('canvas');
@@ -125,7 +126,7 @@ const TitleBar = React.createClass({
         -- fileCount;
         if (fileCount < 1) {
           // loading files complete
-          mangekyouAction.setProcessingState(false);
+          mangekyouAction.setProcessingState(mangekyouConstant.IDLE);
         }
       };
       fr.onload = () => { img.src = fr.result; };
@@ -159,7 +160,7 @@ const TitleBar = React.createClass({
     });
   },
   _onProcessingChange() {
-    const isProcessing = mangekyouStore.getProcessingState();
+    const isProcessing = mangekyouStore.getProcessingState() !== mangekyouConstant.IDLE;
     const newState = {};
     if (isProcessing) {
       newState.processing = true;

@@ -16,13 +16,13 @@ const Quantization = React.createClass({
       },
     };
   },
-  componentDidMount() {},
   render() {
     return ( // eslint-disable-line no-extra-parens
       <div>
         <Slider
           name="slider-quantization"
           onChange={this._handleChange}
+          onClick={this._compute}
           onDragStop={this._compute}
           defaultValue={256}
           max={256}

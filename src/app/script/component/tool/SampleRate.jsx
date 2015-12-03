@@ -16,15 +16,13 @@ const SampleRate = React.createClass({
       },
     };
   },
-  componentDidMount() {
-    this._handleChange(null, 1);
-  },
   render() {
     return ( // eslint-disable-line no-extra-parens
       <div>
         <Slider
           name="slider-samplerate"
           onChange={this._handleChange}
+          onClick={this._compute}
           onDragStop={this._compute}
           max={this.props.currentImage ? Math.min(this.props.currentImage.width, this.props.currentImage.height) : 20}
           min={1}

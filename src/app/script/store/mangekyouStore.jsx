@@ -12,7 +12,7 @@ const CHANGE_EVENT = {
 const _store = {
   history: [],
   previewImage: null,
-  processing: false,
+  processingState: mangekyouConstant.IDLE,
   showing: {
     historyPanel: true,
     toolPanel: true,
@@ -35,8 +35,8 @@ function loadHistory(index) {
   });
 }
 
-function setProcessingState(isProcessing) {
-  _store.processing = isProcessing;
+function setProcessingState(processingState) {
+  _store.processingState = processingState;
 }
 
 function updatePreviewImage(image) {
@@ -69,7 +69,7 @@ const mangekyouStore = Object.assign({}, EventEmitter.prototype, {
     return _store.history.length > 0 ? _store.history.slice(-1)[0] : null;
   },
   getProcessingState() {
-    return _store.processing;
+    return _store.processingState;
   },
   addProcessingChangeListener(cb) {
     this.on(CHANGE_EVENT.PROCESSING, cb);

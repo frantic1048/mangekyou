@@ -20,10 +20,10 @@ const mangekyouAction = {
       data: index,
     });
   },
-  setProcessingState(isProcessing) {
+  setProcessingState(processingState) {
     mangekyouDispatcher.handleAction({
       actionType: mangekyouConstant.SET_PROCESSING_STATE,
-      data: isProcessing,
+      data: processingState,
     });
   },
   updatePreviewImage(image) {

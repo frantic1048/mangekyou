@@ -1,18 +1,19 @@
-import React           from 'react';
-import Paper           from 'material-ui/lib/paper';
-import RaisedButton    from 'material-ui/lib/raised-button';
-import DropDownMenu    from 'material-ui/lib/drop-down-menu';
-import mangekyouAction from '../action/mangekyouAction';
-import mangekyouStore  from '../store/mangekyouStore';
-import SampleRate      from './tool/SampleRate';
-import Quantization    from './tool/Quantization';
+import React             from 'react';
+import Paper             from 'material-ui/lib/paper';
+import RaisedButton      from 'material-ui/lib/raised-button';
+import DropDownMenu      from 'material-ui/lib/drop-down-menu';
+import mangekyouAction   from '../action/mangekyouAction';
+import mangekyouStore    from '../store/mangekyouStore';
+import mangekyouConstant from '../constant/mangekyouConstant';
+import SampleRate        from './tool/SampleRate';
+import Quantization      from './tool/Quantization';
 
 const ToolPanel = React.createClass({
   getInitialState() {
     return {
       showing: mangekyouStore.getShowing().toolPanel,
       currentRecord: mangekyouStore.getLastHistory(),
-      processing: false,
+      processingState: mangekyouStore.getProcessingState(),
       proceedImage: null,
       proceedOperation: '',
       proceedOperationDisplayName: '',
@@ -33,10 +34,12 @@ const ToolPanel = React.createClass({
   componentDidMount() {
     mangekyouStore.addHistoryChangeListener(this._onHistoryChange);
     mangekyouStore.addShowingChangeListener(this._onShowingChange);
+    mangekyouStore.addProcessingChangeListener(this._onProcessingChange);
   },
   componentWillUnmount() {
     mangekyouStore.removeHistoryChangeListener(this._onHistoryChange);
     mangekyouStore.removeShowingChangeListener(this._onShowingChange);
+    mangekyouStore.removeProcessingChangeListener(this._onProcessingChange);
   },
   render() {
     const menuItems = [
@@ -129,37 +132,43 @@ const ToolPanel = React.createClass({
       showing: mangekyouStore.getShowing().toolPanel,
     });
   },
+  _onProcessingChange() {
+    this.setState({
+      processingState: mangekyouStore.getProcessingState(),
+    });
+  },
   _WillProcess({operationName, operationParam}) {
-    if (this.state.processing && this.state.worker) {
+    if (this.state.worker) {
       this.state.worker.terminate();
     }
-    if (this.state.currentRecord) {
-      // if there's an image, process it.
-      const {width, height} = this.state.currentRecord.image;
-      const imgData = this.state.currentRecord.image.getContext('2d').getImageData(0, 0, width, height);
-      const aworker = new Worker('script/worker.js');
-      this.setState({
-        worker: aworker,
-        processing: true,
-        proceedOperation: this.state.selectedOperation,
-        proceedOperationDisplayName: this.state.selectedOperationDisplayName,
-      });
-      aworker.onmessage = this._DidProcess;
-      aworker.postMessage({
-        operationName,
-        operationParam,
-        image: {
-          width: imgData.width,
-          height: imgData.height,
-          data: imgData.data,
-        },
-      });
-      mangekyouAction.setProcessingState(true);
+    if (this.state.processingState === mangekyouConstant.COMPUTING
+      || this.state.processingState === mangekyouConstant.IDLE) {
+      if (this.state.currentRecord) {
+        // if there's an image, process it.
+        const {width, height} = this.state.currentRecord.image;
+        const imgData = this.state.currentRecord.image.getContext('2d').getImageData(0, 0, width, height);
+        const aworker = new Worker('script/worker.js');
+        this.setState({
+          worker: aworker,
+          proceedOperation: this.state.selectedOperation,
+          proceedOperationDisplayName: this.state.selectedOperationDisplayName,
+        });
+        aworker.onmessage = this._DidProcess;
+        aworker.postMessage({
+          operationName,
+          operationParam,
+          image: {
+            width: imgData.width,
+            height: imgData.height,
+            data: imgData.data,
+          },
+        });
+        mangekyouAction.setProcessingState(mangekyouConstant.COMPUTING);
+      }
     }
   },
   _DidProcess({data}) {
     if (data.proceed) {
-      // const imgd = new ImageData(data.image.data, data.image.width, data.image.height);
       const imgd = new ImageData(new Uint8ClampedArray(data.image.buffer), data.image.width, data.image.height);
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
@@ -176,7 +185,7 @@ const ToolPanel = React.createClass({
     } else {
       mangekyouAction.updatePreviewImage(this.state.currentRecord.image);
     }
-    mangekyouAction.setProcessingState(false);
+    mangekyouAction.setProcessingState(mangekyouConstant.IDLE);
   },
 });
 
