@@ -7,6 +7,7 @@ const CHANGE_EVENT = {
   PREVIEW: 'PREVIEW',
   SHOWING: 'SHOWING',
   PROCESSING: 'PROCESSING',
+  COMPUTE: 'COMPUTE',
 };
 
 const _store = {
@@ -95,6 +96,12 @@ const mangekyouStore = Object.assign({}, EventEmitter.prototype, {
   getShowing() {
     return _store.showing;
   },
+  addComputeListener(cb) {
+    this.on(CHANGE_EVENT.TRIGGER_COMPUTE, cb);
+  },
+  removeComputeListener(cb) {
+    this.removeListener(CHANGE_EVENT.TRIGGER_COMPUTE, cb);
+  },
 });
 
 mangekyouDispatcher.register(payload => {
@@ -108,6 +115,7 @@ mangekyouDispatcher.register(payload => {
     loadHistory(data);
     mangekyouStore.emit(CHANGE_EVENT.PREVIEW);
     mangekyouStore.emit(CHANGE_EVENT.HISTORY);
+    mangekyouStore.emit(CHANGE_EVENT.COMPUTE);
     break;
   case mangekyouConstant.SET_PROCESSING_STATE:
     setProcessingState(data);
@@ -125,6 +133,9 @@ mangekyouDispatcher.register(payload => {
   case mangekyouConstant.TRIGGER_SHOWING:
     triggerShowing(data);
     mangekyouStore.emit(CHANGE_EVENT.SHOWING);
+    break;
+  case mangekyouConstant.TRIGGER_COMPUTE:
+    mangekyouStore.emit(CHANGE_EVENT.COMPUTE);
     break;
   default:
     return true;

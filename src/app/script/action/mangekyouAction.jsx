@@ -38,6 +38,11 @@ const mangekyouAction = {
       data: componentName,
     });
   },
+  triggerCompute() {
+    mangekyouDispatcher.handleAction({
+      actionType: mangekyouConstant.TRIGGER_COMPUTE,
+    });
+  },
 };
 
 export default mangekyouAction;

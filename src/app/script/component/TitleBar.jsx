@@ -127,6 +127,9 @@ const TitleBar = React.createClass({
         if (fileCount < 1) {
           // loading files complete
           mangekyouAction.setProcessingState(mangekyouConstant.IDLE);
+
+          // trigger a computing on current image
+          mangekyouAction.triggerCompute();
         }
       };
       fr.onload = () => { img.src = fr.result; };

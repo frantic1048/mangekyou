@@ -16,6 +16,13 @@ const Quantization = React.createClass({
       },
     };
   },
+  componentDidMount() {
+    // FIXME: this triggering seems not work
+    mangekyouStore.addComputeListener(this._compute);
+  },
+  componentWillUnmount() {
+    mangekyouStore.removeComputeListener(this._compute);
+  },
   render() {
     return ( // eslint-disable-line no-extra-parens
       <div>

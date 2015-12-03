@@ -1,5 +1,6 @@
-import React  from 'react';
-import Slider from 'material-ui/lib/slider';
+import React          from 'react';
+import Slider         from 'material-ui/lib/slider';
+import mangekyouStore from '../../store/mangekyouStore';
 
 const SampleRate = React.createClass({
   propTypes: {
@@ -15,6 +16,12 @@ const SampleRate = React.createClass({
         distance: 1,
       },
     };
+  },
+  componentDidMount() {
+    mangekyouStore.addComputeListener(this._compute);
+  },
+  componentWillUnmount() {
+    mangekyouStore.removeComputeListener(this._compute);
   },
   render() {
     return ( // eslint-disable-line no-extra-parens
