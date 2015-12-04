@@ -7,6 +7,7 @@ import mangekyouStore    from '../store/mangekyouStore';
 import mangekyouConstant from '../constant/mangekyouConstant';
 import SampleRate        from './tool/SampleRate';
 import Quantization      from './tool/Quantization';
+import Grayscale         from './tool/Grayscale';
 
 const ToolPanel = React.createClass({
   getInitialState() {
@@ -27,6 +28,10 @@ const ToolPanel = React.createClass({
         Quantization: {
           displayName: '量化',
           component: Quantization,
+        },
+        Grayscale: {
+          displayName: '灰度化',
+          component: Grayscale,
         },
       },
     };
