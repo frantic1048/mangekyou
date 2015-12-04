@@ -97,10 +97,10 @@ const mangekyouStore = Object.assign({}, EventEmitter.prototype, {
     return _store.showing;
   },
   addComputeListener(cb) {
-    this.on(CHANGE_EVENT.TRIGGER_COMPUTE, cb);
+    this.on(CHANGE_EVENT.COMPUTE, cb);
   },
   removeComputeListener(cb) {
-    this.removeListener(CHANGE_EVENT.TRIGGER_COMPUTE, cb);
+    this.removeListener(CHANGE_EVENT.COMPUTE, cb);
   },
 });
 
@@ -115,7 +115,10 @@ mangekyouDispatcher.register(payload => {
     loadHistory(data);
     mangekyouStore.emit(CHANGE_EVENT.PREVIEW);
     mangekyouStore.emit(CHANGE_EVENT.HISTORY);
-    mangekyouStore.emit(CHANGE_EVENT.COMPUTE);
+
+    // HACK: fix `Cannot dispatch in the middle of a dispatch.`
+    setTimeout(() => mangekyouStore.emit(CHANGE_EVENT.COMPUTE), 0);
+
     break;
   case mangekyouConstant.SET_PROCESSING_STATE:
     setProcessingState(data);

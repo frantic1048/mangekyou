@@ -1,5 +1,6 @@
-import React  from 'react';
-import Slider from 'material-ui/lib/slider';
+import React          from 'react';
+import Slider         from 'material-ui/lib/slider';
+import mangekyouStore from '../../store/mangekyouStore';
 
 const Quantization = React.createClass({
   propTypes: {
@@ -17,7 +18,6 @@ const Quantization = React.createClass({
     };
   },
   componentDidMount() {
-    // FIXME: this triggering seems not work
     mangekyouStore.addComputeListener(this._compute);
   },
   componentWillUnmount() {

@@ -27,6 +27,10 @@
     {
       "name": "FIXME",
       "hidden": false
+    },
+    {
+      "name": "HACK",
+      "hidden": false
     }
   ],
   "marked": {

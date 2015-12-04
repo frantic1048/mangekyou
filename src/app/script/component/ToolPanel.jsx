@@ -141,30 +141,28 @@ const ToolPanel = React.createClass({
     if (this.state.worker) {
       this.state.worker.terminate();
     }
-    if (this.state.processingState === mangekyouConstant.COMPUTING
-      || this.state.processingState === mangekyouConstant.IDLE) {
-      if (this.state.currentRecord) {
-        // if there's an image, process it.
-        const {width, height} = this.state.currentRecord.image;
-        const imgData = this.state.currentRecord.image.getContext('2d').getImageData(0, 0, width, height);
-        const aworker = new Worker('script/worker.js');
-        this.setState({
-          worker: aworker,
-          proceedOperation: this.state.selectedOperation,
-          proceedOperationDisplayName: this.state.selectedOperationDisplayName,
-        });
-        aworker.onmessage = this._DidProcess;
-        aworker.postMessage({
-          operationName,
-          operationParam,
-          image: {
-            width: imgData.width,
-            height: imgData.height,
-            data: imgData.data,
-          },
-        });
-        mangekyouAction.setProcessingState(mangekyouConstant.COMPUTING);
-      }
+    const currentRecord = mangekyouStore.getLastHistory();
+    if (currentRecord) {
+      // if there's an image, process it.
+      const {width, height} = currentRecord.image;
+      const imgData = currentRecord.image.getContext('2d').getImageData(0, 0, width, height);
+      const aworker = new Worker('script/worker.js');
+      this.setState({
+        worker: aworker,
+        proceedOperation: this.state.selectedOperation,
+        proceedOperationDisplayName: this.state.selectedOperationDisplayName,
+      });
+      aworker.onmessage = this._DidProcess;
+      aworker.postMessage({
+        operationName,
+        operationParam,
+        image: {
+          width: imgData.width,
+          height: imgData.height,
+          data: imgData.data,
+        },
+      });
+      mangekyouAction.setProcessingState(mangekyouConstant.COMPUTING);
     }
   },
   _DidProcess({data}) {
@@ -183,7 +181,7 @@ const ToolPanel = React.createClass({
         proceedImage: canvas,
       });
     } else {
-      mangekyouAction.updatePreviewImage(this.state.currentRecord.image);
+      mangekyouAction.updatePreviewImage(mangekyouStore.getLastHistory().image);
     }
     mangekyouAction.setProcessingState(mangekyouConstant.IDLE);
   },
