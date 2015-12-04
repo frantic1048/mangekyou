@@ -35,6 +35,7 @@ const Grayscale = React.createClass({
   },
   componentDidMount() {
     mangekyouStore.addComputeListener(this._compute);
+    this._compute();
   },
   componentWillUnmount() {
     mangekyouStore.removeComputeListener(this._compute);
@@ -64,6 +65,7 @@ const Grayscale = React.createClass({
         method: selected,
       },
     });
+    this._compute();
   },
   _compute() {
     this.props.willProcess({
