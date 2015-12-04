@@ -8,6 +8,7 @@ import mangekyouConstant from '../constant/mangekyouConstant';
 import SampleRate        from './tool/SampleRate';
 import Quantization      from './tool/Quantization';
 import Grayscale         from './tool/Grayscale';
+import BitPlane          from './tool/BitPlane';
 
 const ToolPanel = React.createClass({
   getInitialState() {
@@ -32,6 +33,10 @@ const ToolPanel = React.createClass({
         Grayscale: {
           displayName: '灰度化',
           component: Grayscale,
+        },
+        BitPlane: {
+          displayName: '位平面',
+          component: BitPlane,
         },
       },
     };

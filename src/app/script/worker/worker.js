@@ -5,11 +5,13 @@ import 'babel-polyfill';
 import SampleRate   from './SampleRate';
 import Quantization from './Quantization';
 import Grayscale    from './Grayscale';
+import BitPlane     from './BitPlane';
 
 const op = {
   SampleRate,
   Quantization,
   Grayscale,
+  BitPlane,
 };
 
 self.onmessage = ({data: {operationName, operationParam, image}}) => {

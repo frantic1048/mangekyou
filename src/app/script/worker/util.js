@@ -80,4 +80,18 @@ function getAllPositions(width, height) {
   return positions;
 }
 
-export {luma, hsy2rgb, getCoordinate, getAllPositions};
+function* range(start = 0, end = 10, step = 1) {
+  let cur = start;
+  while (step > 0 ? cur < end : cur > end) {
+    yield cur;
+    cur += step;
+  }
+}
+
+export {
+  luma,
+  hsy2rgb,
+  getCoordinate,
+  getAllPositions,
+  range,
+};
