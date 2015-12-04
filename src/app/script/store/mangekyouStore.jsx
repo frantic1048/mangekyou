@@ -26,13 +26,18 @@ function addHistory({operation, operationDisplayName, image}) {
 }
 
 function loadHistory(index) {
+  console.log(index);
+  console.log(_store.history);
+  const loadedHistory = _store.history[index];
+
   if ( _store.history.slice(-1)[0].operation === 'historyJump') {
     _store.history.pop();
   }
+
   addHistory({
     operation: 'historyJump',
     operationDisplayName: '历史跳转',
-    image: _store.history[index].image,
+    image: loadedHistory.image,
   });
 }
 
@@ -115,10 +120,6 @@ mangekyouDispatcher.register(payload => {
     loadHistory(data);
     mangekyouStore.emit(CHANGE_EVENT.PREVIEW);
     mangekyouStore.emit(CHANGE_EVENT.HISTORY);
-
-    // HACK: fix `Cannot dispatch in the middle of a dispatch.`
-    setTimeout(() => mangekyouStore.emit(CHANGE_EVENT.COMPUTE), 0);
-
     break;
   case mangekyouConstant.SET_PROCESSING_STATE:
     setProcessingState(data);

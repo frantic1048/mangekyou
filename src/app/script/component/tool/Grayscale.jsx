@@ -65,12 +65,12 @@ const Grayscale = React.createClass({
         method: selected,
       },
     });
-    this._compute();
+    this._compute({method: selected});
   },
-  _compute() {
+  _compute(method) {
     this.props.willProcess({
       operationName: 'Grayscale',
-      operationParam: this.state.param,
+      operationParam: method || this.state.param,
     });
   },
 });

@@ -22,6 +22,7 @@ const BitPlane = React.createClass({
   },
   componentDidMount() {
     mangekyouStore.addComputeListener(this._compute);
+    this._compute();
   },
   componentWillUnmount() {
     mangekyouStore.removeComputeListener(this._compute);
@@ -29,7 +30,7 @@ const BitPlane = React.createClass({
   render() {
     return ( // eslint-disable-line no-extra-parens
       <div>
-        <p>8 Bit 位平面</p>
+        <p>8 个位平面</p>
         <div
           style={{
             display: 'flex',
@@ -56,12 +57,15 @@ const BitPlane = React.createClass({
         planeIndex: menuItem.payload,
       },
     });
-    this._compute();
+    this._compute({
+      depth: this.state.param.depth,
+      planeIndex: menuItem.payload,
+    });
   },
-  _compute() {
+  _compute(param) {
     this.props.willProcess({
       operationName: 'BitPlane',
-      operationParam: this.state.param,
+      operationParam: param || this.state.param,
     });
   },
 });

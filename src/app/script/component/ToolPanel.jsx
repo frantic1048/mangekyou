@@ -190,8 +190,6 @@ const ToolPanel = React.createClass({
         processing: false,
         proceedImage: canvas,
       });
-    } else {
-      mangekyouAction.updatePreviewImage(mangekyouStore.getLastHistory().image);
     }
     mangekyouAction.setProcessingState(mangekyouConstant.IDLE);
   },
