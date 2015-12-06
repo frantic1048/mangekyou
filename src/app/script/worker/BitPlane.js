@@ -10,6 +10,7 @@ function isBetween(lowerBound, upperBound, value) {
 }
 
 function BitPlane({width, height, data}, {depth, planeIndex}) {
+  console.log(`BitPlane: depth=${depth}, planeIndex=${planeIndex}`);
   const bi = isBetween.bind(this, ...getRange(depth, planeIndex));
   const allPos = getAllPositions(width, height);
   for (const [,, index] of allPos()) {

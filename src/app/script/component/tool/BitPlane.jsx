@@ -5,6 +5,7 @@ import mangekyouStore   from '../../store/mangekyouStore';
 import {range}          from '../../worker/util';
 
 const BitPlane = React.createClass({
+  // TODO: configurable plane depth
   propTypes: {
     willProcess: React.PropTypes.func.isRequired,
     currentImage: React.PropTypes.shape({
@@ -16,7 +17,7 @@ const BitPlane = React.createClass({
     return {
       param: {
         depth: 8,
-        planeIndex: 1,
+        planeIndex: 0,
       },
       indexOptions: [...range(0, 8)].map(v => {
         return {label: `第 ${v} 平面`, value: `${v}`, key: `${v}`};
@@ -52,17 +53,19 @@ const BitPlane = React.createClass({
   },
   _handleChange(event, selected) {
     this.setState({
-      param: {
-        planeIndex: selected,
-      },
+      param: Object.assign({},
+        this.state.param,
+        { planeIndex: selected }
+      ),
     });
     this._compute({
-      depth: this.state.param.depth,
-      planeIndex: selected,
+      param: Object.assign({},
+        this.state.param,
+        { planeIndex: selected }
+      ),
     });
   },
   _compute(param) {
-    // FIXME: sometimes all black on return （´＿｀）
     this.props.willProcess({
       operationName: 'BitPlane',
       operationParam: param || this.state.param,
