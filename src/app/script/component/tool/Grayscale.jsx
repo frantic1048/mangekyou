@@ -18,17 +18,21 @@ const Grayscale = React.createClass({
       },
       options: [
         {
-          displayName: 'Rec. 709',
+          label: 'Rec. 709',
           value: 'rec709',
+          key: 'rec709',
         }, {
-          displayName: '平均值',
+          label: '平均值',
           value: 'average',
+          key: 'average',
         }, {
-          displayName: '最大值',
+          label: '最大值',
           value: 'max',
+          key: 'max',
         }, {
-          displayName: '最小值',
+          label: '最小值',
           value: 'min',
+          key: 'min',
         },
       ],
     };
@@ -48,11 +52,11 @@ const Grayscale = React.createClass({
           name="grayscale"
           defaultSelected="rec709"
         >
-          {this.state.options.map((op) => ( // eslint-disable-line no-extra-parens
+          {this.state.options.map(({key, value, label}) => ( // eslint-disable-line no-extra-parens
             <RadioButton
-              key={op.value}
-              value={op.value}
-              label={op.displayName}
+              key={key}
+              value={value}
+              label={label}
             />
           ))}
         </RadioButtonGroup>

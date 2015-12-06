@@ -1,7 +1,8 @@
-import React          from 'react';
-import DropDownMenu   from 'material-ui/lib/drop-down-menu';
-import mangekyouStore from '../../store/mangekyouStore';
-import {range}        from '../../worker/util';
+import React            from 'react';
+import RadioButtonGroup from 'material-ui/lib/radio-button-group';
+import RadioButton      from 'material-ui/lib/radio-button';
+import mangekyouStore   from '../../store/mangekyouStore';
+import {range}          from '../../worker/util';
 
 const BitPlane = React.createClass({
   propTypes: {
@@ -17,7 +18,9 @@ const BitPlane = React.createClass({
         depth: 8,
         planeIndex: 1,
       },
-      indexOptions: [...range(0, 8)].map(v => { return {payload: v, text: v}; }),
+      indexOptions: [...range(0, 8)].map(v => {
+        return {label: `第 ${v} 平面`, value: `${v}`, key: `${v}`};
+      }),
     };
   },
   componentDidMount() {
@@ -31,38 +34,35 @@ const BitPlane = React.createClass({
     return ( // eslint-disable-line no-extra-parens
       <div>
         <p>8 个位平面</p>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-end',
-          }}
+        <RadioButtonGroup
+          onChange={this._handleChange}
+          name="bitplane"
+          defaultSelected="0"
         >
-          <div style={{
-            display: 'inline-block',
-            paddingBottom: '8px',
-          }}>第</div>
-          <DropDownMenu menuItems={this.state.indexOptions} onChange={this._handleChange}/>
-          <div style={{
-            display: 'inline-block',
-            paddingBottom: '8px',
-          }}>平面</div>
-      </div>
+          {this.state.indexOptions.map(({key, value, label}) => ( // eslint-disable-line no-extra-parens
+            <RadioButton
+              key={key}
+              value={value}
+              label={label}
+            />
+          ))}
+        </RadioButtonGroup>
       </div>
     );
   },
-  _handleChange(event, selectedIndex, menuItem) {
+  _handleChange(event, selected) {
     this.setState({
       param: {
-        planeIndex: menuItem.payload,
+        planeIndex: selected,
       },
     });
     this._compute({
       depth: this.state.param.depth,
-      planeIndex: menuItem.payload,
+      planeIndex: selected,
     });
   },
   _compute(param) {
+    // FIXME: sometimes all black on return （´＿｀）
     this.props.willProcess({
       operationName: 'BitPlane',
       operationParam: param || this.state.param,

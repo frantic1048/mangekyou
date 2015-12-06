@@ -26,9 +26,7 @@ function addHistory({operation, operationDisplayName, image}) {
 }
 
 function loadHistory(index) {
-  console.log(index);
-  console.log(_store.history);
-  const loadedHistory = _store.history[index];
+  const image = _store.history[index].image;
 
   if ( _store.history.slice(-1)[0].operation === 'historyJump') {
     _store.history.pop();
@@ -37,7 +35,7 @@ function loadHistory(index) {
   addHistory({
     operation: 'historyJump',
     operationDisplayName: '历史跳转',
-    image: loadedHistory.image,
+    image,
   });
 }
 
