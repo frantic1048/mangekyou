@@ -33,6 +33,11 @@ function luma(r, g, b) {
   return reGamma(0.2126 * rLinear + 0.7152 * gLinear + 0.0722 * bLinear);
 }
 
+// Rec. 709 luma of a linear RGB color (without sRGB gamma correction)
+function lumaLinear(r, g, b) {
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
 // https://en.wikipedia.org/wiki/HSL_and_HSV#From_luma.2Fchroma.2Fhue
 // h:[0, 360], s:[0, 1], y:[0, 1]
 function hsy2rgb(h, s, y) {
@@ -90,6 +95,7 @@ function* range(start = 0, end = 10, step = 1) {
 
 export {
   luma,
+  lumaLinear,
   hsy2rgb,
   getCoordinate,
   getAllPositions,

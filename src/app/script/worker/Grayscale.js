@@ -1,7 +1,7 @@
-import {getAllPositions, luma} from './util';
+import {getAllPositions, lumaLinear} from './util';
 
 const methods = {
-  rec709: (r, g, b) => luma(r, g, b),
+  rec709: (r, g, b) => lumaLinear(r, g, b),
   average: (r, g, b) => 1 / 3 * (r + g + b),
   max: (r, g, b) => Math.max(r, Math.max(g, b)),
   min: (r, g, b) => Math.min(r, Math.min(g, b)),
