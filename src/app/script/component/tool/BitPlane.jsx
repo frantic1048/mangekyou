@@ -68,9 +68,6 @@ const BitPlane = React.createClass({
       operationName: 'BitPlane',
       operationParam: param || this.state.param,
     });
-    console.log(`param:`);
-    console.log(param);
-    console.log(this.state.param);
   },
 });
 

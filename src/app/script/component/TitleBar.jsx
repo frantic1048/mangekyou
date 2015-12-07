@@ -147,7 +147,11 @@ const TitleBar = React.createClass({
       const a = document.createElement('a');
       a.setAttribute('download', 'proceed.png');
       a.setAttribute('href', this.state.currentImage.toDataURL());
-      a.click();
+      a.setAttribute('style', 'position: fixed; width: 0; height: 0;');
+
+      const link = document.body.appendChild(a);
+      link.click();
+      document.body.removeChild(link);
     }
   },
   _handleTriggerHistoryPanel() { mangekyouAction.triggerShowing('historyPanel'); },
