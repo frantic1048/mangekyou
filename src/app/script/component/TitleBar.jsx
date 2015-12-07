@@ -1,19 +1,21 @@
-import React                  from 'react';
-import AppBar                 from 'material-ui/lib/app-bar';
-import IconMenu               from 'material-ui/lib/menus/icon-menu';
-import MenuItem               from 'material-ui/lib/menus/menu-item';
-import MenuDivider            from 'material-ui/lib/menus/menu-divider';
-import IconButton             from 'material-ui/lib/icon-button';
-import MoreVertIcon           from 'material-ui/lib/svg-icons/navigation/more-vert';
-import ImageAddToPhotosIcon   from 'material-ui/lib/svg-icons/image/add-to-photos';
-import ContentSaveIcon        from 'material-ui/lib/svg-icons/content/save';
-import ActionHistoryIcon      from 'material-ui/lib/svg-icons/action/history';
-import ImageStyleIcon         from 'material-ui/lib/svg-icons/image/style';
-import ImageFilterVintageIcon from 'material-ui/lib/svg-icons/image/filter-vintage';
-import KeyboardShortcut       from './KeyboardShortcut';
-import mangekyouAction        from '../action/mangekyouAction';
-import mangekyouStore         from '../store/mangekyouStore';
-import mangekyouConstant      from '../constant/mangekyouConstant';
+import React                         from 'react';
+import AppBar                        from 'material-ui/lib/app-bar';
+import IconMenu                      from 'material-ui/lib/menus/icon-menu';
+import MenuItem                      from 'material-ui/lib/menus/menu-item';
+import MenuDivider                   from 'material-ui/lib/menus/menu-divider';
+import IconButton                    from 'material-ui/lib/icon-button';
+import MoreVertIcon                  from 'material-ui/lib/svg-icons/navigation/more-vert';
+import ImageAddToPhotosIcon          from 'material-ui/lib/svg-icons/image/add-to-photos';
+import ContentSaveIcon               from 'material-ui/lib/svg-icons/content/save';
+import ActionHistoryIcon             from 'material-ui/lib/svg-icons/action/history';
+import ImageStyleIcon                from 'material-ui/lib/svg-icons/image/style';
+import ImageFilterVintageIcon        from 'material-ui/lib/svg-icons/image/filter-vintage';
+import SocialCakeIcon                from 'material-ui/lib/svg-icons/social/cake';
+import KeyboardShortcut              from './KeyboardShortcut';
+import mangekyouAction               from '../action/mangekyouAction';
+import mangekyouStore                from '../store/mangekyouStore';
+import mangekyouConstant             from '../constant/mangekyouConstant';
+import {version as mangekyouVersion} from '../../../../package.json';
 
 const TitleBar = React.createClass({
   getInitialState() {
@@ -105,6 +107,13 @@ const TitleBar = React.createClass({
               primaryText={`${this.state.showing.toolPanel ? '隐藏' : '显示'}编辑面板`}
               secondaryText="T"
               leftIcon={<ImageStyleIcon/>}
+            />
+            <MenuDivider/>
+            <MenuItem
+              disabled
+              primaryText="版本"
+              secondaryText={`v${mangekyouVersion}`}
+              leftIcon={<SocialCakeIcon/>}
             />
           </IconMenu>
       }/>

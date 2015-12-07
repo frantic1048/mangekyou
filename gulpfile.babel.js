@@ -25,6 +25,11 @@ const webpackConf = {
           presets: ['react', 'es2015'],
         },
       },
+      {
+        test: /\.json$/,
+        exclude: /(node_modules|bower_components|src)/,
+        loader: 'json',
+      },
     ],
   },
 };

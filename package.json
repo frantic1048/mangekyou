@@ -1,6 +1,6 @@
 {
   "name": "mangekyou",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "description": "简单的图像处理程序",
   "main": "build/app/main.js",
   "scripts": {
@@ -43,6 +43,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.5.1",
     "gulp-webpack-sourcemaps": "^0.3.0",
+    "json-loader": "^0.5.4",
     "newer": "^0.1.5",
     "vinyl-named": "^1.1.0",
     "webpack-stream": "^2.1.1"
