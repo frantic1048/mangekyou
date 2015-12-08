@@ -7,6 +7,9 @@ const keyMap = [
   }, {
     char: 't',
     action: () => { mangekyouAction.triggerShowing('toolPanel'); },
+  }, {
+    char: 'a',
+    action: () => { mangekyouAction.triggerShowing('statusPanel'); },
   },
 ];
 

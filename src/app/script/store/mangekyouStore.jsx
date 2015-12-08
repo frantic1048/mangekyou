@@ -17,6 +17,7 @@ const _store = {
   showing: {
     historyPanel: true,
     toolPanel: true,
+    statusPanel: true,
   },
 };
 

@@ -11,6 +11,7 @@ import ActionHistoryIcon             from 'material-ui/lib/svg-icons/action/hist
 import ImageStyleIcon                from 'material-ui/lib/svg-icons/image/style';
 import ImageFilterVintageIcon        from 'material-ui/lib/svg-icons/image/filter-vintage';
 import SocialCakeIcon                from 'material-ui/lib/svg-icons/social/cake';
+import AVEqualizerIcon               from 'material-ui/lib/svg-icons/av/equalizer';
 import KeyboardShortcut              from './KeyboardShortcut';
 import mangekyouAction               from '../action/mangekyouAction';
 import mangekyouStore                from '../store/mangekyouStore';
@@ -108,6 +109,12 @@ const TitleBar = React.createClass({
               secondaryText="T"
               leftIcon={<ImageStyleIcon/>}
             />
+            <MenuItem
+              onClick={this._handleTriggerStatusPanel}
+              primaryText={`${this.state.showing.statusPanel ? '隐藏' : '显示'}统计面板`}
+              secondaryText="A"
+              leftIcon={<AVEqualizerIcon/>}
+            />
             <MenuDivider/>
             <MenuItem
               disabled
@@ -165,6 +172,7 @@ const TitleBar = React.createClass({
   },
   _handleTriggerHistoryPanel() { mangekyouAction.triggerShowing('historyPanel'); },
   _handleTriggerToolPanel() { mangekyouAction.triggerShowing('toolPanel'); },
+  _handleTriggerStatusPanel() { mangekyouAction.triggerShowing('statusPanel'); },
   _onShowingChange() {
     this.setState({
       showing: mangekyouStore.getShowing(),

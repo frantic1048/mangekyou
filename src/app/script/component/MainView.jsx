@@ -1,7 +1,8 @@
 import React        from 'react';
-import HistoryPanel from './HistoryPanel';
-import Preview      from './Preview';
 import ToolPanel    from './ToolPanel';
+import HistoryPanel from './HistoryPanel';
+import StatusPanel  from './StatusPanel';
+import Preview      from './Preview';
 
 const MainView = React.createClass({
   render() {
@@ -19,6 +20,7 @@ const MainView = React.createClass({
         <HistoryPanel/>
         <Preview/>
         <ToolPanel/>
+        <StatusPanel/>
       </div>
     );
   },
