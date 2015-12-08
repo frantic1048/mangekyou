@@ -1,7 +1,9 @@
 import React from 'react';
 
 const Statistics = React.createClass({
-  render() {},
+  render() {
+    return <div>Statistics</div>;
+  },
 });
 
 export default Statistics;

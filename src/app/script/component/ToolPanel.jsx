@@ -155,7 +155,9 @@ const ToolPanel = React.createClass({
     if (currentRecord) {
       // if there's an image, process it.
       const {width, height} = currentRecord.image;
-      const imgData = currentRecord.image.getContext('2d').getImageData(0, 0, width, height);
+      const imgData = currentRecord.image
+                       .getContext('2d')
+                       .getImageData(0, 0, width, height);
       const aworker = new Worker('script/worker.js');
       this.setState({
         worker: aworker,
