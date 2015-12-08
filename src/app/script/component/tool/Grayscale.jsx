@@ -20,19 +20,19 @@ const Grayscale = React.createClass({
         {
           label: 'Rec. 709',
           value: 'rec709',
-          key: 'rec709',
+          key  : 'rec709', // eslint-disable-line key-spacing
         }, {
           label: '平均值',
           value: 'average',
-          key: 'average',
+          key  : 'average', // eslint-disable-line key-spacing
         }, {
           label: '最大值',
           value: 'max',
-          key: 'max',
+          key  : 'max', // eslint-disable-line key-spacing
         }, {
           label: '最小值',
           value: 'min',
-          key: 'min',
+          key  : 'min', // eslint-disable-line key-spacing
         },
       ],
     };

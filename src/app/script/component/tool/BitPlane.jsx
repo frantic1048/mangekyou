@@ -5,7 +5,6 @@ import mangekyouStore   from '../../store/mangekyouStore';
 import {range}          from '../../worker/util';
 
 const BitPlane = React.createClass({
-  // TODO: configurable plane depth
   propTypes: {
     willProcess: React.PropTypes.func.isRequired,
     currentImage: React.PropTypes.shape({
