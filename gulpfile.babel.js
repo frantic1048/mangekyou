@@ -57,8 +57,8 @@ const app = {
   bundle: {},
 };
 
-app.bundle.entry = ['src/app/script/entry.js', 'src/app/script/worker/worker.js'];
-app.bundle.dest = ['build/app/script/entry.js', 'build/app/script/worker/worker.js'];
+app.bundle.entry = ['src/app/script/mangekyou.js', 'src/app/script/worker/worker.js'];
+app.bundle.dest = ['build/app/script/mangekyou.js', 'build/app/script/worker/worker.js'];
 app.bundle.destPath = 'build/app/script';
 
 app.js.src = ['src/app/main.js'];
