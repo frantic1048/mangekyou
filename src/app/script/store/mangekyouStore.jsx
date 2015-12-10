@@ -113,6 +113,7 @@ mangekyouDispatcher.register(payload => {
   switch (actionType) {
   case mangekyouConstant.ADD_HISTORY:
     addHistory(data);
+    mangekyouStore.emit(CHANGE_EVENT.PREVIEW);
     mangekyouStore.emit(CHANGE_EVENT.HISTORY);
     break;
   case mangekyouConstant.LOAD_HISTORY:

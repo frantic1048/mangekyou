@@ -19,11 +19,11 @@ const Histogram = React.createClass({
   },
   _handlePreviewImageChange() {
     const previewImage = mangekyouStore.getPreviewImage();
-    if (previewImage) {
-      this._compute(previewImage);
-    }
     if (this.state.worker) {
       this.state.worker.terminate();
+    }
+    if (previewImage) {
+      this._compute(previewImage);
     }
   },
   _compute(previewImage) {
@@ -37,17 +37,19 @@ const Histogram = React.createClass({
     });
     aworker.onmessage = this._didCompute;
     aworker.postMessage({
-      operationName: '',
+      operationName: 'Histogram',
       operationParam: {},
       image: {
         width: imgData.width,
-        heght: imgData.height,
+        height: imgData.height,
         data: imgData.data,
       },
     });
   },
-  _didCompute() {
-    // TODO: resolve returned histogram data.
+  _didCompute({data}) {
+    if (data.proceed) {
+      // TODO:10 visualize histogram data.
+    }
   },
 });
 

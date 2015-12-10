@@ -5,7 +5,7 @@ import Statistics     from './tool/Statistics';
 import mangekyouStore from './../store/mangekyouStore';
 
 const StatusPanel = React.createClass({
-  // TODO: implement StatusPanel, intergrate to main view.
+  // TODO:30 implement StatusPanel, intergrate to main view.
   getInitialState() {
     return {
       showing: mangekyouStore.getShowing().statusPanel,

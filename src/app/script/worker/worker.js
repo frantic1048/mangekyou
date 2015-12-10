@@ -58,7 +58,7 @@ self.onmessage = ({data: {operationName, operationParam, image}}) => {
     );
     break;
   case OUT_TYPE.FREE:
-    self.postMessage(workerResult);
+    self.postMessage(...workerResult);
     break;
   default:
       // do nothing~
