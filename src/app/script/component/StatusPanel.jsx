@@ -26,6 +26,10 @@ const StatusPanel = React.createClass({
         id="status-panel"
         style={{
           position: 'fixed',
+          display: 'flex',
+          flexFlow: 'column nowrap',
+          justifyContent: 'space-between',
+          alignItems: 'strech',
           width: 'auto',
           right: this.state.showing ? '0rem' : '-16rem',
           bottom: '0',
