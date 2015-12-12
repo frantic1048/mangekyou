@@ -71,7 +71,17 @@ const Histogram = React.createClass({
   },
   _didCompute({data}) {
     if (data.proceed) {
-      // TODO:10 visualize histogram data.
+      // TODO: visualize histogram data on this.state.histogram.
+      const {height} = this.state.histogram;
+      const ctx = this.state.histogram.getContext('2d');
+      // draw luma histogram
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+      // draw red histogram
+      ctx.fillStyle = 'rgba(227, 45, 70, 0.5)';
+      // draw green histogram
+      ctx.fillStyle = 'rgba(111, 227, 44, 0.5)';
+      // draw blud histogram
+      ctx.fillStyle = 'rgba(44, 166, 227, 0.5)';
     }
   },
 });
