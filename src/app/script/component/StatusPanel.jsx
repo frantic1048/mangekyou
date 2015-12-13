@@ -9,7 +9,12 @@ const StatusPanel = React.createClass({
     return {
       showing: mangekyouStore.getShowing().statusPanel,
       worker: null,
-      analytics: {},
+      statistics: {
+        width: 0,
+        height: 0,
+        pixelCount: 0,
+        frequency: null,
+      },
     };
   },
   componentDidMount() {
@@ -33,6 +38,7 @@ const StatusPanel = React.createClass({
           flexFlow: 'column nowrap',
           justifyContent: 'space-between',
           alignItems: 'strech',
+          padding: '1rem',
           width: 'auto',
           right: this.state.showing ? '0rem' : '-16rem',
           bottom: '0',
@@ -43,8 +49,8 @@ const StatusPanel = React.createClass({
           backgroundColor: 'rgba(255, 255, 255, 0.6)',
         }}
       >
-        <Histogram frequency={this.state.analytics.frequency}/>
-        <Statistics />
+        <Histogram frequency={this.state.statistics.frequency}/>
+        <Statistics statistics={this.state.statistics}/>
       </Paper>
     );
   },
@@ -84,15 +90,14 @@ const StatusPanel = React.createClass({
   },
   _didCompute({data}) {
     if (data.proceed) {
-      // TODO:0 visualize histogram data on this.state.histogram.
       this.setState({
-        analytics: data,
-      });
-      this.state.worker.terminate();
-      this.setState({
-        worker: null,
+        statistics: data,
       });
     }
+    this.state.worker.terminate();
+    this.setState({
+      worker: null,
+    });
   },
 });
 

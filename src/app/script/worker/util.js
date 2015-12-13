@@ -26,7 +26,7 @@ function reGamma(Clinear) {
 // Rec. 709 亮度
 // https://en.wikipedia.org/wiki/Rec._709#Luma_coefficients
 // r, g, b:[0, 1]
-function luma(r, g, b) {
+function lumaSRGB(r, g, b) {
   const rLinear = deGamma(r);
   const gLinear = deGamma(g);
   const bLinear = deGamma(b);
@@ -94,7 +94,7 @@ function* range(start = 0, end = 10, step = 1) {
 }
 
 export {
-  luma,
+  lumaSRGB,
   lumaLinear,
   hsy2rgb,
   getCoordinate,

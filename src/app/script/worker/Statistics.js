@@ -1,29 +1,34 @@
-import {getAllPositions, lumaLinear} from './util';
-
+import {getAllPositions, range} from './util';
 
 function Statistics({width, height, data}) {
   const allPos = getAllPositions(width, height);
   const pixelCount = width * height;
-  let lFreq = new Array(256).fill(0); // frequency of luma
-  let rFreq = new Array(256).fill(0); // frequency of red
-  let gFreq = new Array(256).fill(0); // frequency of green
-  let bFreq = new Array(256).fill(0); // frequency of blue
+  const lCount = new Array(256).fill(0); // count of luma levels
+  const rCount = new Array(256).fill(0); // count of red levels
+  const gCount = new Array(256).fill(0); // count of green levels
+  const bCount = new Array(256).fill(0); // count of blue levels
   for (const [,, index] of allPos()) {
     const [r, g, b] = [data[index], data[index + 1], data[index + 2]];
-    ++lFreq[Math.round(lumaLinear(r, g, b))];
-    ++rFreq[r];
-    ++gFreq[g];
-    ++bFreq[b];
+    ++rCount[r];
+    ++gCount[g];
+    ++bCount[b];
   }
 
-  lFreq = lFreq.map(v => v / pixelCount);
-  rFreq = rFreq.map(v => v / pixelCount);
-  gFreq = gFreq.map(v => v / pixelCount);
-  bFreq = bFreq.map(v => v / pixelCount);
+  for (const i of range(0, 256)) {
+    lCount[i] = Math.min(rCount[i], Math.min(gCount[i], bCount[i]));
+  }
+
+  const lFreq = lFreq.map(v => v / pixelCount);
+  const rFreq = rFreq.map(v => v / pixelCount);
+  const gFreq = gFreq.map(v => v / pixelCount);
+  const bFreq = bFreq.map(v => v / pixelCount);
 
   return [
     {
       proceed: true,
+      width,
+      height,
+      pixelCount,
       frequency: {
         luma: lFreq,
         red: rFreq,
