@@ -3,86 +3,96 @@ import ReactDOM from 'react-dom';
 import mangekyouStore from './../../store/mangekyouStore';
 
 const Histogram = React.createClass({
+  propTypes: {
+    frequency: React.PropTypes.shape({
+      luma: React.PropTypes.arrayOf(React.PropTypes.number),
+      red: React.PropTypes.arrayOf(React.PropTypes.number),
+      green: React.PropTypes.arrayOf(React.PropTypes.number),
+      blue: React.PropTypes.arrayOf(React.PropTypes.number),
+    }),
+  },
   getInitialState() {
-    const histogram = documnet.createElement('canvas');
+    const histogram = document.createElement('canvas');
     histogram.setAttribute('width', 256);
-    histogram.setAttribute('height', 1000);
-    // TODO: initiaze histogram element.
+    histogram.setAttribute('height', 150);
     return {
       showing: mangekyouStore.getShowing().toolPanel,
-      worker: null,
       histogram,
     };
   },
   componentDidMount() {
-    mangekyouStore.addPreviewImageChangeListener(this._handlePreviewImageChange);
+    // disable smoothing for histogram.
+    const container = ReactDOM.findDOMNode(this);
+    const canvas = container.children[0];
+    canvas.setAttribute('height', 150);
+    const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = false;
+    ctx.mozImageSmoothingEnabled = false;
+    ctx.webkitImageSmoothingEnabled = false;
+    ctx.msImageSmoothingEnabled = false;
   },
-  componentWillUnmount() {
-    mangekyouStore.removePreviewImageChangeListener(this._handlePreviewImageChange);
+  componentDidUpdate() {
+    if (this.props.frequency) {
+      this._updateHistogram();
+    }
   },
   render() {
     return ( // eslint-disable-line no-extra-parens
       <div
         style={{
           flexGrow: '1',
-          flexBasis: '0',
           overflow: 'hidden',
           userSelect: 'none',
+          margin: '1rem',
         }}
       >
         <canvas id="histogram-canvas"></canvas>
       </div>
     );
   },
-  _handlePreviewImageChange() {
-    const previewImage = mangekyouStore.getPreviewImage();
-    if (this.state.worker) {
-      this.state.worker.terminate();
-    }
-    if (previewImage) {
-      this._compute(previewImage);
-    }
-  },
-  _draw() {
+  _drawHistogram() {
     const container = ReactDOM.findDOMNode(this);
     const canvas = container.children[0];
     const ctx = canvas.getContext('2d');
     const {width, height} = canvas;
+
+    ctx.clearRect(0, 0, width, height);
+    ctx.drawImage(this.state.histogram, 0, 0, width, height);
   },
-  _compute(previewImage) {
-    const {width, height} = previewImage;
-    const imgData = previewImage
-                      .getContext('2d')
-                      .getImageData(0, 0, width, height);
-    const aworker = new Worker('script/worker.js');
-    this.setState({
-      worker: aworker,
+  _updateHistogram() {
+    const freq = this.props.frequency;
+    const {width, height} = this.state.histogram;
+    const ctx = this.state.histogram.getContext('2d');
+
+    // clear old histogram
+    ctx.clearRect(0, 0, width, height);
+
+    // draw luma histogram
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+    freq.luma.forEach((value, index) => {
+      ctx.fillRect(index, height - Math.round(value * height ), 1, Math.round(value * height ));
     });
-    aworker.onmessage = this._didCompute;
-    aworker.postMessage({
-      operationName: 'Histogram',
-      operationParam: {},
-      image: {
-        width: imgData.width,
-        height: imgData.height,
-        data: imgData.data,
-      },
+
+    // draw red histogram
+    ctx.fillStyle = 'rgba(227, 0, 0, 0.3)';
+    freq.red.forEach((value, index) => {
+      ctx.fillRect(index, height - Math.round(value * height ), 1, Math.round(value * height ));
     });
-  },
-  _didCompute({data}) {
-    if (data.proceed) {
-      // TODO: visualize histogram data on this.state.histogram.
-      const {height} = this.state.histogram;
-      const ctx = this.state.histogram.getContext('2d');
-      // draw luma histogram
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-      // draw red histogram
-      ctx.fillStyle = 'rgba(227, 45, 70, 0.5)';
-      // draw green histogram
-      ctx.fillStyle = 'rgba(111, 227, 44, 0.5)';
-      // draw blud histogram
-      ctx.fillStyle = 'rgba(44, 166, 227, 0.5)';
-    }
+
+    // draw green histogram
+    ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';
+    freq.green.forEach((value, index) => {
+      ctx.fillRect(index, height - Math.round(value * height ), 1, Math.round(value * height ));
+    });
+
+    // draw blud histogram
+    ctx.fillStyle = 'rgba(0, 0, 255, 0.3)';
+    freq.blue.forEach((value, index) => {
+      ctx.fillRect(index, height - Math.round(value * height ), 1, Math.round(value * height ));
+    });
+
+    // display on histogram component.
+    this._drawHistogram();
   },
 });
 

@@ -6,7 +6,6 @@ import SampleRate   from './SampleRate';
 import Quantization from './Quantization';
 import Grayscale    from './Grayscale';
 import BitPlane     from './BitPlane';
-import Histogram    from './Histogram';
 import Statistics   from './Statistics';
 
 const OUT_TYPE = {
@@ -30,10 +29,6 @@ const op = {
   BitPlane: {
     func: BitPlane,
     outType: OUT_TYPE.IMAGE,
-  },
-  Histogram: {
-    func: Histogram,
-    outType: OUT_TYPE.FREE,
   },
   Statistics: {
     func: Statistics,
