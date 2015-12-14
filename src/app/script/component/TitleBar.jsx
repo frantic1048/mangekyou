@@ -78,9 +78,9 @@ const TitleBar = React.createClass({
         iconElementRight={
           <IconMenu
             style={{ WebkitAppRegion: 'no-drag' }}
-            iconButtonElement={
-            <IconButton><MoreVertIcon/></IconButton>
-          }>
+            openDirection={'bottom-right'}
+            iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
+          >
             <MenuItem
               onClick={this._handleAddImageClick}
               style={{ WebkitAppRegion: 'no-drag' }}

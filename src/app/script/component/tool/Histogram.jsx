@@ -24,7 +24,7 @@ const Histogram = React.createClass({
     // disable smoothing for histogram.
     const container = ReactDOM.findDOMNode(this);
     const canvas = container.children[0];
-    canvas.setAttribute('width', 256);
+    canvas.setAttribute('width', container.getBoundingClientRect().width);
     canvas.setAttribute('height', 150);
     const ctx = canvas.getContext('2d');
 
