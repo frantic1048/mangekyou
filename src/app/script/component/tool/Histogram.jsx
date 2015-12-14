@@ -99,7 +99,7 @@ const Histogram = React.createClass({
 
     // draw luma histogram
     ctx.fillStyle = 'rgba(100, 100, 100, 1)';
-    freq.luma.forEach((value, index) => {
+    freq.lowerbound.forEach((value, index) => {
       ctx.fillRect(
         index, height - Math.round(value * height * scaleFactor),
         1, Math.round(value * height * scaleFactor)

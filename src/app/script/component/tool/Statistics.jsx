@@ -7,9 +7,13 @@ const Statistics = React.createClass({
       width: React.PropTypes.number,
       height: React.PropTypes.number,
       pixelCount: React.PropTypes.number,
+      averange: React.PropTypes.object,
+      median: React.PropTypes.object,
+      standardDeviation: React.PropTypes.object,
     }),
   },
   render() {
+    // TODO: display all channel statistics info.
     const stat = this.props.statistics;
     return ( // eslint-disable-line no-extra-parens
       <div
@@ -22,6 +26,16 @@ const Statistics = React.createClass({
         </div>
         <div>
           像素数：{stat.pixelCount}
+        </div>
+        <div>通道信息（Rec. 709 亮度，红，绿，蓝）</div>
+        <div>
+          平均值：{Math.round(stat.averange.luma)}
+        </div>
+        <div>
+          中值：{stat.median.luma}
+        </div>
+        <div>
+          标准差：{Math.round(stat.standardDeviation.luma)}
         </div>
       </div>
     );

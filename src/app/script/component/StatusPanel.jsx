@@ -13,6 +13,9 @@ const StatusPanel = React.createClass({
         width: 0,
         height: 0,
         pixelCount: 0,
+        averange: {red: 0, green: 0, blue: 0, luma: 0},
+        median: {red: 0, green: 0, blue: 0, luma: 0},
+        standardDeviation: {red: 0, green: 0, blue: 0, luma: 0},
         frequency: null,
       },
     };
@@ -25,7 +28,7 @@ const StatusPanel = React.createClass({
     mangekyouStore.removeShowingChangeListener(this._handleShowingChange);
     mangekyouStore.removePreviewImageChangeListener(this._handlePreviewImageChange);
   },
-  render () {
+  render() {
     return ( // eslint-disable-line no-extra-parens
       <Paper
         data-showing={this.state.showing}
