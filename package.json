@@ -1,6 +1,6 @@
 {
   "name": "mangekyou",
-  "version": "0.5.16",
+  "version": "0.5.17",
   "description": "简单的图像处理程序",
   "main": "build/app/main.js",
   "scripts": {
@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/frantic1048/mangekyou#readme",
   "dependencies": {
-    "electron-prebuilt": "^0.35.1",
+    "electron-prebuilt": "^0.36.0",
     "events": "^1.1.0",
     "flux": "^2.1.1",
     "material-ui": "^0.13.0",

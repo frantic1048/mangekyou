@@ -18,10 +18,10 @@ function Statistics({width, height, data}) {
     lCount[i] = Math.min(rCount[i], Math.min(gCount[i], bCount[i]));
   }
 
-  const lFreq = lFreq.map(v => v / pixelCount);
-  const rFreq = rFreq.map(v => v / pixelCount);
-  const gFreq = gFreq.map(v => v / pixelCount);
-  const bFreq = bFreq.map(v => v / pixelCount);
+  const lFreq = lCount.map(v => v / pixelCount);
+  const rFreq = rCount.map(v => v / pixelCount);
+  const gFreq = gCount.map(v => v / pixelCount);
+  const bFreq = bCount.map(v => v / pixelCount);
 
   return [
     {
