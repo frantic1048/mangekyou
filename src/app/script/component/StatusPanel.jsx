@@ -25,7 +25,7 @@ const StatusPanel = React.createClass({
     mangekyouStore.removeShowingChangeListener(this._handleShowingChange);
     mangekyouStore.removePreviewImageChangeListener(this._handlePreviewImageChange);
   },
-  render() {
+  render () {
     return ( // eslint-disable-line no-extra-parens
       <Paper
         data-showing={this.state.showing}

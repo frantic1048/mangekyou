@@ -14,6 +14,8 @@ function Statistics({width, height, data}) {
     ++bCount[b];
   }
 
+  // luma here is min freq of (r, g, b) count
+  // may not meaningful "luma"
   for (const i of range(0, 256)) {
     lCount[i] = Math.min(rCount[i], Math.min(gCount[i], bCount[i]));
   }

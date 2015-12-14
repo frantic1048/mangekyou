@@ -64,7 +64,14 @@ app.bundle.destPath = 'build/app/script';
 app.js.src = ['src/app/main.js'];
 app.js.dest = ['build/app/main.js'];
 app.js.destPath = 'build/app';
-app.js.lintSrc = Array.prototype.concat( app.js.src, 'gulpfile.babel.js');
+app.js.lintSrc = Array.prototype.concat(
+  app.js.src,
+  [
+    'gulpfile.babel.js',
+    'src/app/*.+(js|jsx)',
+    'src/app/**/*.+(js|jsx)',
+  ]
+);
 
 app.css.src = 'src/app/style/*.+(css|scss)';
 app.css.dest = 'build/app/style/*.css';
@@ -82,7 +89,7 @@ gulp.task('html', () => {
 gulp.task('lint', () => {
   return gulp.src(app.js.lintSrc)
     .pipe(eslint({ rulePaths: ['./']} ))
-    .pipe(eslint(eslint.format()));
+    .pipe(eslint.format());
 });
 
 gulp.task('css-dev', () => {
@@ -171,6 +178,14 @@ gulp.task('product', (callback) => {
     'css-product',
     'js-product',
     'webpack-product'
+  )();
+  callback();
+});
+
+gulp.task('ci', (callback) => {
+  gulp.parallel(
+    'lint',
+    'product'
   )();
   callback();
 });
