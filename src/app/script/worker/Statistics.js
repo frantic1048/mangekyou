@@ -1,4 +1,4 @@
-import {getAllPositions, range, lumaLinear} from './util';
+import {getAllPositions, range, lumaLinear, minOf} from './util';
 
 function levelMedian(levelCountArray, itemCount) {
   return levelCountArray.reduce((pre, cur, idx) => {

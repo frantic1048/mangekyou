@@ -2,7 +2,7 @@ import React                         from 'react';
 import AppBar                        from 'material-ui/lib/app-bar';
 import IconMenu                      from 'material-ui/lib/menus/icon-menu';
 import MenuItem                      from 'material-ui/lib/menus/menu-item';
-import MenuDivider                   from 'material-ui/lib/menus/menu-divider';
+import Divider                       from 'material-ui/lib/divider';
 import IconButton                    from 'material-ui/lib/icon-button';
 import MoreVertIcon                  from 'material-ui/lib/svg-icons/navigation/more-vert';
 import ImageAddToPhotosIcon          from 'material-ui/lib/svg-icons/image/add-to-photos';
@@ -96,7 +96,7 @@ const TitleBar = React.createClass({
               secondaryText="E"
               leftIcon={<ContentSaveIcon/>}
             />
-            <MenuDivider/>
+            <Divider/>
             <MenuItem
               onClick={this._handleTriggerHistoryPanel}
               primaryText={`${this.state.showing.historyPanel ? '隐藏' : '显示'}历史记录`}
@@ -115,7 +115,7 @@ const TitleBar = React.createClass({
               secondaryText="A"
               leftIcon={<AVEqualizerIcon/>}
             />
-            <MenuDivider/>
+            <Divider/>
             <MenuItem
               disabled
               primaryText="版本"
