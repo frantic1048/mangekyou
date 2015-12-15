@@ -1,10 +1,10 @@
-import {getAllPositions, lumaLinear} from './util';
+import {getAllPositions, lumaLinear, maxOf, minOf} from './util';
 
 const methods = {
   rec709 : (r, g, b) => lumaLinear(r, g, b), // eslint-disable-line key-spacing
   average: (r, g, b) => 1 / 3 * (r + g + b),
-  max    : (r, g, b) => Math.max(r, Math.max(g, b)), // eslint-disable-line key-spacing
-  min    : (r, g, b) => Math.min(r, Math.min(g, b)), // eslint-disable-line key-spacing
+  max    : (r, g, b) => maxOf(r, g, b), // eslint-disable-line key-spacing
+  min    : (r, g, b) => minOf(r, g, b), // eslint-disable-line key-spacing
 };
 
 function Grayscale({width, height, data}, {method}) {

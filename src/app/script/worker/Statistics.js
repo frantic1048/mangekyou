@@ -18,6 +18,7 @@ function levelAverange(levelCountArray, itemCount) {
   return levelCountArray.reduce((pre, cur, idx) => pre + idx * cur, 0) / itemCount;
 }
 
+// https://en.wikipedia.org/wiki/Standard_deviation#Uncorrected_sample_standard_deviation
 function levelStandardDeviation(levelCountArray, averangeValue, itemCount) {
   return Math.sqrt(levelCountArray.reduce((pre, cur, idx) => {
     return pre + Math.pow(cur - averangeValue, 2) * idx;
@@ -42,7 +43,7 @@ function Statistics({width, height, data}) {
   }
 
   for (const i of range(0, 256)) {
-    lbCount[i] = Math.min(rCount[i], Math.min(gCount[i], bCount[i]));
+    lbCount[i] = minOf(rCount[i], gCount[i], bCount[i]);
   }
 
   // color levels frequency
