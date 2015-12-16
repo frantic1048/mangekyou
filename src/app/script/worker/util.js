@@ -46,13 +46,11 @@ function lumaLinear(r, g, b) {
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
-// HSY709 to RGB values
+// Hue/Chroma/Luma(Rec. 709) to RGB values
 // https://en.wikipedia.org/wiki/HSL_and_HSV#From_luma.2Fchroma.2Fhue
-// h:[0, 360], s:[0, 1], y:[0, 1]
-// FIXME: hsy here actually is hc(chroma)y, need implement saturation with hue/luma
-function hsy2rgb(h, s, y) {
+// h:[0, 360], c:[0, 1], y:[0, 1]
+function hcy2rgb(h, c, y) {
   const hm = h / 60;
-  const c = s;
   const x = c * (1 - Math.abs(hm % 2 - 1));
   let r, g, b; // eslint-disable-line one-var
   let r1, g1, b1; // eslint-disable-line one-var
@@ -76,16 +74,15 @@ function hsy2rgb(h, s, y) {
   return [r, g, b];
 }
 
-// convert RGB to HSY709 values
+// convert RGB to Hue/Chroma/Luma(Rec. 709) values
 // r:[0,1], g:[0,1], b:[0,1]
-// h:[0, 360], s:[0, 1], y:[0, 1]
-// FIXME: hsy here actually is hc(chroma)y, need implement saturation with hue/luma
-function rgb2hsy(r, g, b) {
+// h:[0, 360], c:[0, 1], y:[0, 1]
+function rgb2hcy(r, g, b) {
   const M = maxOf(r, g, b);
   const m = minOf(r, g, b);
-  const c = M - m;
+  let h, c, y; // eslint-disable-line one-var
   let hm;
-  let h, s, y; // eslint-disable-line one-var
+  c = M - m;
   if (c === 0) {
     hm = 0;
   } else {
@@ -104,9 +101,8 @@ function rgb2hsy(r, g, b) {
     }
   }
   h = 60 * hm;
-  s = c;
   y = lumaLinear(r, g, b);
-  return [h, s, y];
+  return [h, c, y];
 }
 
 // Coordinate helper for pixel accesing of ImageData
@@ -141,8 +137,8 @@ export {
   minOf,
   lumaSRGB,
   lumaLinear,
-  hsy2rgb,
-  rgb2hsy,
+  hcy2rgb,
+  rgb2hcy,
   getCoordinate,
   getAllPositions,
   range,
