@@ -1,11 +1,11 @@
-// Color space conversion functions
+// Color space conversions
 // if not specified, parameter value range is: [0, 1]
 
 // disable one-var linting for frequently grouped color values declaration
 // disable new-cap linting for color space name usage in function name
 /* eslint-disable one-var, new-cap */
 
-import {clampBetween} from './util';
+import {clampBetween, minOf, maxOf} from './util';
 
 // sRGB Gamma decoding and encoding
 // https://en.wikipedia.org/wiki/SRGB
@@ -50,7 +50,7 @@ function HSYToRGB(h, s, y, R, G, B) {
   const hue = h % 1;
   const sat = clampBetween(s, 0, 1);
   const lum = clampBetween(y, 0, 1);
-  const segment = 0.16666666666666666; // 1 / 6
+  const segment = 0.16666666666666666; // 1/6
   let r, g, b;
 
   let maxSat, m, fract, lumB, chroma, x;
@@ -71,7 +71,7 @@ function HSYToRGB(h, s, y, R, G, B) {
     r = chroma; g = x; b = 0;
     m = lum - ( R * r + G * g + B * b);
     r += m; g += m; b += m;
-  } else if ( hue >= segment && hue <= 2 * segment) {
+  } else if ( hue >= segment && hue < 2 * segment) {
     maxSat = G + R - R * (hue - segment) * 6;
 
     if (lum < maxSat) {
@@ -87,7 +87,7 @@ function HSYToRGB(h, s, y, R, G, B) {
     r =  x; g = chroma; b = 0;
     m = lum - (R * r + G * g + B * b);
     r += m; g += m; b += m;
-  } else if (hue >= 2 * segment && hue <= 3 * segment) {
+  } else if (hue >= 2 * segment && hue < 3 * segment) {
     maxSat = G + B * (hue - 2 * segment) * 6;
 
     if (lum < maxSat) {
@@ -103,7 +103,7 @@ function HSYToRGB(h, s, y, R, G, B) {
     r = 0; g = chroma; b = x;
     m = lum - (R * r + G * g + B * b);
     r += m; g += m; b += m;
-  } else if (hue >= 3 * segment && hue <= 4 * segment) {
+  } else if (hue >= 3 * segment && hue < 4 * segment) {
     maxSat = G + B - G * (hue - 3 * segment) * 6;
 
     if (lum < maxSat) {
@@ -135,7 +135,7 @@ function HSYToRGB(h, s, y, R, G, B) {
     r = x; g = 0; b = chroma;
     m = lum - (R * r + G * g + B * b);
     r += m; g += m; b += m;
-  } else if (hue >= 5 * segment && hue <= 1) {
+  } else if (hue > 5 * segment && hue < 1) {
     maxSat = B + R - B * (hue - 5 * segment) * 6;
 
     if (lum < maxSat) {
@@ -165,7 +165,76 @@ function HSYToRGB(h, s, y, R, G, B) {
 }
 
 function RGBToHSY(r, g, b, R, G, B) {
-  // TODO: implement here
+  const red = clampBetween(r, 0, 1);
+  const green = clampBetween(g, 0, 1);
+  const blue = clampBetween(b, 0, 1);
+  const m = minOf(r, g, b);
+  const M = maxOf(r, g, b);
+  const chroma = M - m;
+  let hue, sat, lum;
+  let lumB, maxSat;
+
+  lum = R * red + G * green + B * blue;
+  lumB = lum;
+  maxSat = 0.5;
+
+  if (chroma === 0) {
+    hue = 0;
+    sat = 0;
+  } else {
+    // the following finds the hue
+    if (M === r) {
+      if ( m === b) {
+        hue = (g - b) / chroma;
+      } else {
+        hue = (g - b) / chroma + 6;
+      }
+    } else if (M === g) {
+      hue = (b - r) / chroma + 2;
+    } else if (M === b) {
+      hue = (r - g) / chroma + 4;
+    }
+    hue /= 6;
+
+    const segment = 0.16666666666666666; // 1/6
+    if (hue > 1 || hue < 0) { hue = hue % 1; }
+
+    if (hue >= 0 && hue < segment) {
+      maxSat = R + G * hue * 6;
+    } else if (hue >= segment && hue < 2 * segment) {
+      maxSat = G + R - R * (hue - segment) * 6;
+    } else if (hue >= 2 * segment && hue < 3 * segment) {
+      maxSat = G + B * (hue - 2 * segment) * 6;
+    } else if (hue >= 3 * segment && hue < 4 * segment) {
+      maxSat = B + G - G * (hue - 3 * segment) * 6;
+    } else if (hue >= 4 * segment && hue < 5 * segment) {
+      maxSat = B + R * (hue - 4 * segment) * 6;
+    } else if (hue >= 5 * segment && hue < 1) {
+      maxSat = R + B - B * (hue - 5 * segment) * 6;
+    } else {
+      maxSat = 0.5;
+    }
+
+    if (maxSat > 1 || maxSat < 0) { // this should not show up during normal use
+      maxSat = maxSat % 1;          // if it does, it'll try to correct, but it's not good !
+    }
+
+    if (lum <= maxSat) {
+      lumB = lum / maxSat * 0.5;
+    } else {
+      lumB = (lum - maxSat) / (1 - maxSat) * 0.5 + 0.5; // This is weighting the luma for the saturation
+    }
+
+    sat = chroma;
+    if (sat > 0) {
+      sat = lum <= maxSat ? chroma / 2 * lumB : chroma / (2 - 2 * lumB);
+    }
+  }
+
+  h = hue;
+  s = clampBetween(sat, 0, 1);
+  y = clampBetween(lum, 0, 1);
+  return [h, s, y];
 }
 
 function HSY709ToRGB(h, s, y) { return HSYToRGB(h, s, y, ...Rec709); }
@@ -193,7 +262,7 @@ function HCYToRGB(h, c, y, R, G, B) {
     [r1, g1, b1] = [0, x, c];
   } else if (hm >= 4 && hm < 5) {
     [r1, g1, b1] = [x, 0, c];
-  } else if (hm >= 5 && hm < 6) {
+  } else if (hm >= 5 && hm <= 6) {
     [r1, g1, b1] = [c, 0, x];
   } else {
     [r1, g1, b1] = [0, 0, 0];
