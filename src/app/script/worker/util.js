@@ -1,3 +1,5 @@
+// General helpers
+
 // max one of input values
 function maxOf(...values) {
   return values.reduce((pre, cur) => Math.max(pre, cur), -Infinity);
@@ -8,101 +10,13 @@ function minOf(...values) {
   return values.reduce((pre, cur) => Math.min(pre, cur), Infinity);
 }
 
-// Gamma Correction
-// https://en.wikipedia.org/wiki/SRGB
-// Csrgb, Clinear below are all in range [0, 1]
-function deGamma(Csrgb) {
-  let Clinear;
-  if (Csrgb <= 0.04045) {
-    Clinear = Csrgb / 12.92;
-  } else {
-    Clinear = Math.pow(Csrgb + 0.055 / 1.055, 2.4);
+// a Python like rangex() helper
+function* range(start = 0, end = 10, step = 1) {
+  let cur = start;
+  while (step > 0 ? cur < end : cur > end) {
+    yield cur;
+    cur += step;
   }
-  return Clinear;
-}
-
-function reGamma(Clinear) {
-  let Csrgb;
-  if (Clinear <= 0.0031308) {
-    Csrgb = 12.92 * Clinear;
-  } else {
-    Csrgb = 1.055 * Math.pow(Clinear, 1 / 2.4) - 0.055;
-  }
-  return Csrgb;
-}
-
-// Rec. 709 luma (Y709) of a sRGB color
-// https://en.wikipedia.org/wiki/Rec._709#Luma_coefficients
-// r, g, b:[0, 1]
-function lumaSRGB(r, g, b) {
-  const rLinear = deGamma(r);
-  const gLinear = deGamma(g);
-  const bLinear = deGamma(b);
-  return reGamma(0.2126 * rLinear + 0.7152 * gLinear + 0.0722 * bLinear);
-}
-
-// Rec. 709 luma of a linear RGB color (without sRGB gamma correction)
-function lumaLinear(r, g, b) {
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-}
-
-// Hue/Chroma/Luma(Rec. 709) to RGB values
-// https://en.wikipedia.org/wiki/HSL_and_HSV#From_luma.2Fchroma.2Fhue
-// h:[0, 360], c:[0, 1], y:[0, 1]
-function hcy2rgb(h, c, y) {
-  const hm = h / 60;
-  const x = c * (1 - Math.abs(hm % 2 - 1));
-  let r, g, b; // eslint-disable-line one-var
-  let r1, g1, b1; // eslint-disable-line one-var
-  if (hm >= 0 && hm < 1) {
-    [r1, g1, b1] = [c, x, 0];
-  } else if (hm >= 1 && hm < 2) {
-    [r1, g1, b1] = [x, c, 0];
-  } else if (hm >= 2 && hm < 3) {
-    [r1, g1, b1] = [0, c, x];
-  } else if (hm >= 3 && hm < 4) {
-    [r1, g1, b1] = [0, x, c];
-  } else if (hm >= 4 && hm < 5) {
-    [r1, g1, b1] = [x, 0, c];
-  } else if (hm >= 5 && hm < 6) {
-    [r1, g1, b1] = [c, 0, x];
-  } else {
-    [r1, g1, b1] = [0, 0, 0];
-  }
-  const m = y - (0.2126 * r1 + 0.7152 * g1 + 0.0722 * b1);
-  [r, g, b] = [r1 + m, g1 + m, b1 + m];
-  return [r, g, b];
-}
-
-// convert RGB to Hue/Chroma/Luma(Rec. 709) values
-// r:[0,1], g:[0,1], b:[0,1]
-// h:[0, 360], c:[0, 1], y:[0, 1]
-function rgb2hcy(r, g, b) {
-  const M = maxOf(r, g, b);
-  const m = minOf(r, g, b);
-  let h, c, y; // eslint-disable-line one-var
-  let hm;
-  c = M - m;
-  if (c === 0) {
-    hm = 0;
-  } else {
-    switch (M) {
-    case r:
-      hm = (g - b) / c % 6;
-      break;
-    case g:
-      hm = (b - r) / c + 2;
-      break;
-    case b:
-      hm = (r - g) / c + 4;
-      break;
-    default:
-      break;
-    }
-  }
-  h = 60 * hm;
-  y = lumaLinear(r, g, b);
-  return [h, c, y];
 }
 
 // Coordinate helper for pixel accesing of ImageData
@@ -124,21 +38,9 @@ function getAllPositions(width, height) {
   return positions;
 }
 
-function* range(start = 0, end = 10, step = 1) {
-  let cur = start;
-  while (step > 0 ? cur < end : cur > end) {
-    yield cur;
-    cur += step;
-  }
-}
-
 export {
   maxOf,
   minOf,
-  lumaSRGB,
-  lumaLinear,
-  hcy2rgb,
-  rgb2hcy,
   getCoordinate,
   getAllPositions,
   range,

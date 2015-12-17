@@ -119,8 +119,8 @@ const ToolPanel = React.createClass({
   },
   _handleChange(event, selectedIndex, menuItem) {
     this.setState({
-      selectedOperation: menuItem.payload,
-      selectedOperationDisplayName: menuItem.text,
+      selectedOperation: menuItem,
+      selectedOperationDisplayName: this.state.operations[menuItem].displayName,
     });
   },
   _handleApply() {

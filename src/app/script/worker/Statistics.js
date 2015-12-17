@@ -1,4 +1,5 @@
-import {getAllPositions, range, lumaLinear, minOf} from './util';
+import {getAllPositions, range, minOf} from './util';
+import {luma709} from './ColorConversion';
 
 function levelMedian(levelCountArray, itemCount) {
   return levelCountArray.reduce((pre, cur, idx) => {
@@ -39,7 +40,7 @@ function Statistics({width, height, data}) {
     ++rCount[r];
     ++gCount[g];
     ++bCount[b];
-    ++lCount[Math.round(lumaLinear(r, g, b))];
+    ++lCount[Math.round(luma709(r, g, b))];
   }
 
   for (const i of range(0, 256)) {
