@@ -10,6 +10,19 @@ function minOf(...values) {
   return values.reduce((pre, cur) => Math.min(pre, cur), Infinity);
 }
 
+// clamp value between given range
+function clampBetween(value, lowerBound, upperBound) {
+  let result;
+  if ( value >= lowerBound && value <= upperBound) {
+    result = value;
+  } else if (value < lowerBound) {
+    result = lowerBound;
+  } else if ( value > upperBound) {
+    result = upperBound;
+  }
+  return result;
+}
+
 // a Python like rangex() helper
 function* range(start = 0, end = 10, step = 1) {
   let cur = start;
@@ -41,6 +54,7 @@ function getAllPositions(width, height) {
 export {
   maxOf,
   minOf,
+  clampBetween,
   getCoordinate,
   getAllPositions,
   range,

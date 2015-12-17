@@ -1,10 +1,11 @@
 // Color space conversion functions
-// if not specified, value ranges are:
-//   [0, 360] for hue
-//   [0, 1] for red, green, blue, chroma, saturation, luma and others.
+// if not specified, parameter value range is: [0, 1]
 
 // disable one-var linting for frequently grouped color values declaration
-/* eslint-disable one-var */
+// disable new-cap linting for color space name usage in function name
+/* eslint-disable one-var, new-cap */
+
+import {clampBetween} from './util';
 
 // sRGB Gamma decoding and encoding
 // https://en.wikipedia.org/wiki/SRGB
@@ -39,25 +40,146 @@ function luma(r, g, b, R, G, B) {
   return R * r + G * g + B * b;
 }
 
-function luma709(r, g, b) {
-  return luma(r, g, b, ...Rec709);
-}
-
-function luma601(r, g, b) {
-  return luma(r, g, b, ...Rec601);
-}
+function luma709(r, g, b) { return luma(r, g, b, ...Rec709); }
+function luma601(r, g, b) { return luma(r, g, b, ...Rec601); }
 
 // Hue/Saturation/Luma to Red/Green/Blue and back
-// These algorithms were taken from Krita's source code.
+// These algorithms were taken from KDE Krita's source code.
 // https://github.com/KDE/krita/blob/fcf9a431b0af9f51546f986499b9621d5ccdf489/libs/pigment/KoColorConversions.cpp#L630-L841
-function HSYToRGB(h, s, y, R, G, B) {}
-function RGBToHSY(r, g, b, R, G, B) {}
+function HSYToRGB(h, s, y, R, G, B) {
+  const hue = h % 1;
+  const sat = clampBetween(s, 0, 1);
+  const lum = clampBetween(y, 0, 1);
+  const segment = 0.16666666666666666; // 1 / 6
+  let r, g, b;
+
+  let maxSat, m, fract, lumB, chroma, x;
+
+  if (hue >= 0 && hue < segment) {
+    maxSat = R + G * hue * 6;
+
+    if (lum <= maxSat) {
+      lumB = lum / maxSat * 0.5;
+      chroma = sat * 2 * lumB;
+    } else {
+      lumB = (lum - maxSat) / ( 1 - maxSat) * 0.5 + 0.5;
+      chroma = sat * (2 - 2 * lumB);
+    }
+
+    fract = hue * 6;
+    x = (1 - Math.abs(fract % 2 - 1)) * chroma;
+    r = chroma; g = x; b = 0;
+    m = lum - ( R * r + G * g + B * b);
+    r += m; g += m; b += m;
+  } else if ( hue >= segment && hue <= 2 * segment) {
+    maxSat = G + R - R * (hue - segment) * 6;
+
+    if (lum < maxSat) {
+      lumB = lum / maxSat * 0.5;
+      chroma = sat * 2 * lumB;
+    } else {
+      lumB = (lum - maxSat) / (1 - maxSat) * 0.5 + 0.5;
+      chroma = sat * (2 - 2 * lumB);
+    }
+
+    fract = hue * 6;
+    x = (1 - Math.abs(fract % 2 - 1)) * chroma;
+    r =  x; g = chroma; b = 0;
+    m = lum - (R * r + G * g + B * b);
+    r += m; g += m; b += m;
+  } else if (hue >= 2 * segment && hue <= 3 * segment) {
+    maxSat = G + B * (hue - 2 * segment) * 6;
+
+    if (lum < maxSat) {
+      lumB = lum / maxSat * 0.5;
+      chroma = sat * 2 * lumB;
+    } else {
+      lumB = (lum - maxSat) / (1 - maxSat) * 0.5 + 0.5;
+      chroma = sat * (2 - 2 * lumB);
+    }
+
+    fract = hue * 6.0;
+    x = (1 - Math.abs(fract % 2 - 1)) * chroma;
+    r = 0; g = chroma; b = x;
+    m = lum - (R * r + G * g + B * b);
+    r += m; g += m; b += m;
+  } else if (hue >= 3 * segment && hue <= 4 * segment) {
+    maxSat = G + B - G * (hue - 3 * segment) * 6;
+
+    if (lum < maxSat) {
+      lumB = lum / maxSat * 0.5;
+      chroma = sat * 2 * lumB;
+    } else {
+      lumB = (lum - maxSat) / (1 - maxSat) * 0.5 + 0.5;
+      chroma = sat * (2 - 2 * lumB);
+    }
+
+    fract = hue * 6;
+    x = (1 - Math.abs(fract % 2 - 1)) * chroma;
+    r = 0; g = x; b = chroma;
+    m = lum - (R * r + G * g + B * b);
+    r += m; g += m; b += m;
+  } else if (hue >= 4 * segment && hue <= 5 * segment) {
+    maxSat = B + R * (hue - 4 * segment) * 6;
+
+    if (lum < maxSat) {
+      lumB = lum / maxSat * 0.5;
+      chroma = sat * 2 * lumB;
+    } else {
+      lumB = (lum - maxSat) / (1 - maxSat) * 0.5 + 0.5;
+      chroma = sat * (2 - 2 * lumB);
+    }
+
+    fract = hue * 6;
+    x = (1 - Math.abs(fract % 2 - 1)) * chroma;
+    r = x; g = 0; b = chroma;
+    m = lum - (R * r + G * g + B * b);
+    r += m; g += m; b += m;
+  } else if (hue >= 5 * segment && hue <= 1) {
+    maxSat = B + R - B * (hue - 5 * segment) * 6;
+
+    if (lum < maxSat) {
+      lumB = lum / maxSat * 0.5;
+      chroma = sat * 2 * lumB;
+    } else {
+      lumB = (lum - maxSat) / (1 - maxSat) * 0.5 + 0.5;
+      chroma = sat * (2 - 2 * lumB);
+    }
+
+    fract = hue * 6;
+    x = (1 - Math.abs(fract % 2 - 1)) * chroma;
+    r = chroma; g = 0; b = x;
+    m = lum - (R * r + G * g + B * b);
+    r += m; g += m; b += m;
+  } else {
+    r = 0;
+    g = 0;
+    b = 0;
+  }
+
+  r = clampBetween(r, 0, 1);
+  g = clampBetween(g, 0, 1);
+  b = clampBetween(b, 0, 1);
+
+  return [r, g, b];
+}
+
+function RGBToHSY(r, g, b, R, G, B) {
+  // TODO: implement here
+}
+
+function HSY709ToRGB(h, s, y) { return HSYToRGB(h, s, y, ...Rec709); }
+function RGBToHSY709(r, g, b) { return RGBToHSY(r, g, b, ...Rec709); }
+
+function HSY601ToRGB(h, s, y) { return HSYToRGB(h, s, y, ...Rec601); }
+function RGBToHSY601(r, g, b) { return RGBToHSY(r, g, b, ...Rec601); }
 
 // Hue/Chroma/Luma to Red/Green/Blue and back
+// algorithm taken from Wiki, modified to fit [0, 1] hue range
 // https://en.wikipedia.org/wiki/HSL_and_HSV#From_luma.2Fchroma.2Fhue
 function HCYToRGB(h, c, y, R, G, B) {
   // R, G, B is coefficients for red/green/blue.
-  const hm = h / 60;
+  const hm = h * 6;
   const x = c * (1 - Math.abs(hm % 2 - 1));
   let r, g, b;
   let r1, g1, b1;
@@ -105,10 +227,16 @@ function RGBToHCY(r, g, b, R, G, B) {
       break;
     }
   }
-  h = 60 * hm;
+  h = hm / 6;
   y = luma(r, g, b, R, G, B);
   return [h, c, y];
 }
+
+function HCY709ToRGB(h, s, y) { return HCYToRGB(h, s, y, ...Rec709); }
+function RGBToHCY709(r, g, b) { return RGBToHCY(r, g, b, ...Rec709); }
+
+function HCY601ToRGB(h, s, y) { return HCYToRGB(h, s, y, ...Rec601); }
+function RGBToHCY601(r, g, b) { return RGBToHCY(r, g, b, ...Rec601); }
 
 export {
   enGamma,
@@ -118,6 +246,14 @@ export {
   luma709,
   HSYToRGB,
   RGBToHSY,
+  HSY709ToRGB,
+  RGBToHSY709,
+  HSY601ToRGB,
+  RGBToHSY601,
   HCYToRGB,
   RGBToHCY,
+  HCY709ToRGB,
+  RGBToHCY709,
+  HCY601ToRGB,
+  RGBToHCY601,
 };
