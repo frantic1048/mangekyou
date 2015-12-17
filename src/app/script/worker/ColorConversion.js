@@ -3,6 +3,9 @@
 //   [0, 360] for hue
 //   [0, 1] for red, green, blue, chroma, saturation, luma and others.
 
+// disable one-var linting for frequently grouped color values declaration
+/* eslint-disable one-var */
+
 // sRGB Gamma decoding and encoding
 // https://en.wikipedia.org/wiki/SRGB
 // Csrgb, Clinear below are all in range [0, 1]
@@ -56,8 +59,8 @@ function HCYToRGB(h, c, y, R, G, B) {
   // R, G, B is coefficients for red/green/blue.
   const hm = h / 60;
   const x = c * (1 - Math.abs(hm % 2 - 1));
-  let r, g, b; // eslint-disable-line one-var
-  let r1, g1, b1; // eslint-disable-line one-var
+  let r, g, b;
+  let r1, g1, b1;
   if (hm >= 0 && hm < 1) {
     [r1, g1, b1] = [c, x, 0];
   } else if (hm >= 1 && hm < 2) {
@@ -82,7 +85,7 @@ function RGBToHCY(r, g, b, R, G, B) {
   // R, G, B is coefficients for red/green/blue.
   const M = maxOf(r, g, b);
   const m = minOf(r, g, b);
-  let h, c, y; // eslint-disable-line one-var
+  let h, c, y;
   let hm;
   c = M - m;
   if (c === 0) {
@@ -108,6 +111,8 @@ function RGBToHCY(r, g, b, R, G, B) {
 }
 
 export {
+  enGamma,
+  deGamma,
   luma,
   luma601,
   luma709,

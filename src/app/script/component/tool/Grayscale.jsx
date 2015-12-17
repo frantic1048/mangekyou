@@ -17,23 +17,29 @@ const Grayscale = React.createClass({
         method: 'rec709',
       },
       options: [
+        /* eslint-disable key-spacing */
         {
-          label: 'Rec. 709',
+          label: '亮度（ITU-R BT.709）',
           value: 'rec709',
-          key  : 'rec709', // eslint-disable-line key-spacing
+          key  : 'rec709',
+        }, {
+          label: '亮度（ITU-R BT.601）',
+          value: 'rec601',
+          key  : 'rec601',
         }, {
           label: '平均值',
           value: 'average',
-          key  : 'average', // eslint-disable-line key-spacing
+          key  : 'average',
         }, {
           label: '最大值',
           value: 'max',
-          key  : 'max', // eslint-disable-line key-spacing
+          key  : 'max',
         }, {
           label: '最小值',
           value: 'min',
-          key  : 'min', // eslint-disable-line key-spacing
+          key  : 'min',
         },
+        /* eslint-enable key-spacing */
       ],
     };
   },

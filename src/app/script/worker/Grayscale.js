@@ -1,12 +1,15 @@
 import {getAllPositions, maxOf, minOf} from './util';
-import {luma709} from './ColorConversion';
+import {luma709, luma601} from './ColorConversion';
 
+/* eslint-disable key-spacing */
 const methods = {
-  rec709 : (r, g, b) => luma709(r, g, b), // eslint-disable-line key-spacing
+  rec709 : (r, g, b) => luma709(r, g, b),
+  rec601 : (r, g, b) => luma601(r, g, b),
   average: (r, g, b) => 1 / 3 * (r + g + b),
-  max    : (r, g, b) => maxOf(r, g, b), // eslint-disable-line key-spacing
-  min    : (r, g, b) => minOf(r, g, b), // eslint-disable-line key-spacing
+  max    : (r, g, b) => maxOf(r, g, b),
+  min    : (r, g, b) => minOf(r, g, b),
 };
+/* eslint-enable key-spacing */
 
 function Grayscale({width, height, data}, {method}) {
   const allPos = getAllPositions(width, height);
