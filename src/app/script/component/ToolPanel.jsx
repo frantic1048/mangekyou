@@ -118,10 +118,17 @@ const ToolPanel = React.createClass({
     );
   },
   _handleChange(event, selectedIndex, menuItem) {
-    this.setState({
-      selectedOperation: menuItem,
-      selectedOperationDisplayName: this.state.operations[menuItem].displayName,
-    });
+    if (menuItem) {
+      this.setState({
+        selectedOperation: menuItem,
+        selectedOperationDisplayName: this.state.operations[menuItem].displayName,
+      });
+    } else {
+      this.setState({
+        selectedOperation: '',
+        selectedOperationDisplayName: '无',
+      });
+    }
   },
   _handleApply() {
     if (this.state.proceedImage) {
