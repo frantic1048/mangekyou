@@ -315,6 +315,7 @@ function HSLToRGB(h, s, l) {
   const hue = h * 6;
   const x = chroma * (1 - Math.abs(hue % 2 - 1));
   let r1, g1, b1;
+  let r, g, b;
 
   if (hue >= 0 && hue < 1) {
     [r1, g1, b1] = [chroma, x, 0];
@@ -333,19 +334,97 @@ function HSLToRGB(h, s, l) {
   }
 
   const m = l - 0.5 * chroma;
-  const [r, g, b] = [r1 + m, g1 + m, b1 + m];
+  [r, g, b] = [r1 + m, g1 + m, b1 + m];
   return [r, g, b];
 }
 
-function RGBToHSL(r, g, b) {}
+function RGBToHSL(r, g, b) {
+  const M = maxOf(r, g, b);
+  const m = minOf(r, g, b);
+  const chroma = M - m;
+  let hue;
+  let h, s, l;
+
+  if (r === M) {
+    hue = (g - b) / c % 6;
+  } else if (g === M) {
+    hue = (b - r) / c + 2;
+  } else if (b === M) {
+    hue = (r - g) / c + 4;
+  }
+
+  h = hue / 6; // make sure h in [0, 1] range
+  l = 0.5 * (M + m);
+
+  if (chroma === 0) {
+    s = 0;
+  } else {
+    s = chroma / (1 - Math.abs(2 * l - 1));
+  }
+
+  return [h, s, l];
+}
 
 // Hue/Saturation/Value to Red/Green/Blue and back
-function HSVToRGB(h, s, v) {}
-function RGBToHSV(r, g, b) {}
+// algorithm from Wiki, hue value modified to fit [0, 1] range
+// https://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV
+function HSVToRGB(h, s, v) {
+  const chroma = v * s;
+  const hue = h * 6;
+  const x = chroma * (1 - Math.abs(hue % 2 - 1));
+  let r1, g1, b1;
+  let r, g, b;
 
-// Hue/Saturation/Intensity to Red/Green/Blue and back
-function HSIToRGB(h, s, i) {}
-function RGBToHSI(r, g, b) {}
+  if (hue >= 0 && hue < 1) {
+    [r1, g1, b1] = [chroma, x, 0];
+  } else if (hue >= 1 && hue < 2) {
+    [r1, g1, b1] = [x, chroma, 0];
+  } else if (hue >= 2 && hue < 3) {
+    [r1, g1, b1] = [0, chroma, x];
+  } else if (hue >= 3 && hue < 4) {
+    [r1, g1, b1] = [0, x, chroma];
+  } else if (hue >= 4 && hue < 5) {
+    [r1, g1, b1] = [x, 0, chroma];
+  } else if (hue >= 5 && hue <= 6) {
+    [r1, g1, b1] = [chroma, 0, x];
+  } else {
+    [r1, g1, b1] = [0, 0, 0];
+  }
+
+  const m = v - chroma;
+  [r, g, b] = [r1 + m, g1 + m, b1 + m];
+  return [r, g, b];
+}
+
+function RGBToHSV(r, g, b) {
+  const M = maxOf(r, g, b);
+  const m = minOf(r, g, b);
+  const chroma = M - m;
+  let hue;
+  let h, s, v;
+
+  if (r === M) {
+    hue = (g - b) / chroma % 6;
+  } else if (g === M) {
+    hue = (b - r) / chroma + 2;
+  } else if (b === M) {
+    hue = (r - g) / chroma + 4;
+  } else if (chroma === 0) {
+    // if no chroma, set hue to 0
+    hue = 0;
+  }
+
+  h = hue / 6;
+  v = M;
+
+  if (chroma === 0) {
+    s = 0;
+  } else {
+    s = chroma / v;
+  }
+
+  return [h, s, v];
+}
 
 export {
   enGamma, deGamma,
@@ -358,5 +437,4 @@ export {
   HCY601ToRGB,  RGBToHCY601,
   HSLToRGB,     RGBToHSL,
   HSVToRGB,     RGBToHSV,
-  HSIToRGB,     RGBToHSI,
 };
