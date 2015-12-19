@@ -2,11 +2,12 @@
 // http://babeljs.io/docs/usage/polyfill/
 import 'babel-polyfill';
 
-import SampleRate   from './SampleRate';
-import Quantization from './Quantization';
-import Grayscale    from './Grayscale';
-import BitPlane     from './BitPlane';
-import Statistics   from './Statistics';
+import SampleRate            from './SampleRate';
+import Quantization          from './Quantization';
+import Grayscale             from './Grayscale';
+import BitPlane              from './BitPlane';
+import Statistics            from './Statistics';
+import HistogramEqualization from './HistogramEqualization';
 
 const OUT_TYPE = {
   IMAGE: 'IMAGE',
@@ -33,6 +34,10 @@ const op = {
   Statistics: {
     func: Statistics,
     outType: OUT_TYPE.FREE,
+  },
+  HistogramEqualization: {
+    func: HistogramEqualization,
+    outType: OUT_TYPE.IMAGE,
   },
 };
 

@@ -27,6 +27,10 @@ const Grayscale = React.createClass({
           value: 'rec601',
           key  : 'rec601',
         }, {
+          label: '亮度（HSL）',
+          value: 'hsl',
+          key  : 'hsl',
+        }, {
           label: '平均值',
           value: 'average',
           key  : 'average',

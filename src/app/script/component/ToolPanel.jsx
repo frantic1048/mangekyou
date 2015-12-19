@@ -1,14 +1,15 @@
-import React             from 'react';
-import Paper             from 'material-ui/lib/paper';
-import RaisedButton      from 'material-ui/lib/raised-button';
-import DropDownMenu      from 'material-ui/lib/drop-down-menu';
-import mangekyouAction   from '../action/mangekyouAction';
-import mangekyouStore    from '../store/mangekyouStore';
-import mangekyouConstant from '../constant/mangekyouConstant';
-import SampleRate        from './tool/SampleRate';
-import Quantization      from './tool/Quantization';
-import Grayscale         from './tool/Grayscale';
-import BitPlane          from './tool/BitPlane';
+import React                 from 'react';
+import Paper                 from 'material-ui/lib/paper';
+import RaisedButton          from 'material-ui/lib/raised-button';
+import DropDownMenu          from 'material-ui/lib/drop-down-menu';
+import mangekyouAction       from '../action/mangekyouAction';
+import mangekyouStore        from '../store/mangekyouStore';
+import mangekyouConstant     from '../constant/mangekyouConstant';
+import SampleRate            from './tool/SampleRate';
+import Quantization          from './tool/Quantization';
+import Grayscale             from './tool/Grayscale';
+import BitPlane              from './tool/BitPlane';
+import HistogramEqualization from './tool/HistogramEqualization';
 
 const ToolPanel = React.createClass({
   getInitialState() {
@@ -37,6 +38,10 @@ const ToolPanel = React.createClass({
         BitPlane: {
           displayName: '位平面',
           component: BitPlane,
+        },
+        HistogramEqualization: {
+          displayName: '直方图均衡化',
+          component: HistogramEqualization,
         },
       },
     };

@@ -346,11 +346,11 @@ function RGBToHSL(r, g, b) {
   let h, s, l;
 
   if (r === M) {
-    hue = (g - b) / c % 6;
+    hue = (g - b) / chroma % 6;
   } else if (g === M) {
-    hue = (b - r) / c + 2;
+    hue = (b - r) / chroma + 2;
   } else if (b === M) {
-    hue = (r - g) / c + 4;
+    hue = (r - g) / chroma + 4;
   }
 
   h = hue / 6; // make sure h in [0, 1] range
