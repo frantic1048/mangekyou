@@ -5,15 +5,13 @@ import {RGBToHSL, HSLToRGB,
         RGBToHSV, HSVToRGB,
         HSY709ToRGB, RGBToHSY709,
         HSY601ToRGB, RGBToHSY601}       from './ColorConversion';
-import {getAllPositions, minOf} from './util';
+import {getAllPositions} from './util';
 
 // space is one of: hsl, hsv, hsy709, hsy610
 // channel is index (0 based) of selected color space: 0, 1, 2
+// algorithm from wiki.
+// https://en.wikipedia.org/wiki/Histogram_equalization
 function HistogramEqualization({width, height, data}, {space, channelIndex}) {
-  // TODO: implement HistogramEqualization algorithm;
-
-  console.log({space, channelIndex});
-
   const allPos = getAllPositions(width, height);
   const pixelCount = width * height;
 
@@ -25,9 +23,8 @@ function HistogramEqualization({width, height, data}, {space, channelIndex}) {
   let RGBToSpec;
   let SpecToRGB;
 
-  // target channel's levels count, and levels frequency
+  // target channel's levels count
   const xCount = new Array(256).fill(0);
-  let xFrequency;
 
   // discrete Cumulative Distribution Function values
   // https://en.wikipedia.org/wiki/Cumulative_distribution_function
@@ -76,18 +73,15 @@ function HistogramEqualization({width, height, data}, {space, channelIndex}) {
     ++xCount[sData[index + channelIndex]];
   }
 
-  // convert the counts into frequency
-  xFrequency = xCount.map(v => v / pixelCount);
-
-  // convert frequency to CDF
-  xFrequency.reduce((pre, cur, idx) => {
+  // convert conuts to CDF
+  xCount.reduce((pre, cur, idx) => {
     const result = pre + cur;
     xCDF[idx] = result;
     return result;
   }, 0);
 
   // compute equalized levels
-  xCDFMin = minOf(...xCDF);
+  xCDFMin = xCDF.find(val => val > 0);
   xEqualized = xCDF.map((val) => {
     return Math.round((val - xCDFMin) / (pixelCount - xCDFMin) * 255);
   });

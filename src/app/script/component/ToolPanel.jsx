@@ -40,7 +40,7 @@ const ToolPanel = React.createClass({
           component: BitPlane,
         },
         HistogramEqualization: {
-          displayName: '直方图均衡化',
+          displayName: '直方图均衡',
           component: HistogramEqualization,
         },
       },
