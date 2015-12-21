@@ -173,6 +173,7 @@ function RGBToHSY(r, g, b, R, G, B) {
   const chroma = M - m;
   let hue, sat, lum;
   let lumB, maxSat;
+  let h, s, y;
 
   lum = R * red + G * green + B * blue;
   lumB = lum;
