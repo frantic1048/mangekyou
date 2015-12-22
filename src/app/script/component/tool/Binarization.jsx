@@ -1,9 +1,10 @@
 import React            from 'react';
 import RadioButtonGroup from 'material-ui/lib/radio-button-group';
 import RadioButton      from 'material-ui/lib/radio-button';
+import Slider           from 'material-ui/lib/slider';
 import mangekyouStore   from '../../store/mangekyouStore';
 
-const HistogramEqualization = React.createClass({
+const Binarization = React.createClass({
   propTypes: {
     willProcess: React.PropTypes.func.isRequired,
     currentImage: React.PropTypes.shape({
@@ -16,34 +17,35 @@ const HistogramEqualization = React.createClass({
       param: {
         space: 'hsl',
         channelIndex: 2,
+        threshold: 125,
       },
       options: {
-        /* eslint-disable key-spacing*/
+        /* eslint-disable key-spacing */
         hsl: {
-          label: '亮度（HSL）',
+          label: 'HSL',
           value: 'hsl',
           key  : 'hsl',
           param: {space: 'hsl', channelIndex: 2},
         },
         hsv: {
-          label: '亮度（HSV）',
+          label: 'HSV',
           value: 'hsv',
           key  : 'hsv',
           param: {space: 'hsv', channelIndex: 2},
         },
         hsy709: {
-          label: '亮度（HSY, Rec. 709）',
+          label: 'HSY, Rec. 709',
           value: 'hsy709',
           key  : 'hsy709',
           param: {space: 'hsy709', channelIndex: 2},
         },
         hsy601: {
-          label: '亮度（HSY, Rec. 610）',
+          label: 'HSY, Rec. 601',
           value: 'hsy601',
           key  : 'hsy601',
           param: {space: 'hsy601', channelIndex: 2},
         },
-        /* eslint-enable key-spacing*/
+        /* eslint-enable key-spacing */
       },
     };
   },
@@ -57,9 +59,10 @@ const HistogramEqualization = React.createClass({
   render() {
     return ( // eslint-disable-line no-extra-parens
       <div>
+        <p>色彩空间</p>
         <RadioButtonGroup
-          onChange={this._handleChange}
-          name="histogramequalization"
+          onChange={this._handleSpaceChange}
+          name="binarization-color-space"
           defaultSelected="hsl"
         >
           {Object.keys(this.state.options).map(key => ( // eslint-disable-line no-extra-parens
@@ -70,21 +73,41 @@ const HistogramEqualization = React.createClass({
             />
           ))}
         </RadioButtonGroup>
+        <Slider
+          name="slider-threshold"
+          onChange={this._handleThresholdChange}
+          onClick={this._compute}
+          onDragStop={this._compute}
+          defaultValue={125}
+          max={255}
+          min={1}
+          step={1}
+          description={`亮度阈值：${this.state.param.threshold} / 255`}
+          style={{marginTop: '1rem'}}
+        />
       </div>
     );
   },
-  _handleChange(event, selected) {
+  _handleSpaceChange(event, selected) {
     this.setState({
-      param: this.state.options[selected].param,
+      param: Object.assign({},
+               this.state.param,
+               this.state.options[selected].param),
     });
-    this._compute(this.state.options[selected].param);
+  },
+  _handleThresholdChange(event, value) {
+    this.setState({
+      param: Object.assign({},
+               this.state.param,
+               {threshold: value}),
+    });
   },
   _compute(param) {
     this.props.willProcess({
-      operationName: 'HistogramEqualization',
+      operationName: 'Binarization',
       operationParam: param || this.state.param,
     });
   },
 });
 
-export default HistogramEqualization;
+export default Binarization;

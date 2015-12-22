@@ -8,6 +8,7 @@ import Grayscale             from './Grayscale';
 import BitPlane              from './BitPlane';
 import Statistics            from './Statistics';
 import HistogramEqualization from './HistogramEqualization';
+import Binarization          from './Binarization';
 
 const OUT_TYPE = {
   IMAGE: 'IMAGE',
@@ -37,6 +38,10 @@ const op = {
   },
   HistogramEqualization: {
     func: HistogramEqualization,
+    outType: OUT_TYPE.IMAGE,
+  },
+  Binarization: {
+    func: Binarization,
     outType: OUT_TYPE.IMAGE,
   },
 };

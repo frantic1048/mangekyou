@@ -20,5 +20,5 @@ after_success:
   - git checkout gh-pages
   - cp -rf ../build/app/* ./
   - git add -A .
-  - git commit --amend -m '(っ╹ ◡ ╹ )っ:cloud:Travis auto update'
+  - git commit --amend -m '⚡୧| ” •̀ ل͜ •́ ” |୨⚡ Trace...ON !'
   - git push --quiet --force origin gh-pages

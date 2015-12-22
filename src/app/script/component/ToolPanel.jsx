@@ -10,6 +10,7 @@ import Quantization          from './tool/Quantization';
 import Grayscale             from './tool/Grayscale';
 import BitPlane              from './tool/BitPlane';
 import HistogramEqualization from './tool/HistogramEqualization';
+import Binarization          from './tool/Binarization';
 
 const ToolPanel = React.createClass({
   getInitialState() {
@@ -42,6 +43,10 @@ const ToolPanel = React.createClass({
         HistogramEqualization: {
           displayName: '直方图均衡',
           component: HistogramEqualization,
+        },
+        Binarization: {
+          displayName: '二值图',
+          component: Binarization,
         },
       },
     };
