@@ -52,6 +52,7 @@ const webpackProductConf = Object.assign({}, webpackConf, {
 
 const app = {
   js: {},
+  bin: {},
   css: {},
   html: {},
   bundle: {},
@@ -60,6 +61,9 @@ const app = {
 app.bundle.entry = ['src/app/script/mangekyou.js', 'src/app/script/worker/worker.js'];
 app.bundle.dest = ['build/app/script/mangekyou.js', 'build/app/script/worker/worker.js'];
 app.bundle.destPath = 'build/app/script';
+
+app.bin.src = ['src/app/bin/mangekyou'];
+app.bin.destPath = 'build/app/bin';
 
 app.js.src = ['src/app/main.js'];
 app.js.dest = ['build/app/main.js'];
@@ -84,6 +88,11 @@ app.html.destPath = 'build/app';
 gulp.task('html', () => {
   return gulp.src(app.html.src)
     .pipe(gulp.dest(app.html.destPath));
+});
+
+gulp.task('bin', () => {
+  return gulp.src(app.bin.src)
+    .pipe(gulp.dest(app.bin.destPath));
 });
 
 gulp.task('lint', () => {
@@ -161,6 +170,7 @@ gulp.task('dev', (callback) => {
   gulp.series(
     gulp.parallel(
       'html',
+      'bin',
       'css-dev',
       'js-dev'
     ),
@@ -175,6 +185,7 @@ gulp.task('dev', (callback) => {
 gulp.task('product', (callback) => {
   gulp.parallel(
     'html',
+    'bin',
     'css-product',
     'js-product',
     'webpack-product'
@@ -190,6 +201,6 @@ gulp.task('ci', (callback) => {
   callback();
 });
 
-gulp.task('default', gulp.series('dev'), (callback) => {
+gulp.task('default', gulp.series('ci'), (callback) => {
   callback();
 });

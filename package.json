@@ -1,13 +1,8 @@
 {
   "name": "mangekyou",
-  "version": "0.7.14",
+  "version": "0.7.15",
   "description": "简单的图像处理程序",
   "main": "build/app/main.js",
-  "scripts": {
-    "run": "electron ./",
-    "dev": "gulp dev",
-    "build": "gulp product"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/frantic1048/mangekyou.git"

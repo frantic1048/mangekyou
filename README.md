@@ -8,12 +8,12 @@
 
 # 功能
 
-- 采样
-- RGB 通道量化
+- 采样：自定义距离重采样
+- 量化：RGB 通道 1~256 级量化
 - 灰度化（HSL，HSY，平均值，最大值，最小值）
-- RGB 通道位平面
-- R/G/B/Rec. 709 通道直方图及详细信息
-- 直方图均衡化（HSL，HSV，HSY）
+- 位平面：RGB 通道分别 8 级量化后的位平面
+- 直方图和统计信息：R/G/B/Rec. 709 4 个通道的直方图及详细信息
+- 直方图均衡化：HSL、HSV、HSY 三种空间亮度通道均衡
 
 # 目录结构
 
@@ -47,4 +47,24 @@
         │       ├── util.js    // 通用算法模块
         │       └── ....js     // 文件名对应相关算法
         └── style // 界面样式表目录
+```
+
+# 构建与运行
+
+环境需求：
+
+- Node.js，最新稳定版本
+- npm，最新稳定版本
+- git
+
+```bash
+#克隆代码到本地
+git clone --depth=1 https://github.com/frantic1048/mangekyou.git
+cd mangekyou
+
+# 开始构建
+gulp ci
+
+# 运行
+npm run run
 ```
