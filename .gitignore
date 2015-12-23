@@ -31,7 +31,9 @@ bower_components
 .directory
 
 # builded app
-build
+build/
 
 # travis releasing temp folder
 ghpage
+
+npm-debug.log

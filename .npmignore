@@ -1,0 +1,6 @@
+# ignore all
+*
+
+# just keep builded stuff
+
+!build

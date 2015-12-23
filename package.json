@@ -1,8 +1,11 @@
 {
   "name": "mangekyou",
-  "version": "0.7.17",
+  "version": "0.7.18",
   "description": "简单的图像处理程序",
   "main": "build/app/main.js",
+  "bin": {
+    "mangekyou": "build/app/bin/mangekyou"
+  },
   "scripts": {
     "run": "electron ./"
   },
@@ -11,21 +14,21 @@
     "url": "git+https://github.com/frantic1048/mangekyou.git"
   },
   "author": "frantic1048",
-  "license": "MIT",
+  "license": "GPLv2",
   "bugs": {
     "url": "https://github.com/frantic1048/mangekyou/issues"
   },
   "homepage": "https://github.com/frantic1048/mangekyou#readme",
   "dependencies": {
-    "electron-prebuilt": "^0.36.0",
+    "electron-prebuilt": "^0.36.0"
+  },
+  "devDependencies": {
     "events": "^1.1.0",
     "flux": "^2.1.1",
     "material-ui": "^0.14.0-rc2",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
-    "react-tap-event-plugin": "^0.2.1"
-  },
-  "devDependencies": {
+    "react-tap-event-plugin": "^0.2.1",
     "babel-core": "^6.3.17",
     "babel-eslint": "^5.0.0-beta6",
     "babel-loader": "^6.2.0",
