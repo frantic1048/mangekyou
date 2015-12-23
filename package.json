@@ -1,8 +1,11 @@
 {
   "name": "mangekyou",
-  "version": "0.7.16",
+  "version": "0.7.17",
   "description": "简单的图像处理程序",
   "main": "build/app/main.js",
+  "scripts": {
+    "run": "electron ./"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/frantic1048/mangekyou.git"

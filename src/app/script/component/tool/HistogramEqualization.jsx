@@ -76,13 +76,12 @@ const HistogramEqualization = React.createClass({
   _handleChange(event, selected) {
     this.setState({
       param: this.state.options[selected].param,
-    });
-    this._compute(this.state.options[selected].param);
+    }, this._compute);
   },
-  _compute(param) {
+  _compute() {
     this.props.willProcess({
       operationName: 'HistogramEqualization',
-      operationParam: param || this.state.param,
+      operationParam: this.state.param,
     });
   },
 });

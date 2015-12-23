@@ -3,8 +3,8 @@
 
 import {RGBToHSL, HSLToRGB,
         RGBToHSV, HSVToRGB,
-        HSY709ToRGB, RGBToHSY709,
-        HSY601ToRGB, RGBToHSY601}       from './ColorConversion';
+        RGBToHSY709, HSY709ToRGB,
+        RGBToHSY601, HSY601ToRGB}       from './ColorConversion';
 import {getAllPositions} from './util';
 
 // space is one of: hsl, hsv, hsy709, hsy610

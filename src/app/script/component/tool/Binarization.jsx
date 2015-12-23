@@ -79,8 +79,8 @@ const Binarization = React.createClass({
           onClick={this._compute}
           onDragStop={this._compute}
           defaultValue={125}
-          max={255}
-          min={1}
+          max={254}
+          min={0}
           step={1}
           description={`亮度阈值：${this.state.param.threshold} / 255`}
           style={{marginTop: '1rem'}}
@@ -94,20 +94,20 @@ const Binarization = React.createClass({
         ...this.state.param,
         ...this.state.options[selected].param,
       },
-    });
+    }, this._compute);
   },
   _handleThresholdChange(event, value) {
     this.setState({
       param: {
         ...this.state.param,
-        ...{threshold: value},
+        threshold: value,
       },
     });
   },
-  _compute(param) {
+  _compute() {
     this.props.willProcess({
       operationName: 'Binarization',
-      operationParam: param || this.state.param,
+      operationParam: this.state.param,
     });
   },
 });

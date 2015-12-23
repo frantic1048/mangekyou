@@ -56,16 +56,12 @@ const BitPlane = React.createClass({
         ...this.state.param,
         planeIndex: selected,
       },
-    });
-    this._compute({
-      ...this.state.param,
-      planeIndex: selected,
-    });
+    }, this._compute);
   },
-  _compute(param) {
+  _compute() {
     this.props.willProcess({
       operationName: 'BitPlane',
-      operationParam: param || this.state.param,
+      operationParam: this.state.param,
     });
   },
 });

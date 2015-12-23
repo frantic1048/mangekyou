@@ -89,7 +89,7 @@ const Histogram = React.createClass({
     );
     });
 
-    // draw blud histogram
+    // draw blue histogram
     ctx.fillStyle = 'rgba(0, 0, 255, 0.3)';
     freq.blue.forEach((value, index) => {
       ctx.fillRect(
