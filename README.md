@@ -1,5 +1,7 @@
 # mangekyou
 ![license](https://img.shields.io/github/license/frantic1048/mangekyou.svg?style=flat-square)
+![npmjs version](https://img.shields.io/npm/v/mangekyou.svg?style=flat-square)
+
 [![codeclimate analysis](https://img.shields.io/codeclimate/github/frantic1048/mangekyou.svg?style=flat-square)](https://codeclimate.com/github/frantic1048/mangekyou)
 [![travis-ci](https://img.shields.io/travis/frantic1048/mangekyou.svg?style=flat-square)](https://travis-ci.org/frantic1048/mangekyou)
 [![david-dm](https://img.shields.io/david/frantic1048/mangekyou.svg?style=flat-square)](https://david-dm.org/frantic1048/mangekyou)
@@ -14,6 +16,17 @@
 - 位平面：RGB 通道分别 8 级量化后的位平面
 - 直方图和统计信息：R/G/B/Rec. 709 4 个通道的直方图及详细信息
 - 直方图均衡化：HSL、HSV、HSY 三种空间亮度通道均衡
+- 二值图：HSL、HSV、HSY 三种空间亮度通道为阈值的二值图。
+
+# 使用
+
+```bash
+# 从 npm 安装
+npm i -g mangekyou
+
+# 运行
+mangekyou
+```
 
 # 目录结构
 
@@ -49,7 +62,7 @@
         └── style // 界面样式表目录
 ```
 
-# 构建与运行
+# 构建
 
 环境需求：
 
