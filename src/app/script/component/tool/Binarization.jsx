@@ -90,16 +90,18 @@ const Binarization = React.createClass({
   },
   _handleSpaceChange(event, selected) {
     this.setState({
-      param: Object.assign({},
-               this.state.param,
-               this.state.options[selected].param),
+      param: {
+        ...this.state.param,
+        ...this.state.options[selected].param,
+      },
     });
   },
   _handleThresholdChange(event, value) {
     this.setState({
-      param: Object.assign({},
-               this.state.param,
-               {threshold: value}),
+      param: {
+        ...this.state.param,
+        ...{threshold: value},
+      },
     });
   },
   _compute(param) {

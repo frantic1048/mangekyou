@@ -27,10 +27,11 @@ const Statistics = React.createClass({
     const redRowColor = {color: 'rgba(227, 45, 70, 0.8)'};
     const greenRowColor = {color: 'rgba(65, 164, 22, 0.8)'};
     const blueRowColor = {color: 'rgba(30, 123, 217, 0.8)'};
-    const headerColumnStyle = Object.assign({}, columnPadding, {
+    const headerColumnStyle = {
+      ...columnPadding,
       color: 'rgba(0, 0, 0, 0.8)',
-    });
-    const rowColumnStyle = Object.assign({}, columnPadding, {});
+    };
+    const rowColumnStyle = {...columnPadding};
     return ( // eslint-disable-line no-extra-parens
       <div
         style={{
@@ -53,11 +54,11 @@ const Statistics = React.createClass({
           >
           <TableRow>
             <TableRowColumn style={rowColumnStyle}>宽×高</TableRowColumn>
-            <TableRowColumn style={Object.assign({}, rowColumnStyle, lumaRowColor)}>{`${stat.width}×${stat.height}`}</TableRowColumn>
+            <TableRowColumn style={{...rowColumnStyle, ...lumaRowColor}}>{`${stat.width}×${stat.height}`}</TableRowColumn>
           </TableRow>
           <TableRow>
             <TableRowColumn style={rowColumnStyle}>像素量</TableRowColumn>
-            <TableRowColumn style={Object.assign({}, rowColumnStyle, lumaRowColor)}>{stat.pixelCount}</TableRowColumn>
+            <TableRowColumn style={{...rowColumnStyle, ...lumaRowColor}}>{stat.pixelCount}</TableRowColumn>
           </TableRow>
           </TableBody>
         </Table>
@@ -71,10 +72,10 @@ const Statistics = React.createClass({
           >
             <TableRow>
               <TableHeaderColumn style={headerColumnStyle}>通道</TableHeaderColumn>
-              <TableHeaderColumn style={Object.assign({}, headerColumnStyle, lumaRowColor)}>Rec. 709</TableHeaderColumn>
-              <TableHeaderColumn style={Object.assign({}, headerColumnStyle, redRowColor)}>Red</TableHeaderColumn>
-              <TableHeaderColumn style={Object.assign({}, headerColumnStyle, greenRowColor)}>Green</TableHeaderColumn>
-              <TableHeaderColumn style={Object.assign({}, headerColumnStyle, blueRowColor)}>Blue</TableHeaderColumn>
+              <TableHeaderColumn style={{...headerColumnStyle, ...lumaRowColor}}>Rec. 709</TableHeaderColumn>
+              <TableHeaderColumn style={{...headerColumnStyle, ...redRowColor}}>Red</TableHeaderColumn>
+              <TableHeaderColumn style={{...headerColumnStyle, ...greenRowColor}}>Green</TableHeaderColumn>
+              <TableHeaderColumn style={{...headerColumnStyle, ...blueRowColor}}>Blue</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
@@ -82,24 +83,24 @@ const Statistics = React.createClass({
           >
             <TableRow>
               <TableRowColumn style={rowColumnStyle}>平均值</TableRowColumn>
-              <TableRowColumn style={Object.assign({}, headerColumnStyle, lumaRowColor)}>{Math.round(stat.averange.luma)}</TableRowColumn>
-              <TableRowColumn style={Object.assign({}, headerColumnStyle, redRowColor)}>{Math.round(stat.averange.red)}</TableRowColumn>
-              <TableRowColumn style={Object.assign({}, headerColumnStyle, greenRowColor)}>{Math.round(stat.averange.green)}</TableRowColumn>
-              <TableRowColumn style={Object.assign({}, headerColumnStyle, blueRowColor)}>{Math.round(stat.averange.blue)}</TableRowColumn>
+              <TableRowColumn style={{...headerColumnStyle, ...lumaRowColor}}>{Math.round(stat.averange.luma)}</TableRowColumn>
+              <TableRowColumn style={{...headerColumnStyle, ...redRowColor}}>{Math.round(stat.averange.red)}</TableRowColumn>
+              <TableRowColumn style={{...headerColumnStyle, ...greenRowColor}}>{Math.round(stat.averange.green)}</TableRowColumn>
+              <TableRowColumn style={{...headerColumnStyle, ...blueRowColor}}>{Math.round(stat.averange.blue)}</TableRowColumn>
             </TableRow>
             <TableRow>
               <TableRowColumn style={rowColumnStyle}>中值</TableRowColumn>
-              <TableRowColumn style={Object.assign({}, headerColumnStyle, lumaRowColor)}>{stat.median.luma}</TableRowColumn>
-              <TableRowColumn style={Object.assign({}, headerColumnStyle, redRowColor)}>{stat.median.red}</TableRowColumn>
-              <TableRowColumn style={Object.assign({}, headerColumnStyle, greenRowColor)}>{stat.median.green}</TableRowColumn>
-              <TableRowColumn style={Object.assign({}, headerColumnStyle, blueRowColor)}>{stat.median.blue}</TableRowColumn>
+              <TableRowColumn style={{...headerColumnStyle, ...lumaRowColor}}>{stat.median.luma}</TableRowColumn>
+              <TableRowColumn style={{...headerColumnStyle, ...redRowColor}}>{stat.median.red}</TableRowColumn>
+              <TableRowColumn style={{...headerColumnStyle, ...greenRowColor}}>{stat.median.green}</TableRowColumn>
+              <TableRowColumn style={{...headerColumnStyle, ...blueRowColor}}>{stat.median.blue}</TableRowColumn>
             </TableRow>
             <TableRow>
               <TableRowColumn style={rowColumnStyle}>标准差</TableRowColumn>
-              <TableRowColumn style={Object.assign({}, headerColumnStyle, lumaRowColor)}>{Math.round(stat.standardDeviation.luma)}</TableRowColumn>
-              <TableRowColumn style={Object.assign({}, headerColumnStyle, redRowColor)}>{Math.round(stat.standardDeviation.red)}</TableRowColumn>
-              <TableRowColumn style={Object.assign({}, headerColumnStyle, greenRowColor)}>{Math.round(stat.standardDeviation.green)}</TableRowColumn>
-              <TableRowColumn style={Object.assign({}, headerColumnStyle, blueRowColor)}>{Math.round(stat.standardDeviation.blue)}</TableRowColumn>
+              <TableRowColumn style={{...headerColumnStyle, ...lumaRowColor}}>{Math.round(stat.standardDeviation.luma)}</TableRowColumn>
+              <TableRowColumn style={{...headerColumnStyle, ...redRowColor}}>{Math.round(stat.standardDeviation.red)}</TableRowColumn>
+              <TableRowColumn style={{...headerColumnStyle, ...greenRowColor}}>{Math.round(stat.standardDeviation.green)}</TableRowColumn>
+              <TableRowColumn style={{...headerColumnStyle, ...blueRowColor}}>{Math.round(stat.standardDeviation.blue)}</TableRowColumn>
             </TableRow>
           </TableBody>
         </Table>

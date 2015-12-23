@@ -3,7 +3,7 @@ import {luma709} from './ColorConversion';
 
 function levelMedian(levelCountArray, itemCount) {
   return levelCountArray.reduce((pre, cur, idx) => {
-    const result = Object.assign({}, pre);
+    const result = {...pre};
     if (!pre.ok) {
       result.sum = pre.sum + cur;
       result.ok = result.sum > 0.5 * itemCount;

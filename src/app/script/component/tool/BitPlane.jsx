@@ -52,15 +52,15 @@ const BitPlane = React.createClass({
   },
   _handleChange(event, selected) {
     this.setState({
-      param: Object.assign({},
-        this.state.param,
-        { planeIndex: selected }
-      ),
+      param: {
+        ...this.state.param,
+        planeIndex: selected,
+      },
     });
-    this._compute(Object.assign({},
-      this.state.param,
-      { planeIndex: selected }
-    ));
+    this._compute({
+      ...this.state.param,
+      planeIndex: selected,
+    });
   },
   _compute(param) {
     this.props.willProcess({

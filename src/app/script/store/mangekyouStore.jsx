@@ -60,7 +60,8 @@ function triggerShowing(componentName) {
   _store.showing[componentName] = !_store.showing[componentName];
 }
 
-const mangekyouStore = Object.assign({}, EventEmitter.prototype, {
+const mangekyouStore = {
+  ...EventEmitter.prototype,
   addHistoryChangeListener(cb) {
     this.on(CHANGE_EVENT.HISTORY, cb);
   },
@@ -106,7 +107,7 @@ const mangekyouStore = Object.assign({}, EventEmitter.prototype, {
   removeComputeListener(cb) {
     this.removeListener(CHANGE_EVENT.COMPUTE, cb);
   },
-});
+};
 
 mangekyouDispatcher.register(payload => {
   const {data, actionType} = payload.action;

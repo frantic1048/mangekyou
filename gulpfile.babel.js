@@ -22,7 +22,7 @@ const webpackConf = {
         exclude: /(node_modules|bower_components)/,
         loader: 'babel',
         query: {
-          presets: ['react', 'es2015'],
+          presets: ['react', 'es2015', 'stage-2'],
         },
       },
       {
@@ -34,12 +34,14 @@ const webpackConf = {
   },
 };
 
-const webpackDevConf = Object.assign({}, webpackConf, {
+const webpackDevConf = {
+  ...webpackConf,
   watch: true,
   devtool: '#inline-source-map',
-});
+};
 
-const webpackProductConf = Object.assign({}, webpackConf, {
+const webpackProductConf = {
+  ...webpackConf,
   plugins: [
     new webpack.webpack.optimize.UglifyJsPlugin({
       sourceMap: false,
@@ -48,7 +50,7 @@ const webpackProductConf = Object.assign({}, webpackConf, {
       },
     }),
   ],
-});
+};
 
 const app = {
   js: {},
@@ -130,7 +132,7 @@ gulp.task('js-dev', () => {
 gulp.task('js-product', () => {
   return gulp.src(app.js.src)
     .pipe(babel({
-      presets: ['es2015'],
+      presets: ['es2015', 'stage-2'],
     }))
     .pipe(uglify({compress: { warnings: false }}))
     .pipe(gulp.dest(app.js.destPath));
