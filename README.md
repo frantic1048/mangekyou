@@ -75,6 +75,9 @@ mangekyou
 git clone --depth=1 https://github.com/frantic1048/mangekyou.git
 cd mangekyou
 
+# 安装依赖
+npm install
+
 # 开始构建
 gulp ci
 
