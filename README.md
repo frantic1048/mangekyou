@@ -1,6 +1,6 @@
 # mangekyou
 ![license](https://img.shields.io/github/license/frantic1048/mangekyou.svg?style=flat-square)
-![npmjs version](https://img.shields.io/npm/v/mangekyou.svg?style=flat-square)
+[![npmjs version](https://img.shields.io/npm/v/mangekyou.svg?style=flat-square)](https://www.npmjs.com/package/mangekyou)
 
 [![codeclimate analysis](https://img.shields.io/codeclimate/github/frantic1048/mangekyou.svg?style=flat-square)](https://codeclimate.com/github/frantic1048/mangekyou)
 [![travis-ci](https://img.shields.io/travis/frantic1048/mangekyou.svg?style=flat-square)](https://travis-ci.org/frantic1048/mangekyou)
@@ -20,6 +20,8 @@
 
 # 使用
 
+## 桌面程序
+
 ```bash
 # 从 npm 安装
 npm i -g mangekyou
@@ -27,6 +29,10 @@ npm i -g mangekyou
 # 运行
 mangekyou
 ```
+
+## 现代浏览器
+
+访问：[http://frantic1048.github.io/mangekyou](http://frantic1048.github.io/mangekyou)
 
 # 目录结构
 
@@ -36,7 +42,8 @@ mangekyou
 ├── .codeclimate.yml  // Code Climate 平台配置
 ├── .travis.yml       // Travis CI 平台配置
 ├── .eslintrc         // 静态分析配置
-├── .gitignore        // git 忽略文件配置
+├── .gitignore        // git 忽略文件设定
+├── .npmignore        // npm 忽略文件设定
 ├── gulpfile.babel.js // 构建配置
 ├── LICENSE           // 发布协议
 ├── package.json      // 依赖信息

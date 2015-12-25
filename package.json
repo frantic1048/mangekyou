@@ -1,6 +1,6 @@
 {
   "name": "mangekyou",
-  "version": "0.7.22",
+  "version": "0.7.23",
   "description": "简单的图像处理程序",
   "main": "build/app/main.js",
   "bin": {
