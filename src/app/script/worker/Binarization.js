@@ -9,7 +9,6 @@ import {getAllPositions}           from './util';
 
 
 function Binarization({width, height, data}, {space, channelIndex, threshold}) {
-  // TODO: implement Binarization algorithm.
   const allPos = getAllPositions(width, height);
 
   // convert RGB -> Specified color space
