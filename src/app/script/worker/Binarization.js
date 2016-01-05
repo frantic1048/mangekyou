@@ -4,8 +4,8 @@
 import {RGBToHSL,
         RGBToHSV,
         RGBToHSY709,
-        RGBToHSY601}  from './ColorConversion';
-import {getAllPositions}           from './util';
+        RGBToHSY601}     from './ColorConversion';
+import {getAllPositions} from './util';
 
 
 function Binarization({width, height, data}, {space, channelIndex, threshold}) {
