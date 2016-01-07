@@ -1,18 +1,24 @@
 // disable new-cap linting for color space name usage in function name
 /* eslint-disable new-cap */
 
+import {RGBToHSL, HSLToRGB,
+        RGBToHSV, HSVToRGB,
+        RGBToHSY709, HSY709ToRGB,
+        RGBToHSY601, HSY601ToRGB}       from './ColorConversion';
 import {getAllPositions} from './util';
 
 function ChannelAdjust({width, height, data}, {space, delta}) {
+  // TODO: make this work correctly..
   const allPos = getAllPositions(width, height);
+
   // function convert RGB <-> Specified 3-channel Color Space
   let RGBToSpec;
   let SpecToRGB;
 
   switch (space) {
   case 'rgb':
-    RGBToSpec = c => c;
-    SpecToRGB = c => c;
+    RGBToSpec = (r, g, b) => [r, g, b];
+    SpecToRGB = (r, g, b) => [r, g, b];
     break;
   case 'hsl':
     RGBToSpec = RGBToHSL;
@@ -38,7 +44,14 @@ function ChannelAdjust({width, height, data}, {space, delta}) {
     const sPixel = RGBToSpec(data[index] / 255,
                            data[index + 1] / 255,
                            data[index + 2] / 255);
-    // TODO: adjust pixel's channels by delta param
+    sPixel[0] += delta[0];
+    sPixel[1] += delta[1];
+    sPixel[2] += delta[2];
+
+    const xPixel = SpecToRGB(...sPixel);
+    data[index] = xPixel[0];
+    data[index + 1] = xPixel[1];
+    data[index + 2] = xPixel[2];
   }
 
   return {width, height, data};

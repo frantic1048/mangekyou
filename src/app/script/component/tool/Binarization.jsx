@@ -65,11 +65,11 @@ const Binarization = React.createClass({
           name="binarization-color-space"
           defaultSelected="hsl"
         >
-          {Object.keys(this.state.options).map(key => ( // eslint-disable-line no-extra-parens
+          {Object.keys(this.state.options).map(keyName => ( // eslint-disable-line no-extra-parens
             <RadioButton
-              key={this.state.options[key].key}
-              value={this.state.options[key].value}
-              label={this.state.options[key].label}
+              key={this.state.options[keyName].key}
+              value={this.state.options[keyName].value}
+              label={this.state.options[keyName].label}
             />
           ))}
         </RadioButtonGroup>

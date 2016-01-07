@@ -2,6 +2,7 @@ import React                 from 'react';
 import Paper                 from 'material-ui/lib/paper';
 import RaisedButton          from 'material-ui/lib/raised-button';
 import DropDownMenu          from 'material-ui/lib/drop-down-menu';
+import MenuItem              from 'material-ui/lib/menus/menu-item';
 import mangekyouAction       from '../action/mangekyouAction';
 import mangekyouStore        from '../store/mangekyouStore';
 import mangekyouConstant     from '../constant/mangekyouConstant';
@@ -11,6 +12,7 @@ import Grayscale             from './tool/Grayscale';
 import BitPlane              from './tool/BitPlane';
 import HistogramEqualization from './tool/HistogramEqualization';
 import Binarization          from './tool/Binarization';
+import ChannelAdjust         from './tool/ChannelAdjust';
 
 const ToolPanel = React.createClass({
   getInitialState() {
@@ -22,8 +24,11 @@ const ToolPanel = React.createClass({
       proceedOperation: '',
       proceedOperationDisplayName: '',
       worker: null,
-      selectedOperation: '',
+      selectedOperation: 'Nothing',
       operations: {
+        Nothing: {
+          displayName: '无',
+        },
         SampleRate: {
           displayName: '采样率',
           component: SampleRate,
@@ -48,6 +53,10 @@ const ToolPanel = React.createClass({
           displayName: '二值图',
           component: Binarization,
         },
+        ChannelAdjust: {
+          displayName: '通道调节',
+          component: ChannelAdjust,
+        },
       },
     };
   },
@@ -62,20 +71,21 @@ const ToolPanel = React.createClass({
     mangekyouStore.removeProcessingChangeListener(this._onProcessingChange);
   },
   render() {
-    const menuItems = [
-      { payload: '', text: '无' },
-    ];
+    const menuItems = [];
 
     // add avilable operations to menu
     for (const op of Object.keys(this.state.operations)) {
-      menuItems.push({
-        payload: op,
-        text: this.state.operations[op].displayName,
-      });
+      menuItems.push(
+        <MenuItem
+          key={op}
+          value={op}
+          primaryText={this.state.operations[op].displayName}
+        />
+      );
     }
 
     // create component of selected operation.
-    const Tool = this.state.selectedOperation ? this.state.operations[this.state.selectedOperation].component : 'span';
+    const Tool = this.state.selectedOperation !== 'Nothing' ? this.state.operations[this.state.selectedOperation].component : 'span';
 
     return ( // eslint-disable-line no-extra-parens
       <Paper
@@ -107,7 +117,12 @@ const ToolPanel = React.createClass({
               paddingBottom: '8px',
             }}
           >操作：</div>
-          <DropDownMenu menuItems={menuItems} onChange={this._handleChange}/>
+          <DropDownMenu
+            onChange={this._handleChange}
+            value={this.state.selectedOperation}
+          >
+            {menuItems}
+          </DropDownMenu>
           <RaisedButton
             onClick={this._handleApply}
             label="应用"
@@ -127,18 +142,11 @@ const ToolPanel = React.createClass({
       </Paper>
     );
   },
-  _handleChange(event, selectedIndex, menuItem) {
-    if (menuItem) {
-      this.setState({
-        selectedOperation: menuItem,
-        selectedOperationDisplayName: this.state.operations[menuItem].displayName,
-      });
-    } else {
-      this.setState({
-        selectedOperation: '',
-        selectedOperationDisplayName: '无',
-      });
-    }
+  _handleChange(event, selectedIndex, value) {
+    this.setState({
+      selectedOperation: value,
+      selectedOperationDisplayName: this.state.operations[value].displayName,
+    });
   },
   _handleApply() {
     if (this.state.proceedImage) {

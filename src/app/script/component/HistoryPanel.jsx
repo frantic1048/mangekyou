@@ -19,12 +19,15 @@ const HistoryPanel = React.createClass({
     mangekyouStore.addHistoryChangeListener(this._onHistoryChange);
     mangekyouStore.addShowingChangeListener(this._onShowingChange);
 
-    // FIXME: implement scrolling disabled listItems' mouse event
-    // const container = ReactDOM.findDOMNode(this);
-    // container.addEventListener('mousedown', this._onScrollStart, false);
-    // container.addEventListener('mousemove', this._onScrollMove);
-    // container.addEventListener('mouseup', this._onScrollEnd);
-    // container.addEventListener('mouseleave', this._onScrollEnd);
+    const container = ReactDOM.findDOMNode(this);
+    container.addEventListener('mousedown', this._onScrollStart, false);
+    container.addEventListener('mousemove', this._onScrollMove);
+    container.addEventListener('mouseup', this._onScrollEnd);
+    container.addEventListener('mouseleave', this._onScrollEnd);
+  },
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.state.showing !== nextState.showing ||
+           this.state.historyList !== nextState.historyList;
   },
   componentDidUpdate() {
     if (this.state.historyList.length > 0) {
@@ -39,12 +42,11 @@ const HistoryPanel = React.createClass({
     mangekyouStore.removeHistoryChangeListener(this._onHistoryChange);
     mangekyouStore.removeShowingChangeListener(this._onShowingChange);
 
-    // FIXME: implement scrolling disabled listItems' mouse event
-    // const container = ReactDOM.findDOMNode(this);
-    // container.removeEventListener('mousedown', this._onScrollStart);
-    // container.removeEventListener('mousemove', this._onScrollMove);
-    // container.removeEventListener('mouseup', this._onScrollEnd);
-    // container.removeEventListener('mouseleave', this._onScrollEnd);
+    const container = ReactDOM.findDOMNode(this);
+    container.removeEventListener('mousedown', this._onScrollStart);
+    container.removeEventListener('mousemove', this._onScrollMove);
+    container.removeEventListener('mouseup', this._onScrollEnd);
+    container.removeEventListener('mouseleave', this._onScrollEnd);
   },
   render() {
     const listItems = [];
@@ -90,11 +92,13 @@ const HistoryPanel = React.createClass({
   },
   _onScrollStart(ev) {
     const {clientY} = ev;
+    const list = ReactDOM.findDOMNode(this.refs.historyList);
     this.setState({
       scrolling: true,
       scrollingStartPos: {
         y: clientY,
       },
+      scrollingStartScrollTop: list.scrollTop,
     });
   },
   _onScrollMove(ev) {
@@ -108,17 +112,14 @@ const HistoryPanel = React.createClass({
     }
   },
   _onScrollEnd() {
-    const list = ReactDOM.findDOMNode(this.refs.historyList);
     this.setState({
       scrolling: false,
-      scrollingStartScrollTop: list.scrollTop,
     });
   },
   _onHistoryChange() {
     this.setState({
-      historyList: mangekyouStore.getHistory(),
+      historyList: mangekyouStore.getHistory().slice(),
     });
-    this.forceUpdate();
   },
   _onShowingChange() {
     this.setState({
