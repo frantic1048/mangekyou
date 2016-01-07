@@ -247,10 +247,14 @@ function RGBToHSY601(r, g, b) { return RGBToHSY(r, g, b, ...Rec601); }
 // Hue/Chroma/Luma to Red/Green/Blue and back
 // algorithm taken from Wiki, modified to fit [0, 1] hue range
 // https://en.wikipedia.org/wiki/HSL_and_HSV#From_luma.2Fchroma.2Fhue
-function HCYToRGB(h, c, y, R, G, B) {
+function HCYToRGB(iH, iC, iY, R, G, B) {
   // R, G, B is coefficients for red/green/blue.
+  const h = iH % 1;
+  const c = clampBetween(iC, 0, 1);
+  const y = clampBetween(iY, 0, 1);
+
   const hm = h * 6;
-  const x = c * (1 - Math.abs(hm % 2 - 1));
+  const x = clampBetween(c, 0, 1) * (1 - Math.abs(hm % 2 - 1));
   let r, g, b;
   let r1, g1, b1;
   if (hm >= 0 && hm < 1) {
@@ -273,8 +277,12 @@ function HCYToRGB(h, c, y, R, G, B) {
   return [r, g, b];
 }
 
-function RGBToHCY(r, g, b, R, G, B) {
+function RGBToHCY(iR, iG, iB, R, G, B) {
   // R, G, B is coefficients for red/green/blue.
+  const r = clampBetween(iR, 0, 1);
+  const g = clampBetween(iG, 0, 1);
+  const b = clampBetween(iB, 0, 1);
+
   const M = maxOf(r, g, b);
   const m = minOf(r, g, b);
   let h, c, y;
@@ -311,7 +319,11 @@ function RGBToHCY601(r, g, b) { return RGBToHCY(r, g, b, ...Rec601); }
 // Hue/Saturation/Lightness to Red/Green/Blue and back
 // algorithm from Wiki, hue value modified to fit [0, 1] range.
 // https://en.wikipedia.org/wiki/HSL_and_HSV#From_HSL
-function HSLToRGB(h, s, l) {
+function HSLToRGB(iH, iS, iL) {
+  const h = iH % 1;
+  const s = clampBetween(iS, 0, 1);
+  const l = clampBetween(iL, 0, 1);
+
   const chroma = (1 - Math.abs(2 * l - 1)) * s;
   const hue = h * 6;
   const x = chroma * (1 - Math.abs(hue % 2 - 1));
@@ -339,7 +351,11 @@ function HSLToRGB(h, s, l) {
   return [r, g, b];
 }
 
-function RGBToHSL(r, g, b) {
+function RGBToHSL(iR, iG, iB) {
+  const r = clampBetween(iR, 0, 1);
+  const g = clampBetween(iG, 0, 1);
+  const b = clampBetween(iB, 0, 1);
+
   const M = maxOf(r, g, b);
   const m = minOf(r, g, b);
   const chroma = M - m;
@@ -369,7 +385,11 @@ function RGBToHSL(r, g, b) {
 // Hue/Saturation/Value to Red/Green/Blue and back
 // algorithm from Wiki, hue value modified to fit [0, 1] range
 // https://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV
-function HSVToRGB(h, s, v) {
+function HSVToRGB(iH, iS, iV) {
+  const h = iH % 1;
+  const s = clampBetween(iS, 0, 1);
+  const v = clampBetween(iV, 0, 1);
+
   const chroma = v * s;
   const hue = h * 6;
   const x = chroma * (1 - Math.abs(hue % 2 - 1));
@@ -397,7 +417,11 @@ function HSVToRGB(h, s, v) {
   return [r, g, b];
 }
 
-function RGBToHSV(r, g, b) {
+function RGBToHSV(iR, iG, iB) {
+  const r = clampBetween(iR, 0, 1);
+  const g = clampBetween(iG, 0, 1);
+  const b = clampBetween(iB, 0, 1);
+
   const M = maxOf(r, g, b);
   const m = minOf(r, g, b);
   const chroma = M - m;
