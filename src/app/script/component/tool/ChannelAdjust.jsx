@@ -68,6 +68,9 @@ const ChannelAdjust = React.createClass({
     );
     }
 
+    const channelNames = this.state.options[this.state.param.space].channels;
+    const delta = this.state.param.delta;
+
     return ( // eslint-disable-line no-extra-parens
       <div>
         色彩空间:
@@ -82,10 +85,11 @@ const ChannelAdjust = React.createClass({
           onChange={this._handleDeltaChange.bind(this, 0)}
           onClick={this._compute}
           onDragStop={this._compute}
+          value={delta[0] * 100}
           max={100}
           min={-100}
           step={1}
-          description={`${this.state.options[this.state.param.space].channels[0]}`}
+          description={`${channelNames[0]} ${delta[0] >= 0 ? '+' : ''}${delta[0].toFixed(2)}`}
           style={{marginTop: '1rem'}}
         />
         <Slider
@@ -93,10 +97,11 @@ const ChannelAdjust = React.createClass({
           onChange={this._handleDeltaChange.bind(this, 1)}
           onClick={this._compute}
           onDragStop={this._compute}
+          value={delta[1] * 100}
           max={100}
           min={-100}
           step={1}
-          description={`${this.state.options[this.state.param.space].channels[1]}`}
+          description={`${channelNames[1]} ${delta[1] >= 0 ? '+' : ''}${delta[1].toFixed(2)}`}
           style={{marginTop: '1rem'}}
         />
         <Slider
@@ -104,10 +109,11 @@ const ChannelAdjust = React.createClass({
           onChange={this._handleDeltaChange.bind(this, 2)}
           onClick={this._compute}
           onDragStop={this._compute}
+          value={delta[2] * 100}
           max={100}
           min={-100}
           step={1}
-          description={`${this.state.options[this.state.param.space].channels[2]}`}
+          description={`${channelNames[2]} ${delta[2] >= 0 ? '+' : ''}${delta[2].toFixed(2)}`}
           style={{marginTop: '1rem'}}
         />
       </div>
@@ -118,8 +124,9 @@ const ChannelAdjust = React.createClass({
       param: {
         ...this.state.param,
         ...this.state.options[value].param,
+        delta: [0, 0, 0],
       },
-    });
+    }, this._compute());
   },
   _handleDeltaChange(channelIndex, event, value) {
     const newDelta = this.state.param.delta;

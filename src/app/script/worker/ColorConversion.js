@@ -47,7 +47,7 @@ function luma601(r, g, b) { return luma(r, g, b, ...Rec601); }
 // These algorithms were taken from KDE Krita's source code.
 // https://github.com/KDE/krita/blob/fcf9a431b0af9f51546f986499b9621d5ccdf489/libs/pigment/KoColorConversions.cpp#L630-L841
 function HSYToRGB(h, s, y, R, G, B) {
-  const hue = h % 1;
+  const hue = h >= 0 ? h % 1 : 1 - Math.abs(h % 1); // shift h into range [0, 1]
   const sat = clampBetween(s, 0, 1);
   const lum = clampBetween(y, 0, 1);
   const segment = 0.16666666666666666; // 1/6
@@ -249,7 +249,7 @@ function RGBToHSY601(r, g, b) { return RGBToHSY(r, g, b, ...Rec601); }
 // https://en.wikipedia.org/wiki/HSL_and_HSV#From_luma.2Fchroma.2Fhue
 function HCYToRGB(iH, iC, iY, R, G, B) {
   // R, G, B is coefficients for red/green/blue.
-  const h = iH % 1;
+  const h = iH >= 0 ? iH % 1 : 1 - Math.abs(iH % 1);
   const c = clampBetween(iC, 0, 1);
   const y = clampBetween(iY, 0, 1);
 
@@ -320,7 +320,7 @@ function RGBToHCY601(r, g, b) { return RGBToHCY(r, g, b, ...Rec601); }
 // algorithm from Wiki, hue value modified to fit [0, 1] range.
 // https://en.wikipedia.org/wiki/HSL_and_HSV#From_HSL
 function HSLToRGB(iH, iS, iL) {
-  const h = iH % 1;
+  const h = iH >= 0 ? iH % 1 : 1 - Math.abs(iH % 1);
   const s = clampBetween(iS, 0, 1);
   const l = clampBetween(iL, 0, 1);
 
@@ -386,7 +386,7 @@ function RGBToHSL(iR, iG, iB) {
 // algorithm from Wiki, hue value modified to fit [0, 1] range
 // https://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV
 function HSVToRGB(iH, iS, iV) {
-  const h = iH % 1;
+  const h = iH >= 0 ? iH % 1 : 1 - Math.abs(iH % 1);
   const s = clampBetween(iS, 0, 1);
   const v = clampBetween(iV, 0, 1);
 

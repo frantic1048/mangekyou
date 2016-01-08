@@ -8,7 +8,6 @@ import {RGBToHSL, HSLToRGB,
 import {getAllPositions} from './util';
 
 function ChannelAdjust({width, height, data}, {space, delta}) {
-  // TODO: make this work correctly..
   const allPos = getAllPositions(width, height);
 
   // function convert RGB <-> Specified 3-channel Color Space
@@ -49,9 +48,9 @@ function ChannelAdjust({width, height, data}, {space, delta}) {
     sPixel[2] += delta[2];
 
     const xPixel = SpecToRGB(...sPixel);
-    data[index] = xPixel[0];
-    data[index + 1] = xPixel[1];
-    data[index + 2] = xPixel[2];
+    data[index] = xPixel[0] * 255;
+    data[index + 1] = xPixel[1] * 255;
+    data[index + 2] = xPixel[2] * 255;
   }
 
   return {width, height, data};
