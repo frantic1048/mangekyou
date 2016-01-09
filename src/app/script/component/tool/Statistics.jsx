@@ -53,12 +53,8 @@ const Statistics = React.createClass({
             displayRowCheckbox={false}
           >
           <TableRow>
-            <TableRowColumn style={rowColumnStyle}>宽×高</TableRowColumn>
-            <TableRowColumn style={{...rowColumnStyle, ...lumaRowColor}}>{`${stat.width}×${stat.height}`}</TableRowColumn>
-          </TableRow>
-          <TableRow>
-            <TableRowColumn style={rowColumnStyle}>像素量</TableRowColumn>
-            <TableRowColumn style={{...rowColumnStyle, ...lumaRowColor}}>{stat.pixelCount}</TableRowColumn>
+            <TableRowColumn style={rowColumnStyle}>宽×高：{`${stat.width}×${stat.height}`}</TableRowColumn>
+            <TableRowColumn style={rowColumnStyle}>像素量：{stat.pixelCount}</TableRowColumn>
           </TableRow>
           </TableBody>
         </Table>
