@@ -10,7 +10,7 @@ function minOf(...values) {
   return values.reduce((pre, cur) => Math.min(pre, cur), Infinity);
 }
 
-// clamp value between given range
+// clamp input value between given range
 function clampBetween(value, lowerBound, upperBound) {
   let result;
   if ( value >= lowerBound && value <= upperBound) {

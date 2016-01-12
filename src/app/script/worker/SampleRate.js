@@ -1,5 +1,6 @@
 import {getCoordinate, getAllPositions} from './util';
 
+// resample input image by given sample distance
 function SampleRate({width, height, data}, {distance}) {
   const cord = getCoordinate(width);
   const oWidth = Math.floor(width / distance);

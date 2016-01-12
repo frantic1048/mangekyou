@@ -5,6 +5,7 @@ import {getAllPositions, maxOf, minOf} from './util';
 import {luma709, luma601, RGBToHSL} from './ColorConversion';
 
 /* eslint-disable key-spacing */
+// avalible RGB grayscale algorithms
 const methods = {
   rec709 : (r, g, b) => luma709(r, g, b),
   rec601 : (r, g, b) => luma601(r, g, b),

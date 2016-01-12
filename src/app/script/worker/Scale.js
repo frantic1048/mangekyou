@@ -1,5 +1,4 @@
-
-function Scale() {
+function Scale({width, height, data}, param) {
   return 0;
 }
 

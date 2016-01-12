@@ -40,13 +40,17 @@ function ChannelAdjust({width, height, data}, {space, delta}) {
   }
 
   for (const [,, index] of allPos()) {
+    // convert piexl to target color space
     const sPixel = RGBToSpec(data[index] / 255,
                            data[index + 1] / 255,
                            data[index + 2] / 255);
+
+    // adjust channels by delta
     sPixel[0] += delta[0];
     sPixel[1] += delta[1];
     sPixel[2] += delta[2];
 
+    // convert back to RGB
     const xPixel = SpecToRGB(...sPixel);
     data[index] = xPixel[0] * 255;
     data[index + 1] = xPixel[1] * 255;

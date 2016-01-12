@@ -34,6 +34,8 @@ function Binarization({width, height, data}, {space, channelIndex, threshold}) {
     const sPixel = RGBToSpec(data[index] / 255,
                            data[index + 1] / 255,
                            data[index + 2] / 255);
+
+    // apply white/black by threshold
     if (sPixel[channelIndex] * 255 > threshold) {
       data[index] = 255;
       data[index + 1] = 255;
