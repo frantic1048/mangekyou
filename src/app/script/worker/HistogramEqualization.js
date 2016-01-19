@@ -92,9 +92,9 @@ function HistogramEqualization({width, height, data}, {space, channelIndex}) {
     sData[index + channelIndex] = xEqualized[orginalValue];
 
     // convert equalized data back to RGB
-    const xPixel = SpecToRGB(sData[index] / 255,
-                             sData[index + 1] / 255,
-                             sData[index + 2] / 255);
+    const xPixel = SpecToRGB(sData[index] * ( 1 / 255),
+                             sData[index + 1] * ( 1 / 255),
+                             sData[index + 2] * ( 1 / 255));
     data[index] = Math.round(xPixel[0] * 255);
     data[index + 1] = Math.round(xPixel[1] * 255);
     data[index + 2] = Math.round(xPixel[2] * 255);

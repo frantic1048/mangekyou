@@ -11,6 +11,7 @@ import Statistics            from './Statistics';
 import HistogramEqualization from './HistogramEqualization';
 import Binarization          from './Binarization';
 import ChannelAdjust         from './ChannelAdjust';
+import Convolve              from './Convolve';
 
 const OUT_TYPE = {
   IMAGE: 'IMAGE',
@@ -48,6 +49,10 @@ const op = {
   },
   ChannelAdjust: {
     func: ChannelAdjust,
+    outType: OUT_TYPE.IMAGE,
+  },
+  Convolve: {
+    func: Convolve,
     outType: OUT_TYPE.IMAGE,
   },
 };

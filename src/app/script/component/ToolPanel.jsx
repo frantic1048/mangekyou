@@ -13,6 +13,7 @@ import BitPlane              from './tool/BitPlane';
 import HistogramEqualization from './tool/HistogramEqualization';
 import Binarization          from './tool/Binarization';
 import ChannelAdjust         from './tool/ChannelAdjust';
+import Convolve              from './tool/Convolve';
 
 const ToolPanel = React.createClass({
   getInitialState() {
@@ -56,6 +57,10 @@ const ToolPanel = React.createClass({
         ChannelAdjust: {
           displayName: '通道调节',
           component: ChannelAdjust,
+        },
+        Convolve: {
+          displayName: '卷积处理',
+          component: Convolve,
         },
       },
     };
