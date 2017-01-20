@@ -85,8 +85,8 @@ cd mangekyou
 # 安装依赖
 npm install
 
-# 开始构建
-gulp ci
+# 使用本地gulp 开始构建 
+node ./node_modules/gulp/bin/gulp.js
 
 # 运行
 npm run run
