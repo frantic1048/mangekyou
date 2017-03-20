@@ -1,7 +1,7 @@
 import React            from 'react';
 import DropDownMenu     from 'material-ui/lib/drop-down-menu';
 import MenuItem         from 'material-ui/lib/menus/menu-item';
-import RadioButtonGroup from 'material-ui/lib/radio-button-group'
+import RadioButtonGroup from 'material-ui/lib/radio-button-group';
 import RadioButton      from 'material-ui/lib/radio-button';
 import mangekyouStore   from '../../store/mangekyouStore';
 

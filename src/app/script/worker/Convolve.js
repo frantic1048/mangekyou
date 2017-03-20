@@ -84,12 +84,12 @@ function Convolve({width, height, data}, {core, space}) {
       let cValue = 0.0;
       core.forEach((line, cy) => {
         line.forEach((weight, cx) => {
-          // console.log(`processing pixel(${x}, ${y}), core(${cx}, ${cy}), convPos(${x + cx - (coreWidth - 1) * ( 1 / 2)}, ${y + cy - (coreHeight - 1) * (1 / 2)}), realPos(${convolveCord(x + cx - (coreWidth - 1) * ( 1 / 2), y + cy - (coreHeight - 1) * (1 / 2))})`);
           cValue += weight * sData[convolveCord(x + cx - (coreWidth - 1) * ( 1 / 2), y + cy - (coreHeight - 1) * (1 / 2)) + channelIndex];
         });
       });
       cPixel[channelIndex] = cValue;
     });
+
     // convert convolved pixel back to RGB
     const xPixel = SpecToRGB(cPixel[0] * ( 1 / 255),
                              cPixel[1] * ( 1 / 255),
