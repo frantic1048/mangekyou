@@ -7,7 +7,10 @@
     "mangekyou": "build/app/bin/mangekyou"
   },
   "scripts": {
-    "run": "electron ./"
+    "run": "electron ./",
+    "dev": "gulp dev",
+    "lint": "gulp lint",
+    "build": "gulp ci"
   },
   "repository": {
     "type": "git",

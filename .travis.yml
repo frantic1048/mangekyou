@@ -13,7 +13,7 @@ script:
   - git fetch
   - git checkout release
   - npm install
-  - gulp ci
+  - npm run build
 after_success:
   - git clone https://$GH_TOKEN@github.com/frantic1048/mangekyou.git ghpage
   - cd ghpage
